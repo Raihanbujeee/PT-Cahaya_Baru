@@ -12,6 +12,13 @@ class ProdukSchema
     {
         return $schema->schema([
             Section::make('Informasi Produk')->schema([
+                Forms\Components\FileUpload::make('image')
+                    ->image()
+                    ->imageEditor()
+                    ->disk('public')
+                    ->directory('produk')
+                    ->label('Gambar Produk')
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)

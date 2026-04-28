@@ -13,6 +13,10 @@ class ProdukTable
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->sortable()->searchable()->toggleable(),
+                Tables\Columns\ImageColumn::make('image')
+                    ->disk('public')
+                    ->label('Gambar')
+                    ->square(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable()

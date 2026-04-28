@@ -16,3 +16,6 @@ Route::get('/produk/{id}', function ($id) {
     $product = Product::with(['category', 'brand'])->findOrFail($id);
     return view('detail_produk', compact('product'));
 });
+Route::get('/kontak', function () {
+    return view('kontak');
+});

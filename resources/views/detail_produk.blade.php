@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Detail Produk - PT Cahaya Baru</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/detail_produk.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
 </head>
 <body>
 
@@ -129,7 +131,89 @@
         </div>
     </section>
 
+    <!-- Floating Cart Button -->
+    <div id="floating-cart" class="floating-cart" onclick="openCheckoutModal()">
+        <i class="ri-shopping-cart-2-fill"></i>
+        <span id="cart-count" class="cart-count">0</span>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keranjang Belanja</h2>
+                <button class="btn-close-modal" onclick="closeCheckoutModal()"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Produk -->
+                <div id="cart-items" class="cart-items-container">
+                    <!-- Cart items will be rendered here -->
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Total Produk</span>
+                        <span id="cart-product-total">Rp 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Total Jasa</span>
+                        <span id="cart-service-total">Rp 0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Grand Total</span>
+                        <span id="cart-total">Rp 0</span>
+                    </div>
+                </div>
+
+                <!-- Jasa / Layanan -->
+                <div class="checkout-form">
+                    <h3>Tambah Jasa / Layanan <span style="font-size:12px;font-weight:400;color:var(--text-muted);">(Opsional)</span></h3>
+                    <div id="service-list" class="service-list">
+                        <p style="color:var(--text-muted);font-size:14px;">Memuat daftar jasa...</p>
+                    </div>
+                </div>
+
+                <!-- Data Pemesan -->
+                <div class="checkout-form">
+                    <h3>Data Pemesan</h3>
+                    <div class="form-group">
+                        <label for="cust-name">Nama Lengkap</label>
+                        <input type="text" id="cust-name" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-phone">Nomor Telepon (WA)</label>
+                        <input type="text" id="cust-phone" placeholder="Contoh: 08123456789" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-address">Alamat Pengiriman</label>
+                        <textarea id="cust-address" rows="3" placeholder="Masukkan alamat lengkap pengiriman" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeCheckoutModal()">Kembali</button>
+                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">Checkout Sekarang <i class="ri-whatsapp-line"></i></button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script -->
+    <script>
+        window.APP_URL = "{{ url('/') }}";
+
+        window.getProductById = function(id) {
+            if (id === {{ $product->id }}) {
+                return {
+                    id: {{ $product->id }},
+                    name: "{{ $product->name }}",
+                    price: {{ (float) $product->selling_price }},
+                    image: "{{ $product->image ? asset('storage/' . $product->image) : $imgFallback }}",
+                    stock: "{{ $product->current_stock > 0 ? 'Tersedia' : 'Habis' }}"
+                };
+            }
+            return null;
+        }
+    </script>
+    <script src="{{ asset('js/cart.js') }}"></script>
     <script src="{{ asset('js/detail_produk.js') }}"></script>
 </body>
 </html>

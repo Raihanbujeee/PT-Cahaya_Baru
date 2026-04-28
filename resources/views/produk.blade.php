@@ -156,7 +156,7 @@
         'unit' => 'pcs',
         'minOrder' => '1',
         'supplier' => 'PT Cahaya Baru',
-        'image' => $imgFallback,
+        'image' => $p->image ? asset('storage/' . $p->image) : $imgFallback,
         'description' => 'Produk ' . $p->name . ' dari merek ' . ($p->brand ? $p->brand->name : 'unggulan') . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.',
         'date' => $p->created_at->format('Y-m-d'),
         'sold' => rand(10, 500)

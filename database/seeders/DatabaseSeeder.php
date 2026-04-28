@@ -4,21 +4,30 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Customer;
+use App\Models\InboundDetail;
+use App\Models\InboundTransaction;
 use App\Models\Product;
+use App\Models\Sale;
+use App\Models\SaleProductDetail;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
         // Create Admin User
-        User::create([
-            'name' => 'Admin SIM-TB',
-            'email' => 'admin@simtb.com',
-            'password' => Hash::make('password'),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@simtb.com'],
+            [
+                'name' => 'Admin SIM-TB',
+                'password' => Hash::make('password'),
+            ]
+        );
 
         // Seed Categories
         $categories = [
@@ -136,15 +145,98 @@ class DatabaseSeeder extends Seeder
             $cat = Category::firstOrCreate(['name' => $prod['category']]);
             $brand = Brand::firstOrCreate(['name' => $prod['brand']]);
 
-            Product::create([
-                'category_id' => $cat->id,
-                'brand_id' => $brand->id,
-                'name' => $prod['name'],
-                'purchase_price' => $prod['purchase_price'],
-                'selling_price' => $prod['selling_price'],
-                'current_stock' => $prod['current_stock'],
-                'minimum_stock' => $prod['minimum_stock'],
-            ]);
+            Product::firstOrCreate(
+                ['name' => $prod['name']],
+                [
+                    'category_id' => $cat->id,
+                    'brand_id' => $brand->id,
+                    'purchase_price' => $prod['purchase_price'],
+                    'selling_price' => $prod['selling_price'],
+                    'current_stock' => $prod['current_stock'],
+                    'minimum_stock' => $prod['minimum_stock'],
+                ]
+            );
+        }
+
+        // Seed Customers
+        $customers = [
+            ['name' => 'Bapak Budi', 'phone_number' => '081234567890', 'address' => 'Jl. Merdeka No. 1'],
+            ['name' => 'Ibu Siti', 'phone_number' => '081298765432', 'address' => 'Jl. Sudirman No. 2'],
+            ['name' => 'Proyek Perumahan A', 'phone_number' => '085612341234', 'address' => 'Kawasan Industri B'],
+        ];
+
+        foreach ($customers as $cust) {
+            Customer::firstOrCreate(
+                ['phone_number' => $cust['phone_number']],
+                $cust
+            );
+        }
+
+        // Seed Suppliers
+        $suppliers = [
+            ['name' => 'PT Semen Indonesia', 'contact_info' => '021-1234567'],
+            ['name' => 'CV Baja Perkasa', 'contact_info' => '021-7654321'],
+            ['name' => 'Toko Cat Warna Warni', 'contact_info' => '081122334455'],
+        ];
+
+        foreach ($suppliers as $supp) {
+            Supplier::firstOrCreate(
+                ['name' => $supp['name']],
+                $supp
+            );
+        }
+
+        // Seed Inbound Transactions (Data Masuk)
+        $supplier1 = Supplier::where('name', 'PT Semen Indonesia')->first();
+        $productSemen = Product::where('name', 'Semen Portland 50Kg')->first();
+
+        if ($supplier1 && $productSemen) {
+            $inbound = InboundTransaction::firstOrCreate(
+                ['supplier_id' => $supplier1->id, 'note' => 'Stok awal semen'],
+                [
+                    'date' => Carbon::now()->subDays(5),
+                    'total_cost' => $productSemen->purchase_price * 50,
+                ]
+            );
+
+            InboundDetail::firstOrCreate(
+                ['inbound_transaction_id' => $inbound->id, 'product_id' => $productSemen->id],
+                [
+                    'quantity' => 50,
+                    'cost_price' => $productSemen->purchase_price,
+                ]
+            );
+        }
+
+        // Seed Sales (Penjualan)
+        $customer1 = Customer::first();
+        $adminUser = User::first();
+        $productCat = Product::where('name', 'Cat Tembok Interior Putih 25Kg')->first();
+
+        if ($customer1 && $adminUser && $productCat) {
+            $qty = 2;
+            $subtotal = $productCat->selling_price * $qty;
+            
+            $sale = Sale::firstOrCreate(
+                ['customer_id' => $customer1->id, 'user_id' => $adminUser->id, 'grand_total' => $subtotal],
+                [
+                    'date' => Carbon::now()->subDays(2),
+                    'total_product_price' => $subtotal,
+                    'total_service_price' => 0,
+                    'payment_method' => 'Cash',
+                    'payment_status' => 'Paid',
+                    'shipping_address' => $customer1->address,
+                ]
+            );
+
+            SaleProductDetail::firstOrCreate(
+                ['sale_id' => $sale->id, 'product_id' => $productCat->id],
+                [
+                    'quantity' => $qty,
+                    'unit_price' => $productCat->selling_price,
+                    'subtotal' => $subtotal,
+                ]
+            );
         }
     }
 }

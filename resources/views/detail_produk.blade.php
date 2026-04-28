@@ -73,7 +73,7 @@
         <div class="container">
             <div class="detail-card">
                 <div class="product-img-wrap">
-                    <img src="{{ $imgFallback }}" alt="{{ $product->name }}">
+                    <img src="{{ $product->image ? asset('storage/' . $product->image) : $imgFallback }}" alt="{{ $product->name }}">
                 </div>
                 
                 <div class="product-info">

@@ -1,14 +1,14 @@
-                                                                              <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistem Informasi Manajemen Toko Bangunan (SIM-TB)</title>
+    <title>PT Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -16,508 +16,840 @@
     <!-- CSS -->
     <style>
         :root {
-            --primary: #F59E0B; /* Amber/Orange */
-            --primary-dark: #D97706;
-            --bg-dark: #0f172a; /* Slate 900 */
-            --bg-card: rgba(30, 41, 59, 0.7); /* Slate 800 with opacity */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glass-bg: rgba(15, 23, 42, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #854F0B; /* Warm Amber/Orange */
+            --primary-hover: #6a3e08;
+            --bg-white: #FFFFFF;
+            --bg-beige: #F5F2EB;
+            --text-dark: #3E2723; /* Dark Brown */
+            --text-muted: #6D4C41;
+            --border-color: #E8E0D5;
+            --shadow-sm: 0 2px 4px rgba(62, 39, 35, 0.05);
+            --shadow-md: 0 4px 6px rgba(62, 39, 35, 0.07);
+            --shadow-lg: 0 10px 15px rgba(62, 39, 35, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
+            background-color: var(--bg-white);
+            color: var(--text-dark);
             line-height: 1.6;
         }
 
-        /* Gradient Orbs Background effect */
-        .orb-1 {
-            position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(60px);
-        }
-        
-        .orb-2 {
-            position: absolute;
-            bottom: -20%;
-            right: -10%;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0) 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(80px);
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 5%;
-            z-index: 100;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        a {
             text-decoration: none;
+            color: inherit;
         }
 
-        .logo span {
-            color: var(--primary);
+        ul {
+            list-style: none;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
             cursor: pointer;
-            display: inline-block;
+            transition: all 0.3s ease;
+            text-align: center;
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: white;
-            border: none;
-            box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.39);
+            border: 2px solid var(--primary);
         }
 
         .btn-primary:hover {
-            background-color: var(--primary-dark);
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+            box-shadow: var(--shadow-md);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
         }
 
         .btn-outline {
             background-color: transparent;
-            color: white;
-            border: 1px solid var(--glass-border);
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-color: var(--primary);
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-wa {
+            background-color: #25D366;
+            color: white;
+            border: 2px solid #25D366;
+        }
+        
+        .btn-wa:hover {
+            background-color: #128C7E;
+            border-color: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        /* Navbar */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-dark);
         }
 
         /* Hero Section */
         .hero {
-            min-height: 100vh;
+            background: linear-gradient(rgba(245, 242, 235, 0.85), rgba(245, 242, 235, 0.85)), url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Padding Utility */
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        /* Produk Unggulan */
+        .produk-bg {
+            background-color: var(--bg-white);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .product-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-badge {
+            background-color: var(--bg-beige);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            align-self: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .product-brand {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        
+        .product-stock {
+            font-size: 13px;
+            color: #2e7d32;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #e8f5e9;
+            padding: 4px 8px;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: auto;
+        }
+
+        .view-all-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Jasa & Layanan */
+        .layanan-bg {
+            background-color: var(--bg-beige);
+        }
+
+        .layanan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .layanan-card {
+            background-color: var(--bg-white);
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .layanan-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            border-color: var(--border-color);
+        }
+
+        .layanan-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: inline-block;
+            background: var(--bg-beige);
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .layanan-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .layanan-desc {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        /* Promo */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--primary), #A05F0D);
+            border-radius: 16px;
+            padding: 50px;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 5%;
-            padding-top: 100px;
-            gap: 4rem;
+            box-shadow: var(--shadow-lg);
+            margin: 40px auto;
         }
 
-        .hero-content {
-            flex: 1;
-            max-width: 600px;
-            animation: slideUp 0.8s ease-out;
+        .promo-content h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
-        .badge {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.1);
+        .promo-content p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .promo-btn {
+            background-color: white;
             color: var(--primary);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            letter-spacing: 1px;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            white-space: nowrap;
         }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .promo-btn:hover {
+            background-color: var(--bg-beige);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .hero-content p {
-            color: var(--text-muted);
-            font-size: 1.125rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
+        /* Tentang Kami */
+        .tentang-bg {
+            background-color: var(--bg-white);
         }
 
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            animation: fadeIn 1s ease-out 0.3s both;
-        }
-
-        .glass-panel {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 1rem;
-            width: 100%;
-            max-width: 550px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .glass-panel img {
-            width: 100%;
-            height: auto;
-            border-radius: 16px;
-            display: block;
-            object-fit: cover;
-        }
-
-        /* Floating Cards Animation */
-        .floating-card {
-            position: absolute;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            z-index: 20;
-        }
-
-        .card-1 {
-            top: 20%;
-            left: -10%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .card-2 {
-            bottom: 15%;
-            right: -5%;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--primary);
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.25rem;
-        }
-
-        .card-info h4 {
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .card-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 6rem 5%;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .feature-grid {
+        .tentang-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+        .tentang-text h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-dark);
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--primary);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+        .tentang-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 16px;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
-            border-color: rgba(245, 158, 11, 0.3);
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--primary);
+        .stat-card {
+            background-color: var(--bg-beige);
+            padding: 20px;
             border-radius: 12px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            gap: 15px;
+            transition: all 0.3s ease;
         }
 
-        .feature-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
 
-        .feature-card p {
+        .stat-icon {
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .stat-info h4 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .stat-info span {
+            font-size: 14px;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-weight: 500;
         }
 
         /* Footer */
         footer {
-            border-top: 1px solid var(--glass-border);
-            padding: 2rem 5%;
+            background-color: var(--text-dark);
+            color: white;
+            padding: 80px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-about .logo {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: #bcaaa4;
+            margin-bottom: 25px;
+            padding-right: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #bcaaa4;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-contact li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: #bcaaa4;
+            align-items: flex-start;
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .footer-bottom {
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            background: rgba(15, 23, 42, 0.8);
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bcaaa4;
+            font-size: 14px;
         }
 
-        /* Animations */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @media (max-width: 968px) {
-            .hero {
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .tentang-content {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .promo-banner {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 120px;
+                gap: 30px;
             }
+        }
 
-            .hero-content {
-                display: flex;
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-white);
                 flex-direction: column;
-                align-items: center;
+                padding: 20px;
+                box-shadow: var(--shadow-md);
+                gap: 15px;
             }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .nav-links.active {
+                display: flex;
             }
-
-            .hero-actions {
-                justify-content: center;
+            .nav-links .btn {
+                width: 100%;
             }
-
-            .floating-card {
-                display: none;
+            .mobile-menu-btn {
+                display: block;
             }
-            
-            .nav-auth {
-                display: none;
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient Orbs -->
-    <div class="orb-1"></div>
-    <div class="orb-2"></div>
-
+    <!-- Navbar -->
     <header>
-        <a href="/" class="logo">
-            <i class="ri-building-4-fill"></i> SIM<span>-TB</span>
-        </a>
-        <div class="nav-links">
-            <div class="nav-auth">
-                @auth
-                    <a href="{{ url('/admin') }}" class="btn btn-primary">Dashboard</a>
-                @else
-                    <a href="{{ url('/admin') }}" class="btn btn-primary">Log in Sistem</a>
-                @endauth
-            </div>
+        <div class="container navbar">
+            <a href="#" class="logo">
+                <i class="ri-building-4-fill"></i> PT Cahaya Baru
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#beranda">Beranda</a>
+                <a href="/produk">Produk</a>
+                <a href="#layanan">Jasa & Layanan</a>
+                <a href="#tentang">Tentang Kami</a>
+                <a href="#kontak">Kontak</a>
+                <a href="https://wa.me/6281234567890" class="btn btn-primary" target="_blank">Hubungi Kami</a>
+            </nav>
+
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="ri-menu-line"></i>
+            </button>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <div class="badge">V4 & Laravel 12</div>
-            <h1>Kelola Toko Bangunan Lebih Mudah & Pintar</h1>
-            <p>Tingkatkan efisiensi toko bangunan Anda dengan Sistem Manajemen Inventaris, Penjualan, & Pelaporan yang terintegrasi secara real-time.</p>
-            <div class="hero-actions">
-                @auth
-                    <a href="{{ url('/admin') }}" class="btn btn-primary">Masuk Dashboard <i class="ri-arrow-right-line" style="margin-left:5px"></i></a>
-                @else
-                    <a href="{{ url('/admin') }}" class="btn btn-primary">Mulai Sekarang <i class="ri-arrow-right-line" style="margin-left:5px"></i></a>
-                @endauth
-                <a href="#fitur" class="btn btn-outline">Pelajari Fitur</a>
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="container">
+            <h1>Solusi Bahan Bangunan Terpercaya</h1>
+            <p>Menyediakan berbagai macam kebutuhan material bangunan berkualitas dengan harga kompetitif dan pelayanan terbaik untuk proyek impian Anda.</p>
+            <div class="hero-buttons">
+                <a href="/produk" class="btn btn-primary">Lihat Produk</a>
+                <a href="https://wa.me/6281234567890" class="btn btn-outline" target="_blank">Hubungi Kami</a>
             </div>
         </div>
-        <div class="hero-image">
-            <div class="glass-panel">
-                <img src="{{ asset('images/hero-bg.png') }}" alt="SIM-TB Dashboard Interface Illustration">
+    </section>
+
+    <!-- Produk Unggulan Section -->
+    <section id="produk" class="section-padding produk-bg">
+        <div class="container">
+            <div class="section-title">
+                <h2>Produk Unggulan Kami</h2>
+                <p>Material bahan bangunan pilihan dengan kualitas standar nasional</p>
+            </div>
+
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Semen" class="product-img">
+                    <div class="product-content">
+                        <span class="product-badge">Semen</span>
+                        <h3 class="product-title">Semen Portland 50Kg</h3>
+                        <p class="product-brand">Semen Tiga Roda</p>
+                        <div class="product-stock"><i class="ri-checkbox-circle-fill"></i> Stok Tersedia</div>
+                        <p class="product-price">Rp 65.000</p>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1562259929-b7e181d8d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Cat Tembok" class="product-img">
+                    <div class="product-content">
+                        <span class="product-badge">Cat</span>
+                        <h3 class="product-title">Cat Tembok Interior 25Kg</h3>
+                        <p class="product-brand">Dulux Catylac</p>
+                        <div class="product-stock"><i class="ri-checkbox-circle-fill"></i> Stok Tersedia</div>
+                        <p class="product-price">Rp 185.000</p>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1590496734187-57ce3dd3045d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Besi Beton" class="product-img">
+                    <div class="product-content">
+                        <span class="product-badge">Besi</span>
+                        <h3 class="product-title">Besi Beton Polos 10mm</h3>
+                        <p class="product-brand">Krakatau Steel</p>
+                        <div class="product-stock"><i class="ri-checkbox-circle-fill"></i> Stok Tersedia</div>
+                        <p class="product-price">Rp 75.000</p>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1523413363574-c30aa1c2a516?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Keramik" class="product-img">
+                    <div class="product-content">
+                        <span class="product-badge">Keramik</span>
+                        <h3 class="product-title">Keramik Lantai 40x40</h3>
+                        <p class="product-brand">Milan</p>
+                        <div class="product-stock"><i class="ri-checkbox-circle-fill"></i> Stok Tersedia</div>
+                        <p class="product-price">Rp 55.000 / Dus</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-all-container">
+                <a href="/produk" class="btn btn-outline">Lihat Semua Produk</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo / Penawaran Section -->
+    <section class="container">
+        <div class="promo-banner">
+            <div class="promo-content">
+                <h3>Promo Spesial Bulan Ini!</h3>
+                <p>Dapatkan diskon hingga 15% untuk pembelian semen minimal 100 sak. Syarat dan ketentuan berlaku.</p>
+            </div>
+            <a href="https://wa.me/6281234567890" class="btn btn-primary promo-btn" target="_blank"><i class="ri-coupon-3-fill"></i> Klaim Promo</a>
+        </div>
+    </section>
+
+    <!-- Jasa & Layanan Section -->
+    <section id="layanan" class="section-padding layanan-bg">
+        <div class="container">
+            <div class="section-title">
+                <h2>Jasa & Layanan</h2>
+                <p>Selain menjual produk, kami juga menyediakan layanan pendukung untuk proyek Anda</p>
+            </div>
+
+            <div class="layanan-grid">
+                <!-- Layanan 1 -->
+                <div class="layanan-card">
+                    <i class="ri-truck-fill layanan-icon"></i>
+                    <h3 class="layanan-title">Pengiriman Barang</h3>
+                    <p class="layanan-desc">Layanan antar jemput material bahan bangunan langsung ke lokasi proyek Anda dengan armada kami sendiri secara aman.</p>
+                    <a href="https://wa.me/6281234567890" class="btn btn-wa" target="_blank"><i class="ri-whatsapp-line"></i> Pesan Pengiriman</a>
+                </div>
+
+                <!-- Layanan 2 -->
+                <div class="layanan-card">
+                    <i class="ri-home-gear-fill layanan-icon"></i>
+                    <h3 class="layanan-title">Konsultasi Bangunan</h3>
+                    <p class="layanan-desc">Konsultasikan kebutuhan material dan estimasi biaya bangunan Anda dengan tim ahli kami secara gratis dan akurat.</p>
+                    <a href="https://wa.me/6281234567890" class="btn btn-wa" target="_blank"><i class="ri-whatsapp-line"></i> Chat Konsultan</a>
+                </div>
+
+                <!-- Layanan 3 -->
+                <div class="layanan-card">
+                    <i class="ri-tools-fill layanan-icon"></i>
+                    <h3 class="layanan-title">Jasa Pemasangan</h3>
+                    <p class="layanan-desc">Kami menyediakan tukang profesional untuk pemasangan keramik, atap baja ringan, plafon, dan instalasi lainnya.</p>
+                    <a href="https://wa.me/6281234567890" class="btn btn-wa" target="_blank"><i class="ri-whatsapp-line"></i> Order Tukang</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang Kami Section -->
+    <section id="tentang" class="section-padding tentang-bg">
+        <div class="container">
+            <div class="tentang-content">
+                <div class="tentang-text">
+                    <h3>Mengenal PT Cahaya Baru</h3>
+                    <p>Berdiri sejak 2010, PT Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>
+                    <p>Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.</p>
+                </div>
                 
-                <div class="floating-card card-1">
-                    <div class="card-icon"><i class="ri-stock-line"></i></div>
-                    <div class="card-info">
-                        <h4>Stok Diperbarui</h4>
-                        <p>Semen Tonasa - Real-Time</p>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="ri-history-line stat-icon"></i>
+                        <div class="stat-info">
+                            <h4>14+</h4>
+                            <span>Tahun Beroperasi</span>
+                        </div>
                     </div>
-                </div>
-
-                <div class="floating-card card-2">
-                    <div class="card-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.2)"><i class="ri-shopping-cart-2-line"></i></div>
-                    <div class="card-info">
-                        <h4>Penjualan Baru</h4>
-                        <p>Transaksi Selesai</p>
+                    <div class="stat-card">
+                        <i class="ri-store-3-line stat-icon"></i>
+                        <div class="stat-info">
+                            <h4>5000+</h4>
+                            <span>Produk Tersedia</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="ri-truck-line stat-icon"></i>
+                        <div class="stat-info">
+                            <h4>50+</h4>
+                            <span>Mitra Supplier</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="ri-user-smile-line stat-icon"></i>
+                        <div class="stat-info">
+                            <h4>10k+</h4>
+                            <span>Pelanggan Puas</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features" id="fitur">
-        <div class="section-header">
-            <h2>Fitur Unggulan Sistem</h2>
-            <p>Dibangun untuk mempermudah operasional sehari-hari toko bangunan Anda, dari manajemen stok hingga pencatatan transaksi yang akurat.</p>
-        </div>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="ri-box-3-fill"></i></div>
-                <h3>Manajemen Inventaris</h3>
-                <p>Pantau stok barang, harga modal, harga jual, dan kelola kategori produk secara terstruktur dan efisien.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="ri-shopping-bag-3-fill"></i></div>
-                <h3>Point of Sale (POS)</h3>
-                <p>Proses transaksi kasir menjadi lebih cepat dengan dukungan sistem pencarian produk otomatis dan perhitungan subtotal akurat.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="ri-bar-chart-box-fill"></i></div>
-                <h3>Laporan Real-Time</h3>
-                <p>Dapatkan insight langsung tentang pendapatan, transaksi harian, dan barang terlaris lewat dashboard interaktif.</p>
-            </div>
-        </div>
-    </section>
+    <!-- Footer -->
+    <footer id="kontak">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <i class="ri-building-4-fill"></i> PT Cahaya Baru
+                    </div>
+                    <p>Pusat perbelanjaan bahan bangunan terlengkap dan termurah. Menjadi solusi utama untuk segala kebutuhan proyek konstruksi Anda.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="ri-facebook-fill"></i></a>
+                        <a href="#"><i class="ri-instagram-line"></i></a>
+                        <a href="#"><i class="ri-twitter-x-line"></i></a>
+                        <a href="#"><i class="ri-youtube-fill"></i></a>
+                    </div>
+                </div>
 
-    <footer>
-        <p>&copy; {{ date('Y') }} SIM-TB - Sistem Informasi Manajemen Toko Bangunan. All rights reserved.</p>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="#beranda">Beranda</a></li>
+                        <li><a href="/produk">Katalog Produk</a></li>
+                        <li><a href="#layanan">Layanan Kami</a></li>
+                        <li><a href="#tentang">Profil Perusahaan</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Bantuan</h4>
+                    <ul>
+                        <li><a href="#">Cara Pembelian</a></li>
+                        <li><a href="#">Syarat & Ketentuan Pengiriman</a></li>
+                        <li><a href="#">Kebijakan Retur</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-contact">
+                    <h4>Kontak Kami</h4>
+                    <ul>
+                        <li>
+                            <i class="ri-map-pin-fill"></i>
+                            <span>Jl. Jendral Sudirman No. 123, Jakarta Pusat, DKI Jakarta 10220</span>
+                        </li>
+                        <li>
+                            <i class="ri-phone-fill"></i>
+                            <span>(021) 1234-5678<br>0812-3456-7890</span>
+                        </li>
+                        <li>
+                            <i class="ri-mail-fill"></i>
+                            <span>info@ptcahayabaru.com</span>
+                        </li>
+                        <li>
+                            <i class="ri-time-fill"></i>
+                            <span>Senin - Sabtu: 08:00 - 17:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; {{ date('Y') }} PT Cahaya Baru. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- Mobile Menu Script -->
     <script>
-        // Simple header background change on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.background = 'rgba(15, 23, 42, 0.9)';
-                header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.background = 'rgba(15, 23, 42, 0.6)';
-                header.style.boxShadow = 'none';
-            }
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
     </script>
 </body>

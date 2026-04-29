@@ -107,28 +107,12 @@
     $cat = $p->category ? $p->category->name : 'Lainnya';
     $imgFallback = 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500&q=80';
 
-    if (str_contains(strtolower($cat), 'semen'))
-        $imgFallback = 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80';
-    else if (str_contains(strtolower($cat), 'cat'))
-        $imgFallback = 'https://images.unsplash.com/photo-1562259929-b7e181d8d002?w=500&q=80';
-    else if (str_contains(strtolower($cat), 'besi'))
-        $imgFallback = 'https://images.unsplash.com/photo-1590496734187-57ce3dd3045d?w=500&q=80';
-    else if (str_contains(strtolower($cat), 'keramik'))
-        $imgFallback = 'https://images.unsplash.com/photo-1523413363574-c30aa1c2a516?w=500&q=80';
-    else if (str_contains(strtolower($cat), 'pipa'))
-        $imgFallback = 'https://images.unsplash.com/photo-1621252179027-94459d278660?w=500&q=80';
-    else if (str_contains(strtolower($cat), 'kabel'))
-        $imgFallback = 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=500&q=80';
-    else if (str_contains(strtolower($cat), 'kayu'))
-        $imgFallback = 'https://images.unsplash.com/photo-1628744448829-01297db3c800?w=500&q=80';
-
     return [
         'id' => $p->id,
         'name' => $p->name,
         'category' => $cat,
         'brand' => $p->brand ? $p->brand->name : 'No Brand',
         'stock' => $p->current_stock > 0 ? 'Tersedia' : 'Habis',
-        'sku' => 'CBR-PRD' . str_pad($p->id, 3, '0', STR_PAD_LEFT),
         'price' => (float) $p->selling_price,
         'unit' => 'pcs',
         'minOrder' => '1',
@@ -177,7 +161,8 @@
 
                 <!-- Jasa / Layanan -->
                 <div class="checkout-form">
-                    <h3>Tambah Jasa / Layanan <span style="font-size:12px;font-weight:400;color:var(--text-muted);">(Opsional)</span></h3>
+                    <h3>Tambah Jasa / Layanan <span
+                            style="font-size:12px;font-weight:400;color:var(--text-muted);">(Opsional)</span></h3>
                     <div id="service-list" class="service-list">
                         <p style="color:var(--text-muted);font-size:14px;">Memuat daftar jasa...</p>
                     </div>
@@ -196,13 +181,15 @@
                     </div>
                     <div class="form-group">
                         <label for="cust-address">Alamat Pengiriman</label>
-                        <textarea id="cust-address" rows="3" placeholder="Masukkan alamat lengkap pengiriman" required></textarea>
+                        <textarea id="cust-address" rows="3" placeholder="Masukkan alamat lengkap pengiriman"
+                            required></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeCheckoutModal()">Kembali</button>
-                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()">Checkout Sekarang <i class="ri-whatsapp-line"></i></button>
+                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()">Checkout Sekarang <i
+                        class="ri-whatsapp-line"></i></button>
             </div>
         </div>
     </div>

@@ -30,7 +30,7 @@
                 <a href="/produk">Produk</a>
                 <a href="#layanan">Jasa & Layanan</a>
                 <a href="#tentang">Tentang Kami</a>
-                <a href="#kontak">Kontak</a>
+                <a href="/kontak">Kontak</a>
                 <a href="https://wa.me/6283834079959" class="btn btn-primary" target="_blank">Hubungi Kami</a>
             </nav>
 

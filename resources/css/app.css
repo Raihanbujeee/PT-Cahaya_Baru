@@ -6,6 +6,19 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    /* Font Families */
+    --font-sans: 'Work Sans', 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-headline: 'Work Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Custom Colors - PT Cahaya Baru Brand */
+    --color-primary: #965A14;
+    --color-on-primary: #ffffff;
+    --color-background: #fcf9f8;
+    --color-surface: #fcf9f8;
+    --color-surface-container: #f6f3f2;
+    --color-outline: #857466;
+    --color-tertiary: #005e27;
+    --color-success-green: #22C55E;
 }

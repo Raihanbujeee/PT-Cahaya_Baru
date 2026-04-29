@@ -41,7 +41,7 @@
                 <ul>
                     <li>
                         <i class="ri-map-pin-fill"></i>
-                        <span>Jl. Raya Darmo No. 123, Wonokromo, Surabaya, Jawa Timur 60241</span>
+                        <span>Jl. Saxophone No.65, Tunggulwulung, Kec. Lowokwaru, Kota Malang, Jawa Timur 65143</span>
                     </li>
                     <li>
                         <i class="ri-phone-fill"></i>

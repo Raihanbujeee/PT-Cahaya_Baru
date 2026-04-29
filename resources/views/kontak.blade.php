@@ -84,11 +84,11 @@
                     <div class="info-box">
                         <h3><i class="ri-map-pin-2-line"></i> Alamat Toko</h3>
                         <p class="address-text">
-                            Jl. Raya Darmo No. 123<br>
-                            Kecamatan Wonokromo, Surabaya<br>
-                            Jawa Timur 60241
+                            Jl. Saxophone No.65<br>
+                            Tunggulwulung, Kec. Lowokwaru<br>
+                            Kota Malang, Jawa Timur 65143
                         </p>
-                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline" style="font-size:13px; padding:8px 16px;">
+                        <a href="https://maps.google.com/?q=Jl.+Saxophone+No.65+Tunggulwulung+Lowokwaru+Malang" target="_blank" class="btn btn-outline" style="font-size:13px; padding:8px 16px;">
                             <i class="ri-map-pin-line"></i> Buka di Google Maps
                         </a>
                     </div>
@@ -170,7 +170,7 @@
         <!-- Map -->
         <div class="map-section">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.4755!2d112.7295!3d-7.2936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTcnMzYuNiJTIDExMsKwNDMnNDYuMiJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.3178!2d112.6242!3d-7.9386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e0a3d9b5%3A0x1b2f2f2f2f2f2f2f!2sJl.%20Saxophone%20No.65%2C%20Tunggulwulung%2C%20Kec.%20Lowokwaru%2C%20Kota%20Malang%2C%20Jawa%20Timur%2065143!5e0!3m2!1sid!2sid!4v1714000000000!5m2!1sid!2sid"
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade">

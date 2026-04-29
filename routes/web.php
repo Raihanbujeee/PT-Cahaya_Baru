@@ -21,6 +21,10 @@ Route::get('/tentang-kami', function () {
     return view('tentang');
 });
 
+Route::get('/kontak', function () {
+    return view('kontak');
+});
+
 
 Route::get('/api/services', function () {
     $services = \App\Models\Service::orderBy('name')

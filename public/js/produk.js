@@ -1,4 +1,4 @@
-const formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+var formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
 
 let state = {
     search: '',
@@ -85,9 +85,9 @@ function renderProducts() {
                 </div>
                 <div class="card-actions">
                     <a href="/produk/${p.id}" class="btn-detail" style="display:inline-block; text-decoration:none;">Detail Produk</a>
-                    <a href="https://wa.me/6283834079959?text=Halo,%20saya%20tertarik%20dengan%20produk%20${encodeURIComponent(p.name)}%20(SKU:%20${p.sku})" target="_blank" class="btn-wa-card" title="Pesan via WhatsApp">
-                        <i class="ri-whatsapp-line"></i>
-                    </a>
+                    <button onclick="addToCart(${p.id})" class="btn-wa-card" title="Tambah ke Keranjang" style="background-color: var(--primary);">
+                        <i class="ri-shopping-cart-2-line"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -200,5 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize
     if (typeof dbProducts !== 'undefined') {
         renderProducts();
+    }
+
+    window.getProductById = function(id) {
+        if (typeof dbProducts !== 'undefined') {
+            return dbProducts.find(p => p.id === id);
+        }
+        return null;
     }
 });

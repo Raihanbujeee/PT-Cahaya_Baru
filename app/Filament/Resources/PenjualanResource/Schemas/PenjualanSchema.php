@@ -65,7 +65,7 @@ class PenjualanSchema
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->reactive()
+                            ->live()
                             ->afterStateUpdated(function (Set $set, $state) {
                                 if ($state) {
                                     $product = Product::find($state);
@@ -82,7 +82,7 @@ class PenjualanSchema
                             ->required()
                             ->minValue(1)
                             ->default(1)
-                            ->reactive()
+                            ->live()
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 $qty = (int) $get('quantity');
                                 $price = (float) $get('unit_price');
@@ -94,7 +94,7 @@ class PenjualanSchema
                             ->numeric()
                             ->prefix('Rp')
                             ->required()
-                            ->reactive()
+                            ->live()
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 $qty = (int) $get('quantity');
                                 $price = (float) $get('unit_price');
@@ -128,7 +128,7 @@ class PenjualanSchema
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->reactive()
+                            ->live()
                             ->afterStateUpdated(function (Set $set, $state) {
                                 if ($state) {
                                     $service = Service::find($state);
@@ -144,7 +144,7 @@ class PenjualanSchema
                             ->required()
                             ->minValue(1)
                             ->default(1)
-                            ->reactive()
+                            ->live()
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 $qty = (int) $get('quantity');
                                 $price = (float) $get('unit_price');
@@ -156,7 +156,7 @@ class PenjualanSchema
                             ->numeric()
                             ->prefix('Rp')
                             ->required()
-                            ->reactive()
+                            ->live()
                             ->afterStateUpdated(function (Get $get, Set $set) {
                                 $qty = (int) $get('quantity');
                                 $price = (float) $get('unit_price');

@@ -29,14 +29,13 @@
         $brandName = $product->brand ? $product->brand->name : 'Unggulan';
         $description = 'Produk ' . $product->name . ' dari merek ' . $brandName . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.';
         
-        $sku = 'CBR-PRD' . str_pad($product->id, 3, '0', STR_PAD_LEFT);
         $unit = 'pcs';
         $minOrder = '1';
         $supplier = 'PT Cahaya Baru';
         $stockLabel = $product->current_stock > 0 ? 'Tersedia' : 'Habis';
         $stockColor = $product->current_stock > 0 ? 'var(--success)' : 'var(--danger)';
         $stockIcon = $product->current_stock > 0 ? 'ri-checkbox-circle-fill' : 'ri-close-circle-fill';
-        $waText = "Halo, saya tertarik dengan produk {$product->name} (SKU: {$sku})";
+        $waText = "Halo, saya tertarik dengan produk {$product->name}";
     @endphp
 
     @include('partials.header', ['activePage' => 'produk'])
@@ -66,7 +65,6 @@
                     
                     <div>
                         <h1 class="product-title">{{ $product->name }}</h1>
-                        <div class="product-sku">SKU: {{ $sku }}</div>
                     </div>
                     
                     <div class="product-price-box">

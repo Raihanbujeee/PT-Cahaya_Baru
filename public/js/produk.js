@@ -15,7 +15,7 @@ function renderProducts() {
 
     // Filter Search
     if (state.search) {
-        filtered = filtered.filter(p => p.name.toLowerCase().includes(state.search.toLowerCase()) || p.sku.toLowerCase().includes(state.search.toLowerCase()));
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(state.search.toLowerCase()));
     }
 
     // Filter Brand
@@ -74,7 +74,6 @@ function renderProducts() {
             <div class="card-body">
                 <div class="card-brand">${p.brand}</div>
                 <h3 class="card-title" title="${p.name}">${p.name}</h3>
-                <div class="card-sku">SKU: ${p.sku}</div>
                 <div class="card-price-wrap">
                     <span class="card-price">${formatRp(p.price)}</span>
                     <span class="card-unit">${p.unit}</span>

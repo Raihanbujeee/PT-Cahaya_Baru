@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
+use App\Models\Service;
 
 Route::get('/', function () {
     $featuredProducts = Product::with(['category', 'brand'])->take(4)->get();
-    return view('welcome', compact('featuredProducts'));
+    $services = Service::take(6)->get(); // Ambil 6 layanan teratas untuk dashboard
+    return view('welcome', compact('featuredProducts', 'services'));
 });
 
 Route::get('/produk', function () {
@@ -24,6 +26,11 @@ Route::get('/tentang-kami', function () {
 
 Route::get('/kontak', function () {
     return view('kontak');
+});
+
+Route::get('/layanan', function () {
+    $services = App\Models\Service::all();
+    return view('layanan', compact('services'));
 });
 
 
@@ -81,7 +88,7 @@ Route::post('/checkout', function (Illuminate\Http\Request $request) {
 
             // 3. Process Cart (Products)
             foreach ($request->cart as $item) {
-                $product = \App\Models\Product::lockForUpdate()->findOrFail($item['id']);
+                $product = Product::lockForUpdate()->findOrFail($item['id']);
                 $qty     = (int) $item['qty'];
 
                 if ($product->current_stock < $qty) {

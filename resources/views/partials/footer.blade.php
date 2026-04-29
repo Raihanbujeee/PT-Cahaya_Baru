@@ -19,7 +19,7 @@
                 <ul>
                     <li><a href="/">Beranda</a></li>
                     <li><a href="/produk">Katalog Produk</a></li>
-                    <li><a href="/#layanan">Layanan Kami</a></li>
+                    <li><a href="/layanan">Layanan Kami</a></li>
                     <li><a href="/tentang-kami">Profil Perusahaan</a></li>
                 </ul>
             </div>

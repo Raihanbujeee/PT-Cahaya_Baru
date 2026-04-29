@@ -38,10 +38,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         navLinks.forEach(function (link) {
-            link.classList.remove('active');
             const href = link.getAttribute('href');
-            if (href && href.includes('#' + current)) {
+            // Hanya jalankan scroll-spy jika section 'current' ditemukan
+            if (current && href && href.includes('#' + current)) {
+                link.classList.remove('active'); // Reset first to avoid duplicates
                 link.classList.add('active');
+            } else if (current && href && href.includes('#')) {
+                // Jika sedang menyorot section lain, pastikan menu ber-anchor lain tidak active
+                link.classList.remove('active');
             }
         });
     }

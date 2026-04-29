@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PT Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
@@ -18,27 +18,7 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <header>
-        <div class="container navbar">
-            <a href="#" class="logo">
-                <i class="ri-building-4-fill"></i> PT Cahaya Baru
-            </a>
-            
-            <nav class="nav-links">
-                <a href="#beranda">Beranda</a>
-                <a href="/produk">Produk</a>
-                <a href="#layanan">Jasa & Layanan</a>
-                <a href="#tentang">Tentang Kami</a>
-                <a href="/kontak">Kontak</a>
-                <a href="https://wa.me/6283834079959" class="btn btn-primary" target="_blank">Hubungi Kami</a>
-            </nav>
-
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <i class="ri-menu-line"></i>
-            </button>
-        </div>
-    </header>
+    @include('partials.header', ['activePage' => 'beranda'])
 
     <!-- Hero Section -->
     <section id="beranda" class="hero">
@@ -131,7 +111,7 @@
     <section id="layanan" class="section-padding layanan-bg">
         <div class="container">
             <div class="section-title">
-                <h2>Jasa & Layanan</h2>
+                <h2>Jasa &amp; Layanan</h2>
                 <p>Selain menjual produk, kami juga menyediakan layanan pendukung untuk proyek Anda</p>
             </div>
 
@@ -172,7 +152,7 @@
                     <p>Berdiri sejak 2010, PT Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>
                     <p>Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.</p>
                 </div>
-                
+
                 <div class="stats-grid">
                     <div class="stat-card">
                         <i class="ri-history-line stat-icon"></i>
@@ -207,73 +187,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="kontak">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-about">
-                    <div class="logo">
-                        <i class="ri-building-4-fill"></i> PT Cahaya Baru
-                    </div>
-                    <p>Pusat perbelanjaan bahan bangunan terlengkap dan termurah. Menjadi solusi utama untuk segala kebutuhan proyek konstruksi Anda.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="ri-facebook-fill"></i></a>
-                        <a href="#"><i class="ri-instagram-line"></i></a>
-                        <a href="#"><i class="ri-twitter-x-line"></i></a>
-                        <a href="#"><i class="ri-youtube-fill"></i></a>
-                    </div>
-                </div>
+    @include('partials.footer')
 
-                <div class="footer-links">
-                    <h4>Tautan Cepat</h4>
-                    <ul>
-                        <li><a href="#beranda">Beranda</a></li>
-                        <li><a href="/produk">Katalog Produk</a></li>
-                        <li><a href="#layanan">Layanan Kami</a></li>
-                        <li><a href="#tentang">Profil Perusahaan</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-links">
-                    <h4>Bantuan</h4>
-                    <ul>
-                        <li><a href="#">Cara Pembelian</a></li>
-                        <li><a href="#">Syarat & Ketentuan Pengiriman</a></li>
-                        <li><a href="#">Kebijakan Retur</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-contact">
-                    <h4>Kontak Kami</h4>
-                    <ul>
-                        <li>
-                            <i class="ri-map-pin-fill"></i>
-                            <span>Jl. Jendral Sudirman No. 123, Jakarta Pusat, DKI Jakarta 10220</span>
-                        </li>
-                        <li>
-                            <i class="ri-phone-fill"></i>
-                            <span>(021) 1234-5678<br>0812-3456-7890</span>
-                        </li>
-                        <li>
-                            <i class="ri-mail-fill"></i>
-                            <span>info@ptcahayabaru.com</span>
-                        </li>
-                        <li>
-                            <i class="ri-time-fill"></i>
-                            <span>Senin - Sabtu: 08:00 - 17:00</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} PT Cahaya Baru. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/welcome.js') }}"></script>
 </body>
 </html>

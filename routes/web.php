@@ -17,7 +17,15 @@ Route::get('/produk/{id}', function ($id) {
     return view('detail_produk', compact('product'));
 });
 
-// API: Get all services for frontend
+Route::get('/tentang-kami', function () {
+    return view('tentang');
+});
+
+Route::get('/kontak', function () {
+    return view('kontak');
+});
+
+
 Route::get('/api/services', function () {
     $services = \App\Models\Service::orderBy('name')
         ->get(['id', 'name', 'price', 'description']);

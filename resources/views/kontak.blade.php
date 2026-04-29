@@ -13,30 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kontak.css') }}">
 </head>
 
 <body>
 
-    <!-- ── HEADER ── -->
-    <header>
-        <div class="container navbar">
-            <a href="/" class="logo">
-                <i class="ri-building-4-fill"></i> PT Cahaya Baru
-            </a>
-            <nav class="nav-links">
-                <a href="/#beranda">Beranda</a>
-                <a href="/produk">Produk</a>
-                <a href="/#layanan">Jasa & Layanan</a>
-                <a href="/#tentang">Tentang Kami</a>
-                <a href="/kontak"class="active">Kontak</a>
-                <a href="https://wa.me/6283834079959" class="btn btn-primary" target="_blank">Hubungi Kami</a>
-            </nav>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <i class="ri-menu-line"></i>
-            </button>
-        </div>
-    </header>
+    @include('partials.header', ['activePage' => 'kontak'])
 
     <!-- ── BREADCRUMB ── -->
     <div class="breadcrumb">
@@ -101,11 +84,11 @@
                     <div class="info-box">
                         <h3><i class="ri-map-pin-2-line"></i> Alamat Toko</h3>
                         <p class="address-text">
-                            Jl. Raya Darmo No. 123<br>
-                            Kecamatan Wonokromo, Surabaya<br>
-                            Jawa Timur 60241
+                            Jl. Saxophone No.65<br>
+                            Tunggulwulung, Kec. Lowokwaru<br>
+                            Kota Malang, Jawa Timur 65143
                         </p>
-                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline" style="font-size:13px; padding:8px 16px;">
+                        <a href="https://maps.google.com/?q=Jl.+Saxophone+No.65+Tunggulwulung+Lowokwaru+Malang" target="_blank" class="btn btn-outline" style="font-size:13px; padding:8px 16px;">
                             <i class="ri-map-pin-line"></i> Buka di Google Maps
                         </a>
                     </div>
@@ -187,7 +170,7 @@
         <!-- Map -->
         <div class="map-section">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.4755!2d112.7295!3d-7.2936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTcnMzYuNiJTIDExMsKwNDMnNDYuMiJF!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.3178!2d112.6242!3d-7.9386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e0a3d9b5%3A0x1b2f2f2f2f2f2f2f!2sJl.%20Saxophone%20No.65%2C%20Tunggulwulung%2C%20Kec.%20Lowokwaru%2C%20Kota%20Malang%2C%20Jawa%20Timur%2065143!5e0!3m2!1sid!2sid!4v1714000000000!5m2!1sid!2sid"
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade">
@@ -196,38 +179,7 @@
 
     </main>
 
-    <!-- ── FOOTER ── -->
-    <footer>
-        <div class="container footer-inner">
-            <span class="footer-brand">PT CAHAYA BARU</span>
-            <span>© 2024 PT Cahaya Baru. Reliable Hardware & Construction Solutions.</span>
-            <div class="footer-links">
-                <a href="#">Kebijakan Privasi</a>
-                <a href="#">Syarat & Ketentuan</a>
-                <a href="#">Pusat Bantuan</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        const mobileBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks  = document.querySelector('.nav-links');
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', () => {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '64px';
-                navLinks.style.left = '0';
-                navLinks.style.right = '0';
-                navLinks.style.background = '#fff';
-                navLinks.style.padding = '16px 24px';
-                navLinks.style.borderBottom = '1px solid #e0d8cc';
-                navLinks.style.zIndex = '99';
-            });
-        }
-    </script>
+    @include('partials.footer')
 
 </body>
 </html>

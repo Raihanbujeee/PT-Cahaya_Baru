@@ -13,11 +13,9 @@
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <!-- Vite: Tailwind CSS & App JS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/layanan.css') }}">
 
     <!-- Stacks for partials -->
     @stack('styles')
@@ -89,47 +87,86 @@
         </div>
     </section>
 
-    <!-- Jasa & Layanan Section -->
-    <section id="layanan" class="section-padding layanan-bg">
+    <!-- ── ADVANTAGES SECTION (Sync with Layanan Page) ── -->
+    <section class="section-padding bg-white">
         <div class="container">
             <div class="section-title fade-up">
-                <h2>Jasa &amp; Layanan</h2>
-                <p>Selain menjual produk, kami juga menyediakan layanan pendukung untuk proyek Anda</p>
+                <h2>Kenapa Memilih Layanan Kami</h2>
             </div>
-
-            <div class="layanan-grid">
-                <div class="layanan-card fade-up">
-                    <div class="layanan-icon-wrap">
-                        <i class="ri-truck-fill layanan-icon"></i>
+            <div class="advantages-grid">
+                <div class="advantage-card fade-up">
+                    <div class="advantage-icon">
+                        <i class="ri-medal-line"></i>
                     </div>
-                    <h3 class="layanan-title">Pengiriman Barang</h3>
-                    <p class="layanan-desc">Layanan pengiriman material bangunan langsung ke lokasi proyek Anda dengan armada kami yang aman dan terpercaya.</p>
-                    <a href="https://wa.me/6283834079959?text=Halo%2C%20saya%20ingin%20menggunakan%20layanan%20pengiriman%20barang" class="btn btn-wa" target="_blank">
-                        <i class="ri-whatsapp-line"></i> Hubungi via WhatsApp
-                    </a>
+                    <h3>Pengalaman 10+ Tahun</h3>
+                    <p>Terpercaya dalam ratusan proyek di seluruh wilayah.</p>
                 </div>
-
-                <div class="layanan-card fade-up" style="transition-delay: 0.1s">
-                    <div class="layanan-icon-wrap">
-                        <i class="ri-home-gear-fill layanan-icon"></i>
+                <div class="advantage-card fade-up" style="transition-delay: 0.1s">
+                    <div class="advantage-icon">
+                        <i class="ri-team-line"></i>
                     </div>
-                    <h3 class="layanan-title">Konsultasi Bangunan</h3>
-                    <p class="layanan-desc">Konsultasikan kebutuhan material dan estimasi biaya bangunan Anda dengan tim ahli kami secara gratis.</p>
-                    <a href="https://wa.me/6283834079959?text=Halo%2C%20saya%20ingin%20konsultasi%20kebutuhan%20bangunan" class="btn btn-wa" target="_blank">
-                        <i class="ri-whatsapp-line"></i> Hubungi via WhatsApp
-                    </a>
+                    <h3>Tim Profesional</h3>
+                    <p>Tenaga ahli bersertifikat yang dedikatif.</p>
                 </div>
-
-                <div class="layanan-card fade-up" style="transition-delay: 0.2s">
-                    <div class="layanan-icon-wrap">
-                        <i class="ri-tools-fill layanan-icon"></i>
+                <div class="advantage-card fade-up" style="transition-delay: 0.2s">
+                    <div class="advantage-icon">
+                        <i class="ri-shield-check-line"></i>
                     </div>
-                    <h3 class="layanan-title">Jasa Pemasangan</h3>
-                    <p class="layanan-desc">Tersedia tukang profesional untuk pemasangan keramik, atap baja ringan, plafon, dan instalasi lainnya.</p>
-                    <a href="https://wa.me/6283834079959?text=Halo%2C%20saya%20ingin%20menggunakan%20jasa%20pemasangan" class="btn btn-wa" target="_blank">
-                        <i class="ri-whatsapp-line"></i> Hubungi via WhatsApp
-                    </a>
+                    <h3>Garansi Kepuasan</h3>
+                    <p>Kualitas pengerjaan dijamin sesuai standar tertinggi.</p>
                 </div>
+                <div class="advantage-card fade-up" style="transition-delay: 0.3s">
+                    <div class="advantage-icon">
+                        <i class="ri-time-line"></i>
+                    </div>
+                    <h3>Respons Cepat</h3>
+                    <p>Penyelesaian tepat waktu sesuai jadwal proyek.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── MAIN SERVICES SECTION (Sync with Layanan Page) ── -->
+    <section id="layanan" class="section-padding" style="background-color: #F4F3F0;">
+        <div class="container">
+            <div class="section-title fade-up">
+                <h2>Layanan Utama Kami</h2>
+            </div>
+            <div class="services-main-grid">
+                @php
+                    $icons = [
+                        'kirim' => 'ri-truck-line',
+                        'angkut' => 'ri-truck-line',
+                        'pasang' => 'ri-tools-line',
+                        'konsultasi' => 'ri-discuss-line',
+                        'survey' => 'ri-map-pin-user-line',
+                    ];
+                @endphp
+                @foreach($services as $index => $service)
+                    @php
+                        $icon = 'ri-customer-service-2-line';
+                        foreach($icons as $key => $value) {
+                            if(strpos(strtolower($service->name), $key) !== false) {
+                                $icon = $value;
+                                break;
+                            }
+                        }
+                    @endphp
+                    <div class="service-main-card fade-up" style="transition-delay: {{ $index * 0.1 }}s">
+                        <div class="service-badge">{{ $service->price > 0 ? 'Rp ' . number_format($service->price, 0, ',', '.') : 'Gratis' }}</div>
+                        <div class="service-main-icon">
+                            <i class="{{ $icon }}"></i>
+                        </div>
+                        <h3>{{ $service->name }}</h3>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
+                            {{ $service->description }}
+                        </p>
+                        <div class="service-actions">
+                            <a href="https://wa.me/6283834079959?text=Halo%2C%20saya%20ingin%20tanya%20tentang%20layanan%20{{ urlencode($service->name) }}" class="btn btn-pesan">Tanya Layanan</a>
+                            <a href="https://wa.me/6283834079959" class="btn btn-chat"><i class="ri-whatsapp-line"></i></a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -189,9 +226,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Jasa & Layanan Section (Tailwind - Blade Partial) -->
-    @include('sections.layanan')
 
     <!-- Tentang Kami Section -->
     <section id="tentang" class="section-padding tentang-bg">

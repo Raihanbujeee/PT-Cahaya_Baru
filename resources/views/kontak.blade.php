@@ -13,30 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kontak.css') }}">
 </head>
 
 <body>
 
-    <!-- ── HEADER ── -->
-    <header>
-        <div class="container navbar">
-            <a href="/" class="logo">
-                <i class="ri-building-4-fill"></i> PT Cahaya Baru
-            </a>
-            <nav class="nav-links">
-                <a href="/#beranda">Beranda</a>
-                <a href="/produk">Produk</a>
-                <a href="/#layanan">Jasa & Layanan</a>
-                <a href="/tentang-kami">Tentang Kami</a>
-                <a href="/kontak"class="active">Kontak</a>
-                <a href="https://wa.me/6283834079959" class="btn btn-primary" target="_blank">Hubungi Kami</a>
-            </nav>
-            <button class="mobile-menu-btn" aria-label="Menu">
-                <i class="ri-menu-line"></i>
-            </button>
-        </div>
-    </header>
+    @include('partials.header', ['activePage' => 'kontak'])
 
     <!-- ── BREADCRUMB ── -->
     <div class="breadcrumb">
@@ -196,38 +179,7 @@
 
     </main>
 
-    <!-- ── FOOTER ── -->
-    <footer>
-        <div class="container footer-inner">
-            <span class="footer-brand">PT CAHAYA BARU</span>
-            <span>© 2024 PT Cahaya Baru. Reliable Hardware & Construction Solutions.</span>
-            <div class="footer-links">
-                <a href="#">Kebijakan Privasi</a>
-                <a href="#">Syarat & Ketentuan</a>
-                <a href="#">Pusat Bantuan</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        const mobileBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks  = document.querySelector('.nav-links');
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', () => {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '64px';
-                navLinks.style.left = '0';
-                navLinks.style.right = '0';
-                navLinks.style.background = '#fff';
-                navLinks.style.padding = '16px 24px';
-                navLinks.style.borderBottom = '1px solid #e0d8cc';
-                navLinks.style.zIndex = '99';
-            });
-        }
-    </script>
+    @include('partials.footer')
 
 </body>
 </html>

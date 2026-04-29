@@ -13,8 +13,14 @@
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
+    <!-- Vite: Tailwind CSS & App JS -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+
+    <!-- Stacks for partials -->
+    @stack('styles')
 </head>
 <body>
 
@@ -184,6 +190,9 @@
         </div>
     </section>
 
+    <!-- Jasa & Layanan Section (Tailwind - Blade Partial) -->
+    @include('sections.layanan')
+
     <!-- Tentang Kami Section -->
     <section id="tentang" class="section-padding tentang-bg">
         <div class="container">
@@ -231,5 +240,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/welcome.js') }}"></script>
+
+    <!-- Stacks for partials -->
+    @stack('scripts')
 </body>
 </html>

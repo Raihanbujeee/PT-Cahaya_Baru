@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 
 Route::get('/', function () {
-    return view('welcome');
+    $featuredProducts = Product::with(['category', 'brand'])->take(4)->get();
+    return view('welcome', compact('featuredProducts'));
 });
 
 Route::get('/produk', function () {

@@ -23,6 +23,8 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+
+    
         return $panel
             ->default()
             ->id('admin')
@@ -52,6 +54,18 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->renderHook(
+            'panels::head.end',
+            fn (): string => '
+                <style>
+                    .fi-sidebar {
+                        width: 220px !important;
+                    }
+
+                </style>
+            '
+             )
+
             ->authMiddleware([
                 Authenticate::class,
             ]);

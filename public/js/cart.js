@@ -7,7 +7,7 @@ var formatRp = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', cu
 
 let cartState = {
     cart: JSON.parse(localStorage.getItem('cart') || '[]'),
-    services: [] // array of { id, name, price, description, qty }
+    services: [] // array of { id, name, type, price, price_per_km, product_id, qty, distance }
 };
 
 let allServices = []; // master data from API
@@ -133,6 +133,7 @@ window.updateCartQty = function(index, change) {
     saveCart();
     updateCartCount();
     renderCartItems();
+    renderServiceList(); // Refresh service list since product dependency might have changed
 }
 
 window.removeFromCart = function(index) {
@@ -140,6 +141,7 @@ window.removeFromCart = function(index) {
     saveCart();
     updateCartCount();
     renderCartItems();
+    renderServiceList(); // Refresh service list since product dependency might have changed
 }
 
 // ----------------------
@@ -154,31 +156,138 @@ window.renderServiceList = function() {
         return;
     }
 
-    container.innerHTML = allServices.map(service => {
-        const inCart = cartState.services.find(s => s.id === service.id);
-        const qty = inCart ? inCart.qty : 0;
-        const priceLabel = (parseFloat(service.price) === 0) ? 'Gratis' : formatRp(service.price);
-        return `
-            <div class="service-item" id="service-item-${service.id}">
-                <div class="service-item-info">
-                    <div class="service-item-name">${service.name}</div>
-                    <div class="service-item-price">${priceLabel}</div>
-                    ${service.description ? `<div class="service-item-desc">${service.description}</div>` : ''}
-                </div>
-                <div class="service-item-actions">
-                    ${qty === 0
-                        ? `<button class="btn-add-service" onclick="addService(${service.id})"><i class="ri-add-line"></i> Tambah</button>`
-                        : `<div class="cart-item-qty">
-                            <button class="qty-btn" onclick="updateServiceQty(${service.id}, -1)">-</button>
-                            <input type="text" class="qty-input" value="${qty}" readonly>
-                            <button class="qty-btn" onclick="updateServiceQty(${service.id}, 1)">+</button>
-                           </div>`
-                    }
-                </div>
-            </div>
-        `;
-    }).join('');
+    // Group services by type
+    const grouped = { pemasangan: [], pengantaran: [], lainnya: [] };
+    allServices.forEach(s => {
+        const type = s.type || 'lainnya';
+        if (!grouped[type]) grouped[type] = [];
+        grouped[type].push(s);
+    });
+
+    // Filter pemasangan: only show services linked to products currently in cart
+    const cartProductIds = cartState.cart.map(item => item.id);
+    const relevantPemasangan = grouped.pemasangan.filter(s => 
+        s.product_id && cartProductIds.includes(s.product_id)
+    );
+
+    // Auto-remove pemasangan services from cartState.services if the product was removed from cart
+    cartState.services = cartState.services.filter(cs => {
+        if (cs.type === 'pemasangan' && cs.product_id) {
+            return cartProductIds.includes(cs.product_id);
+        }
+        return true;
+    });
+
+    let html = '';
+
+    // ── Pemasangan ──
+    if (relevantPemasangan.length > 0) {
+        html += `<div class="service-group">
+            <div class="service-group-title"><i class="ri-tools-line"></i> Jasa Pemasangan</div>
+            <p class="service-group-desc">Biaya pemasangan sesuai produk di keranjang Anda</p>`;
+        relevantPemasangan.forEach(service => {
+            const inCart = cartState.services.find(s => s.id === service.id);
+            const qty = inCart ? inCart.qty : 0;
+            const productName = service.product ? service.product.name : '-';
+            const priceLabel = formatRp(service.price) + ' / unit';
+            html += `
+                <div class="service-item" id="service-item-${service.id}">
+                    <div class="service-item-info">
+                        <div class="service-item-name">${service.name}</div>
+                        <div class="service-item-price">${priceLabel}</div>
+                        <div class="service-item-desc">Untuk: ${productName}</div>
+                        ${service.description ? `<div class="service-item-desc">${service.description}</div>` : ''}
+                    </div>
+                    <div class="service-item-actions">
+                        ${qty === 0
+                            ? `<button class="btn-add-service" onclick="addService(${service.id})"><i class="ri-add-line"></i> Tambah</button>`
+                            : `<div class="cart-item-qty">
+                                <button class="qty-btn" onclick="updateServiceQty(${service.id}, -1)">-</button>
+                                <input type="text" class="qty-input" value="${qty}" readonly>
+                                <button class="qty-btn" onclick="updateServiceQty(${service.id}, 1)">+</button>
+                               </div>`
+                        }
+                    </div>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
+    // ── Pengantaran ──
+    if (grouped.pengantaran.length > 0) {
+        html += `<div class="service-group">
+            <div class="service-group-title"><i class="ri-truck-line"></i> Jasa Pengantaran</div>
+            <p class="service-group-desc">Biaya dihitung berdasarkan jarak pengiriman</p>`;
+        grouped.pengantaran.forEach(service => {
+            const inCart = cartState.services.find(s => s.id === service.id);
+            const isSelected = inCart ? true : false;
+            const distance = inCart ? (inCart.distance || 0) : 0;
+            const baseFee = parseFloat(service.price) || 0;
+            const perKm = parseFloat(service.price_per_km) || 0;
+            const totalDelivery = isSelected ? (baseFee + (perKm * distance)) : 0;
+
+            html += `
+                <div class="service-item delivery-item ${isSelected ? 'selected' : ''}" id="service-item-${service.id}">
+                    <div class="service-item-info" style="flex:1;">
+                        <div class="service-item-name">${service.name}</div>
+                        <div class="service-item-price">Base: ${formatRp(baseFee)} + ${formatRp(perKm)}/km</div>
+                        ${service.description ? `<div class="service-item-desc">${service.description}</div>` : ''}
+                        ${isSelected ? `
+                            <div class="delivery-distance-row">
+                                <label>Jarak (km):</label>
+                                <input type="number" class="distance-input" min="0" step="0.5" value="${distance}"
+                                       onchange="updateDeliveryDistance(${service.id}, this.value)"
+                                       oninput="updateDeliveryDistance(${service.id}, this.value)"
+                                       placeholder="0">
+                                <span class="delivery-cost-label">= ${formatRp(totalDelivery)}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="service-item-actions">
+                        ${!isSelected
+                            ? `<button class="btn-add-service" onclick="addDeliveryService(${service.id})"><i class="ri-add-line"></i> Pilih</button>`
+                            : `<button class="btn-remove-service" onclick="removeDeliveryService(${service.id})"><i class="ri-close-line"></i> Hapus</button>`
+                        }
+                    </div>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
+    // ── Lainnya ──
+    if (grouped.lainnya.length > 0) {
+        html += `<div class="service-group">
+            <div class="service-group-title"><i class="ri-service-line"></i> Layanan Lainnya</div>`;
+        grouped.lainnya.forEach(service => {
+            const inCart = cartState.services.find(s => s.id === service.id);
+            const qty = inCart ? inCart.qty : 0;
+            const priceLabel = (parseFloat(service.price) === 0) ? 'Gratis' : formatRp(service.price);
+            html += `
+                <div class="service-item" id="service-item-${service.id}">
+                    <div class="service-item-info">
+                        <div class="service-item-name">${service.name}</div>
+                        <div class="service-item-price">${priceLabel}</div>
+                        ${service.description ? `<div class="service-item-desc">${service.description}</div>` : ''}
+                    </div>
+                    <div class="service-item-actions">
+                        ${qty === 0
+                            ? `<button class="btn-add-service" onclick="addService(${service.id})"><i class="ri-add-line"></i> Tambah</button>`
+                            : `<div class="cart-item-qty">
+                                <button class="qty-btn" onclick="updateServiceQty(${service.id}, -1)">-</button>
+                                <input type="text" class="qty-input" value="${qty}" readonly>
+                                <button class="qty-btn" onclick="updateServiceQty(${service.id}, 1)">+</button>
+                               </div>`
+                        }
+                    </div>
+                </div>`;
+        });
+        html += `</div>`;
+    }
+
+    container.innerHTML = html;
 }
+
+// ── Service add/update/remove ──
 
 window.addService = function(id) {
     const service = allServices.find(s => s.id === id);
@@ -188,7 +297,7 @@ window.addService = function(id) {
     if (existing) {
         existing.qty += 1;
     } else {
-        cartState.services.push({ ...service, qty: 1 });
+        cartState.services.push({ ...service, qty: 1, distance: 0 });
     }
     renderServiceList();
     updateGrandTotal();
@@ -205,12 +314,67 @@ window.updateServiceQty = function(id, change) {
     updateGrandTotal();
 }
 
+// ── Delivery-specific ──
+
+window.addDeliveryService = function(id) {
+    const service = allServices.find(s => s.id === id);
+    if (!service) return;
+
+    // Remove other delivery services (only one can be active)
+    cartState.services = cartState.services.filter(s => {
+        const master = allServices.find(m => m.id === s.id);
+        return !master || master.type !== 'pengantaran';
+    });
+
+    cartState.services.push({ ...service, qty: 1, distance: 0 });
+    renderServiceList();
+    updateGrandTotal();
+}
+
+window.removeDeliveryService = function(id) {
+    cartState.services = cartState.services.filter(s => s.id !== id);
+    renderServiceList();
+    updateGrandTotal();
+}
+
+window.updateDeliveryDistance = function(id, value) {
+    const svc = cartState.services.find(s => s.id === id);
+    if (!svc) return;
+    svc.distance = Math.max(0, parseFloat(value) || 0);
+
+    // Update the cost label inline without full re-render
+    const baseFee = parseFloat(svc.price) || 0;
+    const perKm = parseFloat(svc.price_per_km) || 0;
+    const total = baseFee + (perKm * svc.distance);
+
+    const item = document.getElementById('service-item-' + id);
+    if (item) {
+        const label = item.querySelector('.delivery-cost-label');
+        if (label) label.textContent = '= ' + formatRp(total);
+    }
+
+    updateGrandTotal();
+}
+
 // ----------------------
 // Grand Total Calculator
 // ----------------------
 window.updateGrandTotal = function() {
     const productTotal = cartState.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const serviceTotal = cartState.services.reduce((sum, item) => sum + (parseFloat(item.price) * item.qty), 0);
+
+    let serviceTotal = 0;
+    cartState.services.forEach(svc => {
+        const type = svc.type || 'lainnya';
+        if (type === 'pengantaran') {
+            const baseFee = parseFloat(svc.price) || 0;
+            const perKm = parseFloat(svc.price_per_km) || 0;
+            const distance = parseFloat(svc.distance) || 0;
+            serviceTotal += baseFee + (perKm * distance);
+        } else {
+            serviceTotal += (parseFloat(svc.price) * svc.qty);
+        }
+    });
+
     const grandTotal = productTotal + serviceTotal;
 
     const elProduct = document.getElementById('cart-product-total');
@@ -256,7 +420,11 @@ window.submitCheckout = async function() {
             cart: cartState.cart.map(item => ({ id: item.id, qty: item.qty })),
             services: cartState.services
                 .filter(s => s.qty > 0)
-                .map(s => ({ id: s.id, qty: s.qty })),
+                .map(s => ({
+                    id: s.id,
+                    qty: s.qty,
+                    distance: s.distance || 0,
+                })),
         };
 
         const response = await fetch(baseUrl + '/checkout', {

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -54,5 +55,13 @@ class Product extends Model
     public function isLowStock(): bool
     {
         return $this->current_stock <= $this->minimum_stock;
+    }
+
+    /**
+     * Jasa pemasangan yang terkait dengan produk ini (1 produk → 1 jasa pemasangan)
+     */
+    public function installationService(): HasOne
+    {
+        return $this->hasOne(Service::class)->where('type', 'pemasangan');
     }
 }

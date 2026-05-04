@@ -35,22 +35,25 @@ Route::get('/layanan', function () {
 
 
 Route::get('/api/services', function () {
-    $services = \App\Models\Service::orderBy('name')
-        ->get(['id', 'name', 'price', 'description']);
+    $services = \App\Models\Service::with('product:id,name')
+        ->orderBy('type')
+        ->orderBy('name')
+        ->get(['id', 'name', 'type', 'price', 'price_per_km', 'product_id', 'description']);
     return response()->json($services);
 });
 
 Route::post('/checkout', function (Illuminate\Http\Request $request) {
     $request->validate([
-        'customer_name'    => 'required|string|max:255',
-        'customer_phone'   => 'required|string|max:20',
-        'customer_address' => 'required|string',
-        'cart'             => 'required|array|min:1',
-        'cart.*.id'        => 'required|integer|exists:products,id',
-        'cart.*.qty'       => 'required|integer|min:1',
-        'services'         => 'nullable|array',
-        'services.*.id'    => 'required_with:services|integer|exists:services,id',
-        'services.*.qty'   => 'required_with:services|integer|min:1',
+        'customer_name'       => 'required|string|max:255',
+        'customer_phone'      => 'required|string|max:20',
+        'customer_address'    => 'required|string',
+        'cart'                => 'required|array|min:1',
+        'cart.*.id'           => 'required|integer|exists:products,id',
+        'cart.*.qty'          => 'required|integer|min:1',
+        'services'            => 'nullable|array',
+        'services.*.id'       => 'required_with:services|integer|exists:services,id',
+        'services.*.qty'      => 'required_with:services|integer|min:1',
+        'services.*.distance' => 'nullable|numeric|min:0',
     ]);
 
     try {
@@ -128,27 +131,46 @@ Route::post('/checkout', function (Illuminate\Http\Request $request) {
                 $productText  .= "  - {$product->name} ({$qty} pcs) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
             }
 
-            // 4. Process Services
+            // 4. Process Services (with distance-based pricing for pengantaran)
             foreach ($request->services ?? [] as $item) {
                 $service  = \App\Models\Service::findOrFail($item['id']);
                 $qty      = (int) $item['qty'];
-                $price    = (float) $service->price;
-                $subtotal = $price * $qty;
+                $distance = (float) ($item['distance'] ?? 0);
+
+                // Calculate subtotal based on service type
+                if ($service->type === 'pengantaran' && $distance > 0) {
+                    $baseFee  = (float) $service->price;
+                    $perKm    = (float) $service->price_per_km;
+                    $subtotal = $baseFee + ($perKm * $distance);
+                    $unitPrice = $subtotal; // entire delivery cost
+                    $qty = 1; // delivery is always qty 1
+                } else {
+                    $unitPrice = (float) $service->price;
+                    $subtotal  = $unitPrice * $qty;
+                }
 
                 \App\Models\SaleServiceDetail::create([
                     'sale_id'    => $sale->id,
                     'service_id' => $service->id,
                     'quantity'   => $qty,
-                    'unit_price' => $price,
+                    'unit_price' => $unitPrice,
                     'subtotal'   => $subtotal,
                 ]);
 
                 $serviceTotal += $subtotal;
-                $serviceText  .= "  - {$service->name} (x{$qty}) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+
+                if ($service->type === 'pengantaran' && $distance > 0) {
+                    $serviceText .= "  - {$service->name} ({$distance} km) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+                } else {
+                    $serviceText .= "  - {$service->name} (x{$qty}) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+                }
             }
 
             // 5. Update Sale totals
             $grandTotal = $productTotal + $serviceTotal;
+            
+            \Illuminate\Support\Facades\Log::info("Checkout totals: Product: $productTotal, Service: $serviceTotal, Grand: $grandTotal");
+
             $sale->total_product_price = $productTotal;
             $sale->total_service_price = $serviceTotal;
             $sale->grand_total         = $grandTotal;

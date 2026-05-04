@@ -10,6 +10,7 @@ use App\Models\InboundTransaction;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleProductDetail;
+use App\Models\Service;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -238,5 +239,59 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         }
+
+        // ── Seed Services (Jasa / Layanan) ──
+
+        // Pemasangan (per produk)
+        $installationServices = [
+            ['product_name' => 'Keramik Lantai 40x40 Putih Polos', 'name' => 'Pemasangan Keramik',  'price' => 30000, 'description' => 'Jasa pemasangan keramik lantai termasuk semen dan nat per meter persegi'],
+            ['product_name' => 'Pipa PVC 1/2 Inch AW',             'name' => 'Pemasangan Pipa',     'price' => 15000, 'description' => 'Jasa pemasangan pipa PVC termasuk lem dan fitting per titik sambungan'],
+            ['product_name' => 'Kabel Listrik NYM 2x1.5mm 50m',   'name' => 'Pemasangan Kabel',    'price' => 25000, 'description' => 'Jasa instalasi kabel listrik termasuk pemasangan stop kontak per titik'],
+            ['product_name' => 'Papan Gypsum 9mm 120x240cm',      'name' => 'Pemasangan Plafon',   'price' => 20000, 'description' => 'Jasa pemasangan plafon gypsum termasuk rangka hollow per lembar'],
+            ['product_name' => 'Cat Tembok Interior Putih 25Kg',  'name' => 'Pengecatan Tembok',   'price' => 12000, 'description' => 'Jasa pengecatan tembok interior per meter persegi (2 lapis)'],
+            ['product_name' => 'Semen Portland 50Kg',             'name' => 'Jasa Aduk & Pasang Semen', 'price' => 35000, 'description' => 'Jasa tukang untuk mengaduk dan mengaplikasikan semen per sak'],
+            ['product_name' => 'Semen Serba Guna 40Kg',           'name' => 'Jasa Aduk & Pasang Semen', 'price' => 30000, 'description' => 'Jasa tukang untuk mengaduk dan mengaplikasikan semen per sak'],
+            ['product_name' => 'Besi Beton Polos 10mm SNI',       'name' => 'Perakitan Besi Cor',  'price' => 5000,  'description' => 'Jasa potong dan rakit besi beton dengan kawat bendrat per batang'],
+        ];
+
+        foreach ($installationServices as $svc) {
+            $linkedProduct = Product::where('name', $svc['product_name'])->first();
+            if ($linkedProduct) {
+                Service::firstOrCreate(
+                    ['name' => $svc['name'], 'type' => 'pemasangan'],
+                    [
+                        'price'       => $svc['price'],
+                        'product_id'  => $linkedProduct->id,
+                        'description' => $svc['description'],
+                    ]
+                );
+            }
+        }
+
+        // Pengantaran (per jarak)
+        $deliveryServices = [
+            ['name' => 'Pengantaran Standar',       'price' => 20000, 'price_per_km' => 5000,  'description' => 'Pengantaran menggunakan pickup untuk material ringan dan sedang'],
+            ['name' => 'Pengantaran Besar (Truk)',  'price' => 50000, 'price_per_km' => 8000,  'description' => 'Pengantaran menggunakan truk untuk material berat dan dalam jumlah besar'],
+        ];
+
+        foreach ($deliveryServices as $svc) {
+            Service::firstOrCreate(
+                ['name' => $svc['name'], 'type' => 'pengantaran'],
+                [
+                    'price'        => $svc['price'],
+                    'price_per_km' => $svc['price_per_km'],
+                    'description'  => $svc['description'],
+                ]
+            );
+        }
+
+        // Lainnya
+        Service::firstOrCreate(
+            ['name' => 'Konsultasi Bangunan', 'type' => 'lainnya'],
+            [
+                'price'       => 0,
+                'description' => 'Konsultasi kebutuhan material dan estimasi biaya bangunan secara gratis',
+            ]
+        );
     }
 }

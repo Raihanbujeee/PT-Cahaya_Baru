@@ -19,10 +19,14 @@ class CreatePenjualan extends CreateRecord
         $totalService = 0;
 
         foreach ($data['saleProductDetails'] ?? [] as $item) {
-            $totalProduct += (float) ($item['subtotal'] ?? 0);
+            $qty = (int) ($item['quantity'] ?? 0);
+            $price = (float) ($item['unit_price'] ?? 0);
+            $totalProduct += $qty * $price;
         }
         foreach ($data['saleServiceDetails'] ?? [] as $item) {
-            $totalService += (float) ($item['subtotal'] ?? 0);
+            $qty = (int) ($item['quantity'] ?? 0);
+            $price = (float) ($item['unit_price'] ?? 0);
+            $totalService += $qty * $price;
         }
 
         $data['total_product_price'] = $totalProduct;

@@ -319,3 +319,90 @@
 .btn-add-service:hover {
     background: var(--primary-hover);
 }
+
+/* Service Groups */
+.service-group {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border-color);
+}
+.service-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+.service-group-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.service-group-title i {
+    color: var(--primary);
+    font-size: 16px;
+}
+.service-group-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+/* Delivery distance input */
+.delivery-item.selected {
+    border-color: var(--primary);
+    background: #fdf6ec;
+}
+.delivery-distance-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+.delivery-distance-row label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    white-space: nowrap;
+}
+.distance-input {
+    width: 80px;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+    font-family: inherit;
+}
+.distance-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.delivery-cost-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+    white-space: nowrap;
+}
+
+/* Remove service button */
+.btn-remove-service {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.btn-remove-service:hover {
+    background: #fecaca;
+}

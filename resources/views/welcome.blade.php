@@ -33,7 +33,7 @@
     <script src="{{ asset('js/cart.js') }}"></script>
 
     <!-- Hero Section -->
-    <section id="beranda" class="hero">
+    <section id="beranda" class="hero" @if(isset($homepageSetting->hero_image)) style="background: url('{{ asset('storage/' . $homepageSetting->hero_image) }}') center/cover no-repeat;" @endif>
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <h1 class="fade-up">{{ $homepageSetting->hero_title ?? 'Solusi Bahan Bangunan Terpercaya untuk Semua Kebutuhan Anda' }}</h1>
@@ -242,9 +242,9 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
-                <button onclick="console.log('Button clicked'); openReviewModal()" class="btn btn-primary" style="position: relative; z-index: 10; pointer-events: auto;">
+                <a href="/kontak#ulasan" class="btn btn-primary" style="position: relative; z-index: 10; pointer-events: auto; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
-                </button>
+                </a>
             </div>
         </div>
     </section>

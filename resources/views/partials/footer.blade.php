@@ -1,5 +1,108 @@
+<style>
+/* Footer Base Styles */
+footer {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 70px 0 20px;
+}
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+.footer-about .logo {
+    color: white;
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.footer-about p {
+    color: #aaa;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+}
+.social-icons a:hover {
+    background-color: #C27A1A;
+    transform: translateY(-2px);
+}
+.footer-links h4 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    color: white;
+}
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+.footer-links ul li a {
+    color: #aaa;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.footer-links ul li a:hover {
+    color: #C27A1A;
+    padding-left: 4px;
+}
+.footer-contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-contact li {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: #aaa;
+    font-size: 14px;
+    align-items: flex-start;
+}
+.footer-contact i {
+    color: #C27A1A;
+    font-size: 18px;
+    margin-top: 2px;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #777;
+    font-size: 13px;
+}
+@media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+
 <!-- ── FOOTER ── -->
-<footer id="kontak">
+<footer>
     <div class="container">
         <div class="footer-grid">
 
@@ -64,41 +167,6 @@
     </div>
 </footer>
 
-<!-- Review Modal -->
-<div class="modal-overlay" id="review-modal">
-    <div class="modal-content" style="max-width: 500px;">
-        <div class="modal-header">
-            <h2>Tulis Ulasan</h2>
-            <button class="btn-close-modal" onclick="closeReviewModal()"><i class="ri-close-line"></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label>Nama Anda</label>
-                <input type="text" id="review-name" class="form-control" placeholder="Masukkan nama">
-            </div>
-            <div class="form-group" style="margin-top: 15px;">
-                <label>Rating</label>
-                <div class="rating-input" id="review-rating-input" style="font-size: 24px; color: #ccc; cursor: pointer; display: flex; gap: 5px;">
-                    <i class="ri-star-fill" data-val="1" style="color: #F5A623;"></i>
-                    <i class="ri-star-fill" data-val="2" style="color: #F5A623;"></i>
-                    <i class="ri-star-fill" data-val="3" style="color: #F5A623;"></i>
-                    <i class="ri-star-fill" data-val="4" style="color: #F5A623;"></i>
-                    <i class="ri-star-fill" data-val="5" style="color: #F5A623;"></i>
-                </div>
-                <input type="hidden" id="review-rating" value="5">
-            </div>
-            <div class="form-group" style="margin-top: 15px;">
-                <label>Ulasan Anda</label>
-                <textarea id="review-comment" class="form-control" rows="4" placeholder="Bagaimana pengalaman Anda?"></textarea>
-            </div>
-        </div>
-        <div class="modal-footer" style="margin-top: 20px;">
-            <button class="btn btn-outline" onclick="closeReviewModal()">Batal</button>
-            <button class="btn btn-primary" onclick="submitReview()" id="btn-submit-review">Kirim Ulasan</button>
-        </div>
-    </div>
-</div>
-
 <!-- Mobile Menu Script -->
 <script>
     (function () {
@@ -110,100 +178,4 @@
             });
         }
     })();
-
-    // Review Modal Logic
-    window.openReviewModal = function() {
-        console.log('Opening Review Modal...');
-        const modal = document.getElementById('review-modal');
-        if (modal) {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scroll
-        } else {
-            console.error('Review modal element not found!');
-        }
-    }
-
-    window.closeReviewModal = function() {
-        const modal = document.getElementById('review-modal');
-        if (modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scroll
-        }
-        document.getElementById('review-name').value = '';
-        document.getElementById('review-comment').value = '';
-        setReviewRating(5);
-    }
-
-    function setReviewRating(rating) {
-        document.getElementById('review-rating').value = rating;
-        const stars = document.querySelectorAll('#review-rating-input i');
-        stars.forEach(star => {
-            if (parseInt(star.dataset.val) <= rating) {
-                star.style.color = '#F5A623';
-            } else {
-                star.style.color = '#ccc';
-            }
-        });
-    }
-
-    document.querySelectorAll('#review-rating-input i').forEach(star => {
-        star.addEventListener('click', function() {
-            setReviewRating(parseInt(this.dataset.val));
-        });
-    });
-
-    async function submitReview() {
-        const name = document.getElementById('review-name').value.trim();
-        const rating = document.getElementById('review-rating').value;
-        const comment = document.getElementById('review-comment').value.trim();
-
-        if (!name || !comment) {
-            alert('Mohon lengkapi nama dan ulasan Anda.');
-            return;
-        }
-
-        const btn = document.getElementById('btn-submit-review');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Mengirim...';
-        btn.disabled = true;
-
-        try {
-            const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
-            const csrfToken = csrfTokenMeta ? csrfTokenMeta.content : '';
-            const baseUrl = (window.APP_URL || '').replace(/\/$/, '');
-
-            const response = await fetch(baseUrl + '/api/reviews', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    customer_name: name,
-                    rating: parseInt(rating),
-                    comment: comment
-                }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                alert('Terima kasih! Ulasan Anda berhasil dikirim.');
-                closeReviewModal();
-                // Opsional: reload halaman jika di beranda agar langsung tampil
-                if (window.location.pathname === '/') {
-                    window.location.reload();
-                }
-            } else {
-                alert('Gagal mengirim ulasan: ' + (data.message || 'Terjadi kesalahan.'));
-            }
-        } catch (error) {
-            console.error('Review error:', error);
-            alert('Terjadi kesalahan saat mengirim ulasan.');
-        } finally {
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }
-    }
 </script>

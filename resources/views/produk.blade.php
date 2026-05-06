@@ -194,6 +194,8 @@
         </div>
     </div>
 
+    @include('partials.footer')
+
     <!-- Scripts -->
     <script src="{{ asset('js/cart.js') }}"></script>
     <script src="{{ asset('js/produk.js') }}"></script>

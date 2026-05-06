@@ -175,6 +175,8 @@
         </div>
     </div>
 
+    @include('partials.footer')
+
     <!-- Script -->
     <script>
         window.APP_URL = "{{ url('/') }}";

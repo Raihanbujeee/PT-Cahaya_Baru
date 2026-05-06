@@ -240,7 +240,7 @@ header {
     margin-bottom: 20px;
 }
 
-.hero p {
+.hero p, .hero-description {
     font-size: 16px;
     color: rgba(255,255,255,0.85);
     margin-bottom: 36px;
@@ -581,7 +581,7 @@ header {
     margin-bottom: 18px;
     color: var(--text-dark);
 }
-.tentang-text p {
+.tentang-text p, .about-desc {
     color: var(--text-body);
     margin-bottom: 16px;
     font-size: 15px;

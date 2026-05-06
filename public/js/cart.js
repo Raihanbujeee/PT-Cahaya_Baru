@@ -447,7 +447,20 @@ window.submitCheckout = async function() {
             updateCartCount();
             closeCheckoutModal();
 
+            // Set customer name into the review modal automatically
+            const reviewNameInput = document.getElementById('review-name');
+            if (reviewNameInput) {
+                reviewNameInput.value = name;
+            }
+
             window.open(data.wa_url, '_blank');
+
+            // Open Review Modal after short delay to allow new tab to open
+            setTimeout(() => {
+                if (typeof openReviewModal === 'function') {
+                    openReviewModal();
+                }
+            }, 500);
         } else {
             alert('Gagal memproses pesanan: ' + (data.message || 'Terjadi kesalahan pada server.'));
         }

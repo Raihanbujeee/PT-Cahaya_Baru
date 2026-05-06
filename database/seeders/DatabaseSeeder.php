@@ -30,6 +30,11 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Seed Homepage Settings
+        $this->call([
+            HomepageSettingSeeder::class,
+        ]);
+
         // Seed Categories
         $categories = [
             'Cat Tembok',

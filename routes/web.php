@@ -7,7 +7,10 @@ use App\Models\Service;
 Route::get('/', function () {
     $featuredProducts = Product::with(['category', 'brand'])->take(4)->get();
     $services = Service::take(6)->get(); // Ambil 6 layanan teratas untuk dashboard
-    return view('welcome', compact('featuredProducts', 'services'));
+    $homepageSetting = \App\Models\HomepageSetting::latest()->first();
+    $reviews = \App\Models\Review::latest()->take(3)->get();
+
+    return view('welcome', compact('featuredProducts', 'services', 'homepageSetting', 'reviews'));
 });
 
 Route::get('/produk', function () {
@@ -40,6 +43,18 @@ Route::get('/api/services', function () {
         ->orderBy('name')
         ->get(['id', 'name', 'type', 'price', 'price_per_km', 'product_id', 'description']);
     return response()->json($services);
+});
+
+Route::post('/api/reviews', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'comment' => 'required|string',
+    ]);
+
+    $review = \App\Models\Review::create($validated);
+
+    return response()->json(['success' => true, 'review' => $review]);
 });
 
 Route::post('/checkout', function (Illuminate\Http\Request $request) {

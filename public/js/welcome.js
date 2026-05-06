@@ -3,13 +3,48 @@
 // Scroll reveal animation (repeatable — re-triggers every time element enters viewport)
 document.addEventListener('DOMContentLoaded', function () {
     const fadeElements = document.querySelectorAll('.fade-up');
+    const counters = document.querySelectorAll('.counter');
+
+    // Function for counter animation
+    const runCounter = (el) => {
+        if (el.isAnimating) return;
+        el.isAnimating = true;
+
+        const target = +el.getAttribute('data-target');
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 2000; // Animation duration in ms
+        const stepTime = 20; // Update interval
+        const totalSteps = duration / stepTime;
+        const increment = target / totalSteps;
+        
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                el.innerText = target + suffix;
+                clearInterval(timer);
+                el.isAnimating = false;
+            } else {
+                el.innerText = Math.floor(current) + suffix;
+            }
+        }, stepTime);
+    };
 
     const observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                
+                // If the intersecting element is or contains a counter
+                if (entry.target.classList.contains('stats-grid')) {
+                    counters.forEach(counter => {
+                        // Reset to 0 before starting
+                        counter.innerText = '0' + (counter.getAttribute('data-suffix') || '');
+                        runCounter(counter);
+                    });
+                }
             } else {
-                // Remove visible class so animation replays on next scroll
                 entry.target.classList.remove('visible');
             }
         });

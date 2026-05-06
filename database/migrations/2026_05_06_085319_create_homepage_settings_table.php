@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('homepage_settings', function (Blueprint $table) {
+            $table->id();
+            $table->string('hero_title');
+            $table->text('hero_description')->nullable();
+            $table->string('about_title')->nullable();
+            $table->text('about_desc_1')->nullable();
+            $table->text('about_desc_2')->nullable();
+            $table->integer('stat_years')->default(0);
+            $table->integer('stat_products')->default(0);
+            $table->integer('stat_suppliers')->default(0);
+            $table->integer('stat_customers')->default(0);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('homepage_settings');
+    }
+};

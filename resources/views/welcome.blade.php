@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>PT Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
 
     <!-- Google Fonts -->
@@ -16,6 +17,11 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layanan.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+
+    <script>
+        window.APP_URL = "{{ url('/') }}";
+    </script>
 
     <!-- Stacks for partials -->
     @stack('styles')
@@ -23,13 +29,17 @@
 <body>
 
     @include('partials.header', ['activePage' => 'beranda'])
+    
+    <script src="{{ asset('js/cart.js') }}"></script>
 
     <!-- Hero Section -->
     <section id="beranda" class="hero">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
-            <h1 class="fade-up">Solusi Bahan Bangunan Terpercaya untuk Semua Kebutuhan Anda</h1>
-            <p class="fade-up" style="transition-delay: 0.1s">Menyediakan material konstruksi berkualitas tinggi dengan pelayanan profesional sejak 2004. Bangun impian Anda bersama kami.</p>
+            <h1 class="fade-up">{{ $homepageSetting->hero_title ?? 'Solusi Bahan Bangunan Terpercaya untuk Semua Kebutuhan Anda' }}</h1>
+            <div class="fade-up hero-description" style="transition-delay: 0.1s">
+                {!! $homepageSetting->hero_description ?? '<p>Menyediakan material konstruksi berkualitas tinggi dengan pelayanan profesional sejak 2004. Bangun impian Anda bersama kami.</p>' !!}
+            </div>
             <div class="hero-buttons fade-up" style="transition-delay: 0.2s">
                 <a href="/produk" class="btn btn-primary">Lihat Produk</a>
                 <a href="https://wa.me/6283834079959" class="btn btn-hero-outline" target="_blank">Hubungi Kami</a>
@@ -179,50 +189,62 @@
             </div>
 
             <div class="testimoni-grid">
-                <div class="testimoni-card fade-up">
-                    <div class="testimoni-quote">"</div>
-                    <div class="testimoni-stars">
-                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                    </div>
-                    <p class="testimoni-text">"Material selalu lengkap dan kualitasnya terjamin. Pengiriman ke lokasi proyek di Jakarta Selatan selalu tepat waktu. Sangat membantu operasional kontraktor."</p>
-                    <div class="testimoni-author">
-                        <div class="testimoni-avatar" style="background-color: #E8D5B7;">B</div>
-                        <div class="testimoni-info">
-                            <strong>Budi Santoso</strong>
-                            <span>Kontraktor Independen</span>
-                        </div>
-                    </div>
-                </div>
+                @php
+                    $reviewsData = isset($reviews) && $reviews->count() > 0 ? $reviews : [
+                        [
+                            'customer_name' => 'Budi Santoso',
+                            'rating' => 5,
+                            'comment' => 'Material selalu lengkap dan kualitasnya terjamin. Pengiriman ke lokasi proyek di Jakarta Selatan selalu tepat waktu. Sangat membantu operasional kontraktor.',
+                        ],
+                        [
+                            'customer_name' => 'Rina Wijaya',
+                            'rating' => 5,
+                            'comment' => 'Pelayanan stafnya luar biasa. Saat saya renovasi rumah, mereka sabar merekomendasikan jenis cat dan keramik yang pas dengan budget. Toko langganan!',
+                        ],
+                        [
+                            'customer_name' => 'Andi Pratama',
+                            'rating' => 5,
+                            'comment' => 'Harga sangat bersaing terutama untuk pembelian partai besar. Proses PO jelas dan tagihan selalu rapi. Mitra bisnis yang solid.',
+                        ]
+                    ];
+                    $avatarColors = ['#E8D5B7', '#D4B896', '#C4A882', '#D3B48F', '#CBA373', '#E0C8A4'];
+                @endphp
 
-                <div class="testimoni-card fade-up" style="transition-delay: 0.1s">
-                    <div class="testimoni-quote">"</div>
-                    <div class="testimoni-stars">
-                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                    </div>
-                    <p class="testimoni-text">"Pelayanan stafnya luar biasa. Saat saya renovasi rumah, mereka sabar merekomendasikan jenis cat dan keramik yang pas dengan budget. Toko langganan!"</p>
-                    <div class="testimoni-author">
-                        <div class="testimoni-avatar" style="background-color: #D4B896;">R</div>
-                        <div class="testimoni-info">
-                            <strong>Rina Wijaya</strong>
-                            <span>Pemilik Rumah</span>
+                @foreach($reviewsData as $index => $review)
+                    @php
+                        $color = $avatarColors[$index % count($avatarColors)];
+                        $reviewName = is_object($review) ? $review->customer_name : $review['customer_name'];
+                        $reviewComment = is_object($review) ? $review->comment : $review['comment'];
+                        $reviewRating = is_object($review) ? $review->rating : $review['rating'];
+                        $initial = strtoupper(substr($reviewName, 0, 1));
+                    @endphp
+                    <div class="testimoni-card fade-up" style="transition-delay: {{ $index * 0.1 }}s">
+                        <div class="testimoni-quote">"</div>
+                        <div class="testimoni-stars">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $reviewRating)
+                                    <i class="ri-star-fill"></i>
+                                @else
+                                    <i class="ri-star-line" style="color: #ccc;"></i>
+                                @endif
+                            @endfor
+                        </div>
+                        <p class="testimoni-text">"{!! strip_tags($reviewComment) !!}"</p>
+                        <div class="testimoni-author">
+                            <div class="testimoni-avatar" style="background-color: {{ $color }};">{{ $initial }}</div>
+                            <div class="testimoni-info">
+                                <strong>{{ $reviewName }}</strong>
+                                <span>Pelanggan</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="testimoni-card fade-up" style="transition-delay: 0.2s">
-                    <div class="testimoni-quote">"</div>
-                    <div class="testimoni-stars">
-                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                    </div>
-                    <p class="testimoni-text">"Harga sangat bersaing terutama untuk pembelian partai besar. Proses PO jelas dan tagihan selalu rapi. Mitra bisnis yang solid."</p>
-                    <div class="testimoni-author">
-                        <div class="testimoni-avatar" style="background-color: #C4A882;">A</div>
-                        <div class="testimoni-info">
-                            <strong>Andi Pratama</strong>
-                            <span>Purchasing Manager</span>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
+                <button onclick="console.log('Button clicked'); openReviewModal()" class="btn btn-primary" style="position: relative; z-index: 10; pointer-events: auto;">
+                    <i class="ri-pencil-line"></i> Tulis Ulasan Anda
+                </button>
             </div>
         </div>
     </section>
@@ -232,36 +254,40 @@
         <div class="container">
             <div class="tentang-content">
                 <div class="tentang-text fade-up">
-                    <h3>Mengenal PT Cahaya Baru</h3>
-                    <p>Berdiri sejak 2010, PT Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>
-                    <p>Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.</p>
+                    <h3>{{ $homepageSetting->about_title ?? 'Mengenal PT Cahaya Baru' }}</h3>
+                    <div class="about-desc">
+                        {!! $homepageSetting->about_desc_1 ?? '<p>Berdiri sejak 2010, PT Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>' !!}
+                    </div>
+                    <div class="about-desc">
+                        {!! $homepageSetting->about_desc_2 ?? '<p>Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.</p>' !!}
+                    </div>
                 </div>
                 <div class="stats-grid fade-up" style="transition-delay: 0.15s">
                     <div class="stat-card">
                         <i class="ri-history-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>14+</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting->stat_years ?? 14 }}" data-suffix="+">0</h4>
                             <span>Tahun Beroperasi</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-store-3-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>5000+</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting->stat_products ?? 5000 }}" data-suffix="+">0</h4>
                             <span>Produk Tersedia</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-truck-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>50+</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting->stat_suppliers ?? 50 }}" data-suffix="+">0</h4>
                             <span>Mitra Supplier</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-user-smile-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>10k+</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting->stat_customers ?? 10 }}" data-suffix="k+">0</h4>
                             <span>Pelanggan Puas</span>
                         </div>
                     </div>
@@ -269,6 +295,8 @@
             </div>
         </div>
     </section>
+
+
 
     @include('partials.footer')
 

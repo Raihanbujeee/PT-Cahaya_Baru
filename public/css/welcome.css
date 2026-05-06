@@ -617,6 +617,7 @@ header {
     font-size: 22px;
     font-weight: 800;
     color: var(--text-dark);
+    font-variant-numeric: tabular-nums;
 }
 .stat-info span {
     font-size: 13px;

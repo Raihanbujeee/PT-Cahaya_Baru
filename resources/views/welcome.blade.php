@@ -240,28 +240,28 @@
                     <div class="stat-card">
                         <i class="ri-history-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>14+</h4>
+                            <h4 class="counter" data-target="14" data-suffix="+">0</h4>
                             <span>Tahun Beroperasi</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-store-3-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>5000+</h4>
+                            <h4 class="counter" data-target="5000" data-suffix="+">0</h4>
                             <span>Produk Tersedia</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-truck-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>50+</h4>
+                            <h4 class="counter" data-target="50" data-suffix="+">0</h4>
                             <span>Mitra Supplier</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-user-smile-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4>10k+</h4>
+                            <h4 class="counter" data-target="10" data-suffix="k+">0</h4>
                             <span>Pelanggan Puas</span>
                         </div>
                     </div>

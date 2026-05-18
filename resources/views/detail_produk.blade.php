@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/detail_produk.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
 </head>
@@ -174,6 +175,8 @@
             </div>
         </div>
     </div>
+
+    @include('partials.footer')
 
     <!-- Script -->
     <script>

@@ -4,18 +4,21 @@
     text-align: center;
     padding: 80px 20px;
     background-color: var(--bg-white);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 3px solid var(--border-color);
 }
 
 .kontak-hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 42px;
     font-weight: 800;
     color: var(--text-dark);
     margin-bottom: 16px;
     letter-spacing: -0.5px;
+    text-transform: uppercase;
 }
 
 .kontak-hero p {
+    font-family: 'Space Grotesk', sans-serif;
     color: var(--text-muted);
     font-size: 17px;
     max-width: 600px;
@@ -34,20 +37,20 @@
 }
 
 .contact-card {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    background: #FFFFFF;
+    border: 2px solid var(--border-color);
+    border-radius: 0px;
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .contact-card:hover {
-    transform: translateY(-8px);
+    transform: translate(-4px, -4px);
     box-shadow: var(--shadow-lg);
     border-color: var(--primary);
 }
@@ -55,20 +58,25 @@
 .card-icon {
     width: 64px;
     height: 64px;
-    background: var(--primary-light);
-    color: var(--primary);
-    border-radius: 14px;
+    background: var(--secondary);
+    color: var(--text-dark);
+    border: 2px solid var(--border-color);
+    border-radius: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 28px;
     margin-bottom: 24px;
+    box-shadow: 2px 2px 0px var(--border-color);
 }
 
 .contact-card h3 {
-    font-size: 19px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 12px;
+    text-transform: uppercase;
+    color: var(--text-dark);
 }
 
 .contact-card p {
@@ -90,20 +98,23 @@
 }
 
 .info-box {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
+    background: #FFFFFF;
+    border: 3px solid var(--border-color);
+    border-radius: 0px;
     padding: 32px;
     margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
 }
 
 .info-box h3 {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 18px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
 .info-box h3 i { color: var(--primary); }
@@ -112,35 +123,48 @@
     display: flex;
     justify-content: space-between;
     padding: 12px 0;
-    border-bottom: 1px solid var(--bg-light);
+    border-bottom: 2px dashed var(--bg-beige);
     font-size: 14px;
+    font-family: 'Space Mono', monospace;
 }
 
 .jam-row:last-child { border-bottom: none; }
-.jam-row .time { font-weight: 600; }
-.jam-row .tutup { color: #c62828; font-weight: 700; }
+.jam-row .time { font-weight: 700; }
+.jam-row .tutup { color: var(--primary); font-weight: 700; }
 
 /* ── FORM BOX ── */
 .form-box {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+    background: #FFFFFF;
+    border: 3px solid var(--border-color);
+    border-radius: 0px;
     padding: 40px;
     box-shadow: var(--shadow-md);
 }
 
-.form-box h3 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
-.form-sub { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
+.form-box h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.form-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
 
 .form-group { margin-bottom: 20px; }
 .form-group label {
     display: block;
+    font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 8px;
-    color: var(--text-muted);
+    color: var(--text-dark);
 }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -148,16 +172,19 @@
 input, select, textarea {
     width: 100%;
     padding: 14px 16px;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    border-radius: 0px;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 15px;
-    transition: all 0.3s;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    box-shadow: var(--shadow-sm);
+    background-color: #FFFFFF;
 }
 
 input:focus, select:focus, textarea:focus {
     border-color: var(--primary);
     outline: none;
-    box-shadow: 0 0 0 4px var(--primary-light);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-submit {
@@ -173,29 +200,31 @@ input:focus, select:focus, textarea:focus {
 }
 
 .map-card {
-    background: white;
+    background: #FFFFFF;
     padding: 12px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
+    border-radius: 0px;
+    border: 3px solid var(--border-color);
     box-shadow: var(--shadow-lg);
     overflow: hidden;
     height: 450px;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
 }
 
 .map-card:hover {
-    transform: scale(1.005);
+    transform: translate(-4px, -4px);
+    box-shadow: var(--shadow-lg);
 }
 
 .map-card iframe {
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 12px;
+    border-radius: 0px;
     display: block;
 }
 
 @media (max-width: 992px) {
     .cards-grid { grid-template-columns: 1fr; margin-top: 20px; }
     .bottom-section { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
 }

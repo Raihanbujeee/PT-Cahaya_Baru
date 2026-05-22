@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -242,7 +242,7 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
-                <a href="/kontak#ulasan" class="btn btn-primary" style="position: relative; z-index: 10; pointer-events: auto; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                <button onclick="console.log('Button clicked'); openReviewModal()" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
                 </a>
             </div>

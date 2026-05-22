@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -146,40 +146,6 @@
             </div>
         </div>
 
-        {{-- Tim Kami --}}
-        <div class="tim-section">
-            <h2 class="section-h2">Mengenal Tim Kami</h2>
-            <p class="section-sub">
-                Tim profesional kami siap membantu Anda dengan pengalaman, dedikasi,
-                dan pelayanan terbaik di setiap kebutuhan proyek bangunan.
-            </p>
-            <div class="tim-grid">
-                <div class="tim-card">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Budi Santoso">
-                    <h3>Budi Santoso</h3>
-                    <div class="role">Direktur Utama</div>
-                    <p>Memimpin perusahaan dengan visi jangka panjang dan inovasi berkelanjutan.</p>
-                </div>
-                <div class="tim-card">
-                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Sinta Dewi">
-                    <h3>Sinta Dewi</h3>
-                    <div class="role">Manajer Operasional</div>
-                    <p>Menjaga alur distribusi dan operasional berjalan efisien.</p>
-                </div>
-                <div class="tim-card">
-                    <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Andi Pratama">
-                    <h3>Andi Pratama</h3>
-                    <div class="role">Supervisor Gudang</div>
-                    <p>Mengatur stok dan memastikan pengiriman tepat waktu.</p>
-                </div>
-                <div class="tim-card">
-                    <img src="https://randomuser.me/api/portraits/women/60.jpg" alt="Rina Maharani">
-                    <h3>Rina Maharani</h3>
-                    <div class="role">Customer Service</div>
-                    <p>Siap membantu kebutuhan pelanggan dengan ramah dan cepat.</p>
-                </div>
-            </div>
-        </div>
 
         {{-- CTA --}}
         <div class="cta-section">

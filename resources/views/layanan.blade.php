@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jasa & Layanan - PT Cahaya Baru</title>
+    <title>Jasa &amp; Layanan - TB Cahaya Baru</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,7 +76,7 @@
     </section>
 
     <!-- ── MAIN SERVICES SECTION ── -->
-    <section class="section-padding" style="background-color: #F4F3F0;">
+    <section class="section-padding" style="background: rgba(0, 0, 0, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
         <div class="container">
             <div class="section-title fade-up">
                 <h2>Layanan Utama Kami</h2>

@@ -1,3 +1,47 @@
+/* TB Cahaya Baru - Halaman Keranjang & Checkout Futuristic Stylesheet */
+
+:root {
+    --primary: #995F2F; /* Copper orange-brown */
+    --primary-hover: #804F26;
+    --primary-light: rgba(153, 95, 47, 0.15);
+    --secondary: #978F66; /* Olive gold */
+    --accent: #978F66;
+    
+    /* Theme Backgrounds */
+    --bg-gradient: linear-gradient(135deg, #11241B 0%, #162E21 40%, #2E2F1A 100%);
+    --bg-white: #11241B; /* Fallback Solid Green-black */
+    --bg-light: rgba(255, 255, 255, 0.03); /* Glass container overlay */
+    --bg-beige: rgba(0, 0, 0, 0.25); /* Darker backdrop */
+    
+    /* Card backgrounds: Glassmorphism by default! */
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-active-bg: #E4D6A9; /* Sandy cream active state */
+    
+    /* Text colors */
+    --text-dark: #FFFFFF;
+    --text-body: #E5EAD8; /* Soft green-cream */
+    --text-muted: #A3AE98; /* Muted greenish-gray */
+    
+    /* Text inside active beige card */
+    --text-card-dark: #1C2A1E; /* Deep green-black */
+    --text-card-body: #2B3A2D;
+    --text-card-muted: #566859;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-card: 1px solid rgba(255, 255, 255, 0.08);
+    
+    /* Glows & Shadows */
+    --glow-primary: 0 0 20px rgba(153, 95, 47, 0.45);
+    --glow-secondary: 0 0 25px rgba(228, 214, 169, 0.35); /* Beige card glow */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
+    --danger: #e57373;
+}
+
 /* Floating Cart Button */
 .floating-cart {
     position: fixed;
@@ -13,21 +57,22 @@
     justify-content: center;
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(133, 79, 11, 0.4);
+    box-shadow: var(--shadow-md), var(--glow-primary);
     z-index: 1000;
-    transition: transform 0.3s, background-color 0.3s;
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
 }
 .floating-cart:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) translateY(-2px);
     background-color: var(--primary-hover);
+    box-shadow: 0 8px 25px rgba(153, 95, 47, 0.6), var(--glow-primary);
 }
 .cart-count {
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: var(--danger);
+    background-color: #d32f2f;
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
     width: 24px;
     height: 24px;
@@ -35,7 +80,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid white;
+    border: 2px solid #11241B;
 }
 
 /* Modal Overlay */
@@ -45,7 +90,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(17, 36, 27, 0.6);
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,31 +105,35 @@
     visibility: visible;
 }
 .modal-content {
-    background: white;
+    background: rgba(17, 36, 27, 0.95);
+    border: var(--border-card);
     width: 90%;
     max-width: 600px;
-    border-radius: 12px;
+    border-radius: var(--border-radius-lg);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     max-height: 90vh;
     transform: translateY(20px);
     transition: transform 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 .modal-overlay.active .modal-content {
     transform: translateY(0);
 }
 .modal-header {
     padding: 20px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 .modal-header h2 {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 20px;
-    color: var(--text-dark);
+    color: #FFFFFF;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 .btn-close-modal {
     background: none;
@@ -91,10 +141,11 @@
     font-size: 24px;
     color: var(--text-muted);
     cursor: pointer;
-    transition: color 0.2s;
+    transition: all 0.2s;
 }
 .btn-close-modal:hover {
     color: var(--danger);
+    transform: scale(1.1);
 }
 .modal-body {
     padding: 20px;
@@ -107,8 +158,8 @@
 .cart-item {
     display: flex;
     gap: 15px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     align-items: center;
 }
 .cart-item-img {
@@ -116,7 +167,8 @@
     height: 60px;
     border-radius: 8px;
     object-fit: cover;
-    background: var(--bg-beige);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .cart-item-info {
     flex-grow: 1;
@@ -124,6 +176,7 @@
 .cart-item-title {
     font-size: 14px;
     font-weight: 600;
+    color: #FFFFFF;
     margin-bottom: 4px;
 }
 .cart-item-price {
@@ -141,20 +194,25 @@
     height: 28px;
     border-radius: 4px;
     border: 1px solid var(--border-color);
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    transition: all 0.2s ease;
 }
 .qty-btn:hover {
-    background: var(--bg-beige);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
 }
 .qty-input {
     width: 40px;
     text-align: center;
     border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
     border-radius: 4px;
     height: 28px;
     font-size: 14px;
@@ -166,78 +224,78 @@
     cursor: pointer;
     font-size: 18px;
     padding: 5px;
+    transition: color 0.2s ease;
 }
 .btn-remove-item:hover {
-    color: #b71c1c;
+    color: #ef5350;
 }
 .cart-summary {
-    background: var(--bg-beige);
-    padding: 15px;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 18px;
+    border-radius: 12px;
     margin-bottom: 20px;
 }
 .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-size: 14px;
+    color: var(--text-body);
 }
 .summary-row.total {
     font-weight: 800;
     font-size: 18px;
-    color: var(--primary);
-    border-top: 1px dashed var(--border-color);
-    padding-top: 10px;
-    margin-top: 10px;
+    color: #FFFFFF;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+    margin-top: 12px;
 }
 .checkout-form h3 {
     font-size: 16px;
-    margin-bottom: 15px;
-    padding-bottom: 5px;
+    margin-bottom: 18px;
+    padding-bottom: 6px;
     border-bottom: 2px solid var(--primary);
     display: inline-block;
+    color: #FFFFFF;
+    text-transform: uppercase;
 }
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 .form-group label {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: var(--text-dark);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-body);
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
 }
 .form-group input, .form-group textarea {
     width: 100%;
-    padding: 10px 12px;
+    padding: 12px 14px;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
+    border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 .form-group input:focus, .form-group textarea:focus {
     outline: none;
     border-color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: var(--glow-primary);
 }
 .modal-footer {
     padding: 20px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-}
-.btn-outline {
-    background: transparent;
-    color: var(--text-dark);
-    border: 1px solid var(--border-color);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.btn-outline:hover {
-    background: var(--bg-beige);
 }
 
 .empty-cart-msg {
@@ -269,22 +327,23 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: #fafafa;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
     gap: 10px;
-    transition: border-color 0.2s;
+    transition: all 0.3s ease;
 }
 .service-item:hover {
     border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.04);
 }
 .service-item-info {
     flex-grow: 1;
 }
 .service-item-name {
     font-size: 13px;
-    font-weight: 600;
-    color: var(--text-dark);
+    font-weight: 700;
+    color: #FFFFFF;
     margin-bottom: 2px;
 }
 .service-item-price {
@@ -305,26 +364,28 @@
     background: var(--primary);
     color: white;
     border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 4px;
-    transition: background 0.2s;
-    white-space: nowrap;
+    transition: all 0.2s ease;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
 }
 .btn-add-service:hover {
     background: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
 /* Service Groups */
 .service-group {
     margin-bottom: 16px;
     padding-bottom: 12px;
-    border-bottom: 1px dashed var(--border-color);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
 }
 .service-group:last-child {
     border-bottom: none;
@@ -333,7 +394,7 @@
 .service-group-title {
     font-size: 14px;
     font-weight: 700;
-    color: var(--text-dark);
+    color: #FFFFFF;
     margin-bottom: 4px;
     display: flex;
     align-items: center;
@@ -349,11 +410,22 @@
     margin-bottom: 10px;
 }
 
-/* Delivery distance input */
+/* Delivery distance input - Active beige alignment! */
 .delivery-item.selected {
-    border-color: var(--primary);
-    background: #fdf6ec;
+    border-color: var(--card-active-bg) !important;
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
 }
+.delivery-item.selected .service-item-name {
+    color: var(--text-card-dark) !important;
+}
+.delivery-item.selected .service-item-price {
+    color: var(--text-card-dark) !important;
+}
+.delivery-item.selected .service-item-desc {
+    color: var(--text-card-muted) !important;
+}
+
 .delivery-distance-row {
     display: flex;
     align-items: center;
@@ -363,19 +435,32 @@
 }
 .delivery-distance-row label {
     font-size: 13px;
-    font-weight: 600;
-    color: var(--text-dark);
+    font-weight: 700;
+    color: var(--text-body);
     white-space: nowrap;
 }
+.delivery-item.selected .delivery-distance-row label {
+    color: var(--text-card-body) !important;
+}
+
 .distance-input {
     width: 80px;
     padding: 6px 8px;
     border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
     border-radius: 6px;
     font-size: 14px;
     text-align: center;
     font-family: inherit;
+    transition: all 0.3s ease;
 }
+.delivery-item.selected .distance-input {
+    border-color: rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--text-card-dark);
+}
+
 .distance-input:focus {
     outline: none;
     border-color: var(--primary);
@@ -386,23 +471,28 @@
     color: var(--primary);
     white-space: nowrap;
 }
+.delivery-item.selected .delivery-cost-label {
+    color: var(--text-card-dark) !important;
+}
 
 /* Remove service button */
 .btn-remove-service {
-    background: #fee2e2;
-    color: #dc2626;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
+    background: rgba(229, 115, 115, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(229, 115, 115, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 4px;
-    transition: background 0.2s;
-    white-space: nowrap;
+    transition: all 0.2s ease;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
 }
 .btn-remove-service:hover {
-    background: #fecaca;
+    background: rgba(229, 115, 115, 0.25);
+    transform: translateY(-1px);
 }

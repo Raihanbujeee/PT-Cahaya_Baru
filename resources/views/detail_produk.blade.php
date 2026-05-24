@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Detail Produk - PT Cahaya Baru</title>
+    <title>Detail Produk - TB Cahaya Baru</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
@@ -32,7 +32,7 @@
         
         $unit = 'pcs';
         $minOrder = '1';
-        $supplier = 'PT Cahaya Baru';
+        $supplier = 'TB Cahaya Baru';
         $stockLabel = $product->current_stock > 0 ? 'Tersedia' : 'Habis';
         $stockColor = $product->current_stock > 0 ? 'var(--success)' : 'var(--danger)';
         $stockIcon = $product->current_stock > 0 ? 'ri-checkbox-circle-fill' : 'ri-close-circle-fill';

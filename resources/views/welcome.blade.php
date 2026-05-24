@@ -33,7 +33,7 @@
     <script src="{{ asset('js/cart.js') }}"></script>
 
     <!-- Hero Section -->
-    <section id="beranda" class="hero">
+    <section id="beranda" class="hero" @if(isset($homepageSetting->hero_image)) style="background: url('{{ asset('storage/' . $homepageSetting->hero_image) }}') center/cover no-repeat;" @endif>
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <h1 class="fade-up">{{ $homepageSetting->hero_title ?? 'Solusi Bahan Bangunan Terpercaya untuk Semua Kebutuhan Anda' }}</h1>
@@ -244,7 +244,7 @@
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
                 <button onclick="console.log('Button clicked'); openReviewModal()" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
-                </button>
+                </a>
             </div>
         </div>
     </section>

@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Filament\Resources\Reviews;
+namespace App\Filament\Resources;
 
-use App\Filament\Resources\Reviews\Pages\ManageReviews;
+use App\Filament\Resources\UlasanPelangganResource\Pages\ManageUlasanPelanggan;
 use App\Models\Review;
-use BackedEnum;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
+use Filament\Resources\Resource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ReviewResource extends Resource
+class UlasanPelangganResource extends Resource
 {
     protected static ?string $model = Review::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-star';
+    protected static \UnitEnum|string|null $navigationGroup = 'Pengaturan Halaman';
     protected static ?string $navigationLabel = 'Ulasan Pelanggan';
     protected static ?string $pluralModelLabel = 'Ulasan Pelanggan';
     protected static ?string $modelLabel = 'Ulasan';
@@ -26,12 +27,12 @@ class ReviewResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                \Filament\Forms\Components\TextInput::make('customer_name')
+            ->schema([
+                TextInput::make('customer_name')
                     ->label('Nama Pelanggan')
                     ->required()
                     ->maxLength(255),
-                \Filament\Forms\Components\Select::make('rating')
+                Select::make('rating')
                     ->label('Rating (Bintang)')
                     ->options([
                         1 => '1 Bintang',
@@ -41,7 +42,7 @@ class ReviewResource extends Resource
                         5 => '5 Bintang',
                     ])
                     ->required(),
-                \Filament\Forms\Components\Textarea::make('comment')
+                Textarea::make('comment')
                     ->label('Ulasan')
                     ->required()
                     ->columnSpanFull(),
@@ -52,11 +53,11 @@ class ReviewResource extends Resource
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('customer_name')
+                TextColumn::make('customer_name')
                     ->label('Nama Pelanggan')
                     ->searchable()
                     ->sortable(),
-                \Filament\Tables\Columns\TextColumn::make('rating')
+                TextColumn::make('rating')
                     ->label('Rating')
                     ->sortable()
                     ->badge()
@@ -67,32 +68,24 @@ class ReviewResource extends Resource
                         '2', '1' => 'danger',
                         default => 'primary',
                     }),
-                \Filament\Tables\Columns\TextColumn::make('comment')
+                TextColumn::make('comment')
                     ->label('Ulasan')
                     ->limit(50),
-                \Filament\Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
             ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ManageReviews::route('/'),
+            'index' => ManageUlasanPelanggan::route('/'),
         ];
     }
 }

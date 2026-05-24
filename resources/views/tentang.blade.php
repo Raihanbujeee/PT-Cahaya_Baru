@@ -35,10 +35,9 @@
         {{-- Header atas --}}
         <div class="about-hero">
             <h1>
-                Mitra Terpercaya Untuk Setiap<br>
-                Proyek Bangunan Anda
+                {!! nl2br(e($tentangSetting->hero_title ?? "Mitra Terpercaya Untuk Setiap\nProyek Bangunan Anda")) !!}
             </h1>
-            <p>Kami hadir memberikan solusi terbaik untuk kebutuhan bangunan Anda.</p>
+            <p>{{ $tentangSetting->hero_description ?? 'Kami hadir memberikan solusi terbaik untuk kebutuhan bangunan Anda.' }}</p>
         </div>
 
         {{-- Kotak tengah dengan foto --}}

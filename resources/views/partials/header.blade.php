@@ -2,7 +2,7 @@
 
 <header>
     <div class="container navbar">
-        <a href="/" class="logo">PT Cahaya Baru</a>
+        <a href="/" class="logo">TB Cahaya Baru</a>
 
         <nav class="nav-links">
             <a href="/#beranda" @class(['nav-link', 'active' => $activePage === 'beranda'])>Beranda</a>

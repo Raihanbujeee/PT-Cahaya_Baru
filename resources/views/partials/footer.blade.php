@@ -4,7 +4,7 @@
         <div class="footer-grid">
 
             <div class="footer-about">
-                <div class="logo">PT Cahaya Baru</div>
+                <div class="logo">TB Cahaya Baru</div>
                 <p>Pusat perbelanjaan bahan bangunan terlengkap dan termurah. Menjadi solusi utama untuk segala kebutuhan proyek konstruksi Anda.</p>
                 <div class="social-icons">
                     <a href="#"><i class="ri-facebook-fill"></i></a>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} PT Cahaya Baru. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} TB Cahaya Baru. All rights reserved.</p>
         </div>
     </div>
 </footer>

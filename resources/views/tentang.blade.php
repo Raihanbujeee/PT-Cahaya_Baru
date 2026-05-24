@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tentang Kami - PT Cahaya Baru</title>
+    <title>Tentang Kami - TB Cahaya Baru</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,16 +46,16 @@
             <div class="about-box-inner">
                 <div class="about-box-img">
                     <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                         alt="PT Cahaya Baru">
+                         alt="TB Cahaya Baru">
                 </div>
                 <div class="about-box-text">
                     <div class="about-label">
                         <div class="about-label-line"></div>
                         <span>Tentang Kami</span>
                     </div>
-                    <h2>PT Cahaya Baru — Solusi Bahan Bangunan Sejak 2010</h2>
+                    <h2>TB Cahaya Baru — Solusi Bahan Bangunan Sejak 2010</h2>
                     <p>
-                        Berawal dari sebuah toko kecil di Surabaya, PT Cahaya Baru didirikan dengan satu tujuan sederhana:
+                        Berawal dari sebuah toko kecil di Surabaya, TB Cahaya Baru didirikan dengan satu tujuan sederhana:
                         menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari 14 tahun, kami telah
                         berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga
                         pemilik rumah perorangan.

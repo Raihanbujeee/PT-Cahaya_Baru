@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>PT Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
+    <title>TB Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -254,9 +254,9 @@
         <div class="container">
             <div class="tentang-content">
                 <div class="tentang-text fade-up">
-                    <h3>{{ $homepageSetting->about_title ?? 'Mengenal PT Cahaya Baru' }}</h3>
+                    <h3>{{ $homepageSetting->about_title ?? 'Mengenal TB Cahaya Baru' }}</h3>
                     <div class="about-desc">
-                        {!! $homepageSetting->about_desc_1 ?? '<p>Berdiri sejak 2010, PT Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>' !!}
+                        {!! $homepageSetting->about_desc_1 ?? '<p>Berdiri sejak 2010, TB Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>' !!}
                     </div>
                     <div class="about-desc">
                         {!! $homepageSetting->about_desc_2 ?? '<p>Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.</p>' !!}

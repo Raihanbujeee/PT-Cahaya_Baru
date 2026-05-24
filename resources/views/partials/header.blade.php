@@ -10,7 +10,7 @@
             <a href="/layanan" @class(['nav-link', 'active' => $activePage === 'layanan'])>Jasa &amp; Layanan</a>
             <a href="/tentang-kami" @class(['nav-link', 'active' => $activePage === 'tentang'])>Tentang Kami</a>
             <a href="/kontak" @class(['nav-link', 'active' => $activePage === 'kontak'])>Kontak</a>
-            <a href="https://wa.me/6283834079959" class="btn btn-primary nav-cta" target="_blank">Hubungi Kami</a>
+            <a href="/admin" class="btn btn-primary nav-cta">ADMIN</a>
         </nav>
 
         <button class="mobile-menu-btn" aria-label="Menu">

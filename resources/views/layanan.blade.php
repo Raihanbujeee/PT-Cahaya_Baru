@@ -76,7 +76,7 @@
     </section>
 
     <!-- ── MAIN SERVICES SECTION ── -->
-    <section class="section-padding" style="background-color: #F4F3F0;">
+    <section class="section-padding" style="background: rgba(0, 0, 0, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
         <div class="container">
             <div class="section-title fade-up">
                 <h2>Layanan Utama Kami</h2>

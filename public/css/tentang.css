@@ -1,14 +1,69 @@
-/* ================================================
-   tentang.css - Halaman Tentang Kami PT Cahaya Baru
-   ================================================ */
+/* PT Cahaya Baru - Halaman Tentang Kami Futuristic Stylesheet */
 
-/* ── Breadcrumb ── */
+:root {
+    --primary: #995F2F; /* Copper orange-brown */
+    --primary-hover: #804F26;
+    --primary-light: rgba(153, 95, 47, 0.15);
+    --secondary: #978F66; /* Olive gold */
+    --accent: #978F66;
+    
+    /* Theme Backgrounds */
+    --bg-gradient: linear-gradient(135deg, #11241B 0%, #162E21 40%, #2E2F1A 100%);
+    --bg-white: #11241B; /* Fallback Solid Green-black */
+    --bg-light: rgba(255, 255, 255, 0.03); /* Glass container overlay */
+    --bg-beige: rgba(0, 0, 0, 0.25); /* Darker backdrop */
+    
+    /* Card backgrounds: Glassmorphism by default! */
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-active-bg: #E4D6A9; /* Sandy cream active state */
+    
+    /* Text colors */
+    --text-dark: #FFFFFF;
+    --text-body: #E5EAD8; /* Soft green-cream */
+    --text-muted: #A3AE98; /* Muted greenish-gray */
+    
+    /* Text inside active beige card */
+    --text-card-dark: #1C2A1E; /* Deep green-black */
+    --text-card-body: #2B3A2D;
+    --text-card-muted: #566859;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-card: 1px solid rgba(255, 255, 255, 0.08);
+    
+    /* Glows & Shadows */
+    --glow-primary: 0 0 20px rgba(153, 95, 47, 0.45);
+    --glow-secondary: 0 0 25px rgba(228, 214, 169, 0.35); /* Beige card glow */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
+}
+
+body {
+    background: var(--bg-gradient) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--text-body);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   Breadcrumb Bar
+   ========================================================================== */
 .breadcrumb-bar {
-    background: var(--bg-light);
+    background: rgba(17, 36, 27, 0.5);
     padding: 14px 0;
     font-size: 14px;
     color: var(--text-muted);
-    border-bottom: 3px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 .breadcrumb-bar a { 
     color: var(--primary); 
@@ -16,21 +71,22 @@
 }
 .breadcrumb-bar span { 
     margin: 0 6px; 
-    color: var(--border-color);
+    color: var(--primary);
 }
 
-/* ── Page Hero ── */
+/* ==========================================================================
+   Page Hero
+   ========================================================================== */
 .about-hero {
     width: 100%;
-    padding: 70px 0 50px;
+    padding: 70px 0 30px;
     text-align: center;
-    background: var(--bg-white);
 }
 .about-hero h1 { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 44px; 
     font-weight: 800; 
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     line-height: 1.2; 
     margin-bottom: 16px; 
     text-transform: uppercase;
@@ -41,13 +97,17 @@
     color: var(--text-muted); 
 }
 
-/* ── Tentang Box ── */
+/* ==========================================================================
+   Tentang Box (Main Story Card)
+   ========================================================================== */
 .about-box {
     width: 100%;
-    background: #FFFFFF;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 60px 40px;
-    border: 3px solid var(--border-color);
-    border-radius: 0px;
     margin-bottom: 60px;
     box-shadow: var(--shadow-md);
 }
@@ -57,8 +117,8 @@
     width: 100%; 
     height: 420px; 
     object-fit: cover; 
-    border-radius: 0px; 
-    border: 3px solid var(--border-color);
+    border-radius: var(--border-radius); 
+    border: var(--border-card);
     box-shadow: var(--shadow-sm); 
 }
 .about-box-text { flex: 1; }
@@ -74,7 +134,7 @@
 }
 .about-box-text h2 { 
     font-family: 'Space Grotesk', sans-serif;
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     font-size: 26px; 
     font-weight: 800; 
     margin-bottom: 18px; 
@@ -82,81 +142,105 @@
     text-transform: uppercase;
 }
 .about-box-text p { 
-    color: var(--text-muted); 
+    color: var(--text-body); 
     font-size: 15px; 
     line-height: 1.9; 
     margin-bottom: 16px; 
 }
 
-/* ── Stats Row ── */
+/* ==========================================================================
+   Stats Row
+   ========================================================================== */
 .stats-row { display: flex; gap: 25px; width: 100%; margin-bottom: 60px; }
 .stat-box {
     flex: 1;
-    background: #FFFFFF;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
     padding: 35px 20px;
-    border-radius: 0px;
     text-align: center;
-    box-shadow: var(--shadow-md);
-    border: 3px solid var(--border-color);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .stat-box:hover { 
-    transform: translate(-4px, -4px); 
-    box-shadow: var(--shadow-lg); 
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 .stat-box .number { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 42px; 
     font-weight: 800; 
     color: var(--primary); 
+    transition: color 0.4s ease;
+}
+.stat-box:hover .number {
+    color: var(--text-card-dark) !important;
 }
 .stat-box .label  { 
     font-family: 'Space Mono', monospace;
     font-size: 14px; 
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     margin-top: 8px; 
     font-weight: 700; 
     text-transform: uppercase;
+    transition: color 0.4s ease;
+}
+.stat-box:hover .label {
+    color: var(--text-card-dark) !important;
 }
 
-/* ── Visi & Misi ── */
+/* ==========================================================================
+   Visi & Misi (High readability active style)
+   ========================================================================== */
 .visimisi-wrapper {
-    background: #FFFFFF;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 40px;
-    border-radius: 0px;
     margin-bottom: 60px;
-    border: 3px solid var(--border-color);
     box-shadow: var(--shadow-md);
 }
 .visimisi-grid { display: flex; gap: 25px; }
 .vm-card { 
     flex: 1; 
-    background: var(--bg-light); 
+    background: var(--card-active-bg) !important; 
+    color: var(--text-card-body) !important;
     padding: 28px; 
-    border-radius: 0px; 
-    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius); 
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 .vm-title { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.vm-title i { color: var(--primary); font-size: 20px; }
+.vm-title i { color: var(--text-card-dark); font-size: 20px; }
 .vm-title span { 
     font-family: 'Space Grotesk', sans-serif;
-    color: var(--primary); 
+    color: var(--text-card-dark); 
     font-size: 20px; 
     font-weight: 800; 
     text-transform: uppercase;
 }
-.vm-card p { color: var(--text-dark); line-height: 1.8; font-size: 15px; }
+.vm-card p { color: var(--text-card-body) !important; line-height: 1.8; font-size: 15px; }
 .misi-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
-.misi-list li { display: flex; gap: 10px; align-items: flex-start; color: var(--text-dark); font-size: 15px; }
-.misi-list li i { color: var(--primary); margin-top: 3px; flex-shrink: 0; }
+.misi-list li { display: flex; gap: 10px; align-items: flex-start; color: var(--text-card-body) !important; font-size: 15px; }
+.misi-list li i { color: var(--text-card-dark); margin-top: 3px; flex-shrink: 0; }
 
-/* ── Nilai Inti ── */
+/* ==========================================================================
+   Nilai Inti
+   ========================================================================== */
 .nilai-section { margin-bottom: 70px; text-align: center; }
 .nilai-section .section-h2 { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 36px; 
     font-weight: 800; 
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     margin-bottom: 12px; 
     text-transform: uppercase;
 }
@@ -168,37 +252,48 @@
 .nilai-grid { display: flex; gap: 25px; }
 .nilai-card {
     flex: 1;
-    background: #FFFFFF;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
     padding: 35px 25px;
-    border-radius: 0px;
     text-align: center;
-    box-shadow: var(--shadow-md);
-    border: 3px solid var(--border-color);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .nilai-card:hover { 
-    transform: translate(-4px, -4px); 
-    box-shadow: var(--shadow-lg); 
-    border-color: var(--primary); 
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
-.nilai-card .icon { font-size: 38px; color: var(--primary); margin-bottom: 18px; }
+.nilai-card .icon { font-size: 38px; color: var(--primary); margin-bottom: 18px; transition: color 0.4s ease; }
+.nilai-card:hover .icon { color: var(--text-card-dark); }
 .nilai-card h3 { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 20px; 
     font-weight: 700; 
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     margin-bottom: 12px; 
     text-transform: uppercase;
+    transition: color 0.4s ease;
 }
-.nilai-card p { font-size: 15px; color: var(--text-muted); line-height: 1.8; }
+.nilai-card:hover h3 { color: var(--text-card-dark) !important; }
+.nilai-card p { font-size: 15px; color: var(--text-muted); line-height: 1.8; transition: color 0.4s ease; }
+.nilai-card:hover p { color: var(--text-card-muted) !important; }
 
-/* ── Tim Kami ── */
+/* ==========================================================================
+   Tim Kami (Visual parity for profiles)
+   ========================================================================== */
 .tim-section { margin-bottom: 60px; text-align: center; }
 .tim-section .section-h2 { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 36px; 
     font-weight: 800; 
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     margin-bottom: 12px; 
     text-transform: uppercase;
 }
@@ -211,33 +306,47 @@
 }
 .tim-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; text-align: center; }
 .tim-card {
-    background: #FFFFFF;
-    border-radius: 0px;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
     padding: 30px 20px;
-    border: 3px solid var(--border-color);
-    box-shadow: var(--shadow-md);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .tim-card:hover { 
-    transform: translate(-4px, -4px); 
-    box-shadow: var(--shadow-lg); 
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 .tim-card img { 
     width: 110px; 
     height: 110px; 
-    border-radius: 0px; 
+    border-radius: 50%; 
     object-fit: cover; 
     margin: 0 auto 16px; 
     display: block; 
-    border: 3px solid var(--border-color); 
-    box-shadow: 3px 3px 0px var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.4s ease;
+}
+.tim-card:hover img {
+    border-color: rgba(0, 0, 0, 0.15);
 }
 .tim-card h3 { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 18px; 
     font-weight: 800; 
-    color: var(--text-dark); 
+    color: #FFFFFF; 
     margin-bottom: 6px; 
+    transition: color 0.4s ease;
+}
+.tim-card:hover h3 {
+    color: var(--text-card-dark) !important;
 }
 .tim-card .role { 
     font-family: 'Space Mono', monospace;
@@ -246,24 +355,34 @@
     font-weight: 700; 
     margin-bottom: 10px; 
     text-transform: uppercase;
+    transition: color 0.4s ease;
 }
-.tim-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+.tim-card:hover .role {
+    color: var(--text-card-dark) !important;
+}
+.tim-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; transition: color 0.4s ease; }
+.tim-card:hover p { color: var(--text-card-muted) !important; }
 
-/* ── CTA ── */
+/* ==========================================================================
+   CTA Section
+   ========================================================================== */
 .cta-section {
-    background: var(--primary);
+    background: var(--card-bg);
+    border: var(--border-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 70px 40px;
-    border-radius: 0px;
-    border: 3px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-lg);
     text-align: center;
-    color: white;
+    color: var(--text-body);
     margin-bottom: 60px;
 }
 .cta-section h2 { 
     font-family: 'Space Grotesk', sans-serif;
     font-size: 34px; 
     font-weight: 800; 
+    color: #FFFFFF;
     margin-bottom: 14px; 
     text-transform: uppercase;
 }
@@ -277,50 +396,10 @@
     margin-right: auto; 
 }
 .cta-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-.btn-white {
-    background: white;
-    color: var(--text-dark);
-    border: 2px solid var(--border-color);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    border-radius: 0px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 16px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
-    text-decoration: none;
-}
-.btn-white:hover { 
-    background: var(--primary-light); 
-    transform: translate(2px, 2px); 
-    box-shadow: none;
-}
-.btn-outline-white {
-    background: var(--secondary);
-    color: var(--text-dark);
-    border: 2px solid var(--border-color);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    border-radius: 0px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: 16px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
-    text-decoration: none;
-}
-.btn-outline-white:hover { 
-    background: var(--primary-light);
-    transform: translate(2px, 2px); 
-    box-shadow: none;
-}
 
-/* ── Responsive ── */
+/* ==========================================================================
+   Responsive Media Queries
+   ========================================================================== */
 @media (max-width: 992px) {
     .about-box-inner { flex-direction: column; }
     .stats-row { flex-wrap: wrap; }

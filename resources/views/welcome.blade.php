@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>PT Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
+    <title>TB Cahaya Baru - Solusi Bahan Bangunan Terpercaya</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -137,7 +137,7 @@
     </section>
 
     <!-- ── MAIN SERVICES SECTION (Sync with Layanan Page) ── -->
-    <section id="layanan" class="section-padding" style="background-color: #F4F3F0;">
+    <section id="layanan" class="section-padding" style="background: rgba(0, 0, 0, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
         <div class="container">
             <div class="section-title fade-up">
                 <h2>Layanan Utama Kami</h2>
@@ -242,7 +242,7 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
-                <a href="/kontak#ulasan" class="btn btn-primary" style="position: relative; z-index: 10; pointer-events: auto; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                <button onclick="console.log('Button clicked'); openReviewModal()" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
                 </a>
             </div>
@@ -254,9 +254,9 @@
         <div class="container">
             <div class="tentang-content">
                 <div class="tentang-text fade-up">
-                    <h3>{{ $homepageSetting->about_title ?? 'Mengenal PT Cahaya Baru' }}</h3>
+                    <h3>{{ $homepageSetting->about_title ?? 'Mengenal TB Cahaya Baru' }}</h3>
                     <div class="about-desc">
-                        {!! $homepageSetting->about_desc_1 ?? '<p>Berdiri sejak 2010, PT Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>' !!}
+                        {!! $homepageSetting->about_desc_1 ?? '<p>Berdiri sejak 2010, TB Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.</p>' !!}
                     </div>
                     <div class="about-desc">
                         {!! $homepageSetting->about_desc_2 ?? '<p>Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.</p>' !!}

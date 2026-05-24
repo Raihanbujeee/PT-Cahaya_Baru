@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Katalog Produk - PT Cahaya Baru</title>
+    <title>Katalog Produk - TB Cahaya Baru</title>
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/produk.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
 </head>
@@ -116,7 +116,7 @@
         'price' => (float) $p->selling_price,
         'unit' => 'pcs',
         'minOrder' => '1',
-        'supplier' => 'PT Cahaya Baru',
+        'supplier' => 'TB Cahaya Baru',
         'image' => $p->image ? asset('storage/' . $p->image) : $imgFallback,
         'description' => 'Produk ' . $p->name . ' dari merek ' . ($p->brand ? $p->brand->name : 'unggulan') . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.',
         'date' => $p->created_at ? $p->created_at->format('Y-m-d') : now()->format('Y-m-d'),

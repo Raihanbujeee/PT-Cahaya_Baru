@@ -1,19 +1,66 @@
-/* ── LAYANAN PAGE STYLES ── */
+/* TB Cahaya Baru - Halaman Layanan Futuristic Stylesheet */
 
 :root {
-    --primary: #C27A1A;
-    --primary-hover: #A86710;
-    --bg-light: #F8F8F8;
-    --bg-beige: #F5F2EB;
-    --text-dark: #1A1A1A;
-    --text-muted: #777777;
-    --border-color: #E5E5E5;
+    --primary: #995F2F; /* Copper orange-brown */
+    --primary-hover: #804F26;
+    --primary-light: rgba(153, 95, 47, 0.15);
+    --secondary: #978F66; /* Olive gold */
+    --accent: #978F66;
+    
+    /* Theme Backgrounds */
+    --bg-gradient: linear-gradient(135deg, #11241B 0%, #162E21 40%, #2E2F1A 100%);
+    --bg-white: #11241B; /* Fallback Solid Green-black */
+    --bg-light: rgba(255, 255, 255, 0.03); /* Glass container overlay */
+    --bg-beige: rgba(0, 0, 0, 0.25); /* Darker backdrop */
+    
+    /* Card backgrounds: Glassmorphism by default! */
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-active-bg: #E4D6A9; /* Sandy cream active state */
+    
+    /* Text colors */
+    --text-dark: #FFFFFF;
+    --text-body: #E5EAD8; /* Soft green-cream */
+    --text-muted: #A3AE98; /* Muted greenish-gray */
+    
+    /* Text inside active beige card */
+    --text-card-dark: #1C2A1E; /* Deep green-black */
+    --text-card-body: #2B3A2D;
+    --text-card-muted: #566859;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-card: 1px solid rgba(255, 255, 255, 0.08);
+    
+    /* Glows & Shadows */
+    --glow-primary: 0 0 20px rgba(153, 95, 47, 0.45);
+    --glow-secondary: 0 0 25px rgba(228, 214, 169, 0.35); /* Beige card glow */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
 }
 
-/* ── HERO SECTION ── */
+body {
+    background: var(--bg-gradient) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--text-body);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
 .layanan-hero {
     position: relative;
-    min-height: 550px;
+    min-height: 480px;
     display: flex;
     align-items: center;
     background: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkDv1PSxUnmv2LYh-QQfKViwU_MLybIszaWCp0C-HC5UZfdp_LJ1KD6x0X1nCe3JnucTOKXnV_b2WepmVh598eJ8RzGvp-oHAXxopmpuisJcFqea7bsBxFWb6eD2kYzGs_roxjtJdWBMlwhdpjMheg4aP8enIikm23juH-K5_wR3BFux6dcZnJxE75qCbXPKqq8aXV7z5f-U0qm_DNQLquG5W0xnJeT2EHSRpofkKF3-3Biw5EMVhpkFGJhNAch9IfA5aHJ-TEnuo') center/cover no-repeat;
@@ -24,7 +71,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(17, 36, 27, 0.7) 0%, rgba(22, 46, 33, 0.8) 50%, rgba(45, 45, 27, 0.85) 100%);
     z-index: 1;
 }
 
@@ -34,22 +81,30 @@
     max-width: 850px;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 .hero-breadcrumb {
+    font-family: 'Space Mono', monospace;
     font-size: 14px;
     margin-bottom: 24px;
     opacity: 0.9;
+    text-transform: uppercase;
+    color: var(--primary);
 }
 
 .layanan-hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 48px;
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #FFFFFF;
 }
 
 .layanan-hero p {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 32px;
@@ -58,92 +113,156 @@
 
 .hero-actions {
     display: flex;
+    justify-content: center;
     gap: 16px;
 }
 
 .btn-hero-blur {
-    background: rgba(255,255,255,0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.3s ease;
 }
 
 .btn-hero-blur:hover {
     background: white;
-    color: var(--primary);
+    color: #11241B;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
-/* ── ADVANTAGES SECTION ── */
+/* ==========================================================================
+   Advantages Section
+   ========================================================================== */
 .advantages-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 24px;
     margin-top: 40px;
 }
 
 .advantage-card {
-    background: white;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
     padding: 40px 20px;
-    border: 1px solid var(--border-color);
     text-align: center;
-    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .advantage-card:hover {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 
 .advantage-icon {
     width: 60px;
     height: 60px;
-    background: #FFEDE0;
+    background: rgba(255, 255, 255, 0.08);
     color: var(--primary);
-    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 24px;
     font-size: 28px;
+    transition: all 0.4s ease;
+}
+
+.advantage-card:hover .advantage-icon {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--text-card-dark);
+    border-color: rgba(0, 0, 0, 0.12);
 }
 
 .advantage-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 12px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
+}
+
+.advantage-card:hover h3 {
+    color: var(--text-card-dark) !important;
 }
 
 .advantage-card p {
     font-size: 14px;
     color: var(--text-muted);
     line-height: 1.5;
+    transition: color 0.4s ease;
 }
 
-/* ── MAIN SERVICES SECTION ── */
+.advantage-card:hover p {
+    color: var(--text-card-muted) !important;
+}
+
+/* ==========================================================================
+   Main Services Section
+   ========================================================================== */
 .services-main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 32px;
     max-width: 1000px;
     margin: 0 auto;
 }
 
 .service-main-card {
-    background: #FDFCFB;
-    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
     padding: 40px;
     position: relative;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.service-main-card:hover {
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg), var(--glow-primary);
 }
 
 .service-badge {
     position: absolute;
     top: 40px;
     right: 40px;
-    background: #E8E5E0;
-    padding: 4px 12px;
-    font-size: 11px;
+    background: var(--primary);
+    color: #FFFFFF;
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--text-dark);
+    border-radius: 20px;
 }
 
 .service-main-icon {
@@ -153,9 +272,17 @@
 }
 
 .service-main-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    transition: color 0.4s ease;
+}
+
+.service-main-card:hover h3 {
+    color: var(--text-card-dark) !important;
 }
 
 .service-features {
@@ -169,29 +296,59 @@
     margin-bottom: 12px;
     font-size: 15px;
     color: var(--text-body);
+    transition: color 0.4s ease;
+}
+
+.service-main-card:hover .service-features li {
+    color: var(--text-card-body) !important;
 }
 
 .service-features i {
     color: var(--primary);
     font-size: 18px;
+    transition: color 0.4s ease;
+}
+
+.service-main-card:hover .service-features i {
+    color: var(--text-card-dark) !important;
 }
 
 .service-actions {
     display: flex;
     gap: 12px;
-    border-top: 1px solid #eee;
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
     padding-top: 24px;
+    transition: border-top-color 0.4s ease;
+}
+
+.service-main-card:hover .service-actions {
+    border-top-color: rgba(0, 0, 0, 0.1);
 }
 
 .btn-pesan {
     flex-grow: 1;
-    background: #8B4513; /* Warna coklat sesuai gambar */
-    color: white;
+    background: var(--primary);
+    color: #FFFFFF;
+    border: 1px solid var(--primary);
+    border-radius: 30px;
+    font-family: 'Space Mono', monospace;
     font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-pesan:hover {
-    background: #70380f;
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-primary);
 }
 
 .btn-chat {
@@ -203,9 +360,21 @@
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    border: 1px solid #25D366;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.btn-chat:hover {
+    background: #1da851;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);
 }
 
-/* ── RESPONSIVE ── */
+/* ==========================================================================
+   Responsive Media Queries
+   ========================================================================== */
 @media (max-width: 1024px) {
     .advantages-grid { grid-template-columns: repeat(2, 1fr); }
     .services-main-grid { grid-template-columns: 1fr; }

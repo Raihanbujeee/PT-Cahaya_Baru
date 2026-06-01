@@ -24,16 +24,19 @@ Route::get('/produk/{id}', function ($id) {
 });
 
 Route::get('/tentang-kami', function () {
-    return view('tentang');
+    $tentangSetting = \App\Models\TentangSetting::first();
+    return view('tentang', compact('tentangSetting'));
 });
 
 Route::get('/kontak', function () {
-    return view('kontak');
+    $kontakSetting = \App\Models\KontakSetting::first();
+    return view('kontak', compact('kontakSetting'));
 });
 
 Route::get('/layanan', function () {
     $services = App\Models\Service::all();
-    return view('layanan', compact('services'));
+    $layananSetting = \App\Models\LayananSetting::first();
+    return view('layanan', compact('services', 'layananSetting'));
 });
 
 
@@ -193,7 +196,7 @@ Route::post('/checkout', function (Illuminate\Http\Request $request) {
 
             // 6. Generate WA Message
             $waNumber = '6283834079959';
-            $message  = "Halo PT Cahaya Baru, saya ingin memproses pesanan saya:\n\n";
+            $message  = "Halo TB Cahaya Baru, saya ingin memproses pesanan saya:\n\n";
             $message .= "*Data Pemesan:*\n";
             $message .= "Nama: {$customer->name}\n";
             $message .= "No. HP: {$customer->phone_number}\n";

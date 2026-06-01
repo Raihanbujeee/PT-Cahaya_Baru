@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jasa & Layanan - PT Cahaya Baru</title>
+    <title>Jasa &amp; Layanan - TB Cahaya Baru</title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,13 +22,16 @@
     @include('partials.header', ['activePage' => 'layanan'])
 
     <!-- ── HERO SECTION ── -->
-    <section class="layanan-hero">
-        <div class="container">
+    <section class="layanan-hero" @if(isset($layananSetting->hero_image)) style="background: url('{{ asset('storage/' . $layananSetting->hero_image) }}') center/cover no-repeat; position: relative;" @endif>
+        @if(isset($layananSetting->hero_image))
+            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6);"></div>
+        @endif
+        <div class="container" style="position: relative; z-index: 2;">
             <nav class="hero-breadcrumb fade-up">
                 Beranda &nbsp; > &nbsp; <strong>Jasa & Layanan</strong>
             </nav>
-            <h1 class="fade-up">Layanan Lengkap untuk Kebutuhan Bangunan Anda</h1>
-            <p class="fade-up" style="transition-delay: 0.1s">Dari konsultasi hingga instalasi, kami menyediakan solusi terpadu dengan standar kualitas tinggi untuk menjamin kesuksesan proyek Anda.</p>
+            <h1 class="fade-up">{{ $layananSetting->hero_title ?? 'Layanan Lengkap untuk Kebutuhan Bangunan Anda' }}</h1>
+            <p class="fade-up" style="transition-delay: 0.1s">{{ $layananSetting->hero_description ?? 'Dari konsultasi hingga instalasi, kami menyediakan solusi terpadu dengan standar kualitas tinggi untuk menjamin kesuksesan proyek Anda.' }}</p>
             <div class="hero-actions fade-up" style="transition-delay: 0.2s">
                 <a href="https://wa.me/6283834079959?text=Halo%2C%20saya%20ingin%20konsultasi%20gratis" class="btn btn-primary">Konsultasi Gratis</a>
                 <a href="/produk" class="btn btn-hero-blur">Lihat Produk Kami</a>
@@ -76,7 +79,7 @@
     </section>
 
     <!-- ── MAIN SERVICES SECTION ── -->
-    <section class="section-padding" style="background-color: #F4F3F0;">
+    <section class="section-padding" style="background: rgba(0, 0, 0, 0.15); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
         <div class="container">
             <div class="section-title fade-up">
                 <h2>Layanan Utama Kami</h2>

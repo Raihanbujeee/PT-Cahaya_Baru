@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tentang Kami - PT Cahaya Baru</title>
+    <title>Tentang Kami - TB Cahaya Baru</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,10 +41,9 @@
         {{-- Header atas --}}
         <div class="about-hero">
             <h1>
-                Mitra Terpercaya Untuk Setiap<br>
-                Proyek Bangunan Anda
+                {!! nl2br(e($tentangSetting->hero_title ?? "Mitra Terpercaya Untuk Setiap\nProyek Bangunan Anda")) !!}
             </h1>
-            <p>Kami hadir memberikan solusi terbaik untuk kebutuhan bangunan Anda.</p>
+            <p>{{ $tentangSetting->hero_description ?? 'Kami hadir memberikan solusi terbaik untuk kebutuhan bangunan Anda.' }}</p>
         </div>
 
         {{-- Kotak tengah dengan foto --}}
@@ -60,8 +59,18 @@
                         <div class="about-label-line"></div>
                         <span>Tentang Kami</span>
                     </div>
-                    <h2>{{ $about_contents->title }}</h2>
-                    <p>{!! $about_contents->description !!}</p>
+                    <h2>PT Cahaya Baru — Solusi Bahan Bangunan Sejak 2010</h2>
+                    <p>
+                        Berawal dari sebuah toko kecil di Surabaya, PT Cahaya Baru didirikan dengan satu tujuan sederhana:
+                        menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari 14 tahun, kami telah
+                        berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga
+                        pemilik rumah perorangan.
+                    </p>
+                    <p>
+                        Kami percaya bahwa fondasi bangunan yang kuat dimulai dari material yang tepat dan hubungan jangka panjang
+                        yang didasari rasa saling percaya. Tim kami selalu siap memberikan konsultasi profesional untuk memastikan
+                        setiap proyek Anda berjalan lancar tanpa kendala suplai material.
+                    </p>
                     <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:20px;">
                         <a href="/produk" class="btn btn-primary"><i class="ri-store-2-line"></i> Lihat Produk</a>
                         <a href="/kontak" class="btn btn-outline"><i class="ri-phone-line"></i> Hubungi Kami</a>

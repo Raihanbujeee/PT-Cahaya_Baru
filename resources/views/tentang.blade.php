@@ -1,3 +1,9 @@
+@php
+    $about_contents = \App\Models\AboutContents::first();
+    // dd($about_contents);
+    $stats = \App\Models\CompanyStats::orderBy('id', 'asc')->get(); 
+    // return view('tentang', compact('about_contents', 'stats')); 
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -45,26 +51,17 @@
         <div class="about-box">
             <div class="about-box-inner">
                 <div class="about-box-img">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                         alt="PT Cahaya Baru">
+                    @if($about_contents->image)
+                        <img src="{{ asset('storage/' . $about_contents->image) }}" alt="Tentang Kami">
+                    @endif
                 </div>
                 <div class="about-box-text">
                     <div class="about-label">
                         <div class="about-label-line"></div>
                         <span>Tentang Kami</span>
                     </div>
-                    <h2>PT Cahaya Baru — Solusi Bahan Bangunan Sejak 2010</h2>
-                    <p>
-                        Berawal dari sebuah toko kecil di Surabaya, PT Cahaya Baru didirikan dengan satu tujuan sederhana:
-                        menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari 14 tahun, kami telah
-                        berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga
-                        pemilik rumah perorangan.
-                    </p>
-                    <p>
-                        Kami percaya bahwa fondasi bangunan yang kuat dimulai dari material yang tepat dan hubungan jangka panjang
-                        yang didasari rasa saling percaya. Tim kami selalu siap memberikan konsultasi profesional untuk memastikan
-                        setiap proyek Anda berjalan lancar tanpa kendala suplai material.
-                    </p>
+                    <h2>{{ $about_contents->title }}</h2>
+                    <p>{!! $about_contents->description !!}</p>
                     <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:20px;">
                         <a href="/produk" class="btn btn-primary"><i class="ri-store-2-line"></i> Lihat Produk</a>
                         <a href="/kontak" class="btn btn-outline"><i class="ri-phone-line"></i> Hubungi Kami</a>
@@ -75,22 +72,12 @@
 
         {{-- Statistik 4 kolom --}}
         <div class="stats-row">
-            <div class="stat-box">
-                <div class="number">14+</div>
-                <div class="label">Tahun Pengalaman</div>
-            </div>
-            <div class="stat-box">
-                <div class="number">500+</div>
-                <div class="label">Jenis Produk</div>
-            </div>
-            <div class="stat-box">
-                <div class="number">50+</div>
-                <div class="label">Mitra Supplier</div>
-            </div>
-            <div class="stat-box">
-                <div class="number">100.000+</div>
-                <div class="label">Pelanggan Puas</div>
-            </div>
+            @foreach($stats as $stat)
+                <div class="stat-box">
+                    <div class="number">{{ $stat->value }}</div>
+                    <div class="label">{{ $stat->label }}</div>
+                </div>
+            @endforeach
         </div>
 
         {{-- Visi & Misi --}}

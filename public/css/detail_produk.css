@@ -1,30 +1,51 @@
-/* PT Cahaya Baru - Detail Produk Retro Brutalist Stylesheet */
+/* TB Cahaya Baru - Detail Produk Futuristic Stylesheet */
 
 :root {
-    --primary: #E24A32;
-    --primary-hover: #C93922;
-    --primary-light: #F5E6CC;
-    --secondary: #F3B562;
-    --accent: #1A5F7A;
-    --bg-white: #FFF8E7;
-    --bg-light: #F3EBD4;
-    --bg-beige: #E6DBC0;
-    --text-dark: #1C1B1A;
-    --text-body: #2B2A29;
-    --text-muted: #5B5854;
-    --border-color: #1C1B1A;
-    --shadow-sm: 2px 2px 0px #1C1B1A;
-    --shadow-md: 4px 4px 0px #1C1B1A;
-    --shadow-lg: 6px 6px 0px #1C1B1A;
-    --success: #2e7d32;
-    --success-bg: #e8f5e9;
-    --danger: #c62828;
-    --danger-bg: #ffebee;
+    --primary: #995F2F; /* Copper orange-brown */
+    --primary-hover: #804F26;
+    --primary-light: rgba(153, 95, 47, 0.15);
+    --secondary: #978F66; /* Olive gold */
+    --accent: #978F66;
+    
+    /* Theme Backgrounds */
+    --bg-gradient: linear-gradient(135deg, #11241B 0%, #162E21 40%, #2E2F1A 100%);
+    --bg-white: #11241B; /* Fallback Solid Green-black */
+    --bg-light: rgba(255, 255, 255, 0.03); /* Glass container overlay */
+    --bg-beige: rgba(0, 0, 0, 0.25); /* Darker backdrop */
+    
+    /* Card backgrounds: Glassmorphism by default! */
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-active-bg: #E4D6A9; /* Sandy cream active state */
+    
+    /* Text colors */
+    --text-dark: #FFFFFF;
+    --text-body: #E5EAD8; /* Soft green-cream */
+    --text-muted: #A3AE98; /* Muted greenish-gray */
+    
+    /* Text inside active beige card */
+    --text-card-dark: #1C2A1E; /* Deep green-black */
+    --text-card-body: #2B3A2D;
+    --text-card-muted: #566859;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-card: 1px solid rgba(255, 255, 255, 0.08);
+    
+    /* Glows & Shadows */
+    --glow-primary: 0 0 20px rgba(153, 95, 47, 0.45);
+    --glow-secondary: 0 0 25px rgba(228, 214, 169, 0.35); /* Beige card glow */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
 }
 
 body {
-    background-color: var(--bg-white);
-    color: var(--text-dark);
+    background: var(--bg-gradient) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--text-body);
     line-height: 1.6;
 }
 
@@ -39,8 +60,8 @@ body {
    ========================================================================== */
 .page-header {
     padding: 32px 0 16px;
-    background: var(--bg-light);
-    border-bottom: 3px solid var(--border-color);
+    background: rgba(17, 36, 27, 0.5);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .breadcrumb {
@@ -57,24 +78,27 @@ body {
 }
 
 .breadcrumb a:hover {
-    color: var(--primary);
+    color: #FFFFFF;
 }
 
 .breadcrumb span {
     margin: 0 8px;
-    color: var(--border-color);
+    color: var(--primary);
 }
 
 /* ==========================================================================
-   Product Detail Card
+   Product Detail Section
    ========================================================================== */
 .product-detail-section {
     padding: 56px 0;
 }
 
 .detail-card {
-    background: #FFFFFF;
-    border: 3px solid var(--border-color);
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow: var(--shadow-md);
     overflow: hidden;
     display: grid;
@@ -85,10 +109,11 @@ body {
 
 .product-img-wrap {
     width: 100%;
-    border: 3px solid var(--border-color);
+    border: var(--border-card);
+    border-radius: var(--border-radius);
     aspect-ratio: 1;
     overflow: hidden;
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.02);
     box-shadow: var(--shadow-sm);
 }
 
@@ -97,6 +122,11 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.4s ease;
+}
+
+.product-img-wrap:hover img {
+    transform: scale(1.03);
 }
 
 .product-info {
@@ -107,14 +137,14 @@ body {
 
 .product-brand {
     display: inline-block;
-    padding: 6px 14px;
-    background: var(--secondary);
-    color: var(--text-dark);
+    padding: 6px 16px;
+    background: var(--primary-light);
+    color: #FFFFFF;
     font-family: 'Space Mono', monospace;
     font-size: 12px;
     font-weight: 700;
-    border: 2px solid var(--border-color);
-    box-shadow: 2px 2px 0px var(--border-color);
+    border: 1px solid var(--primary);
+    border-radius: 20px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     width: fit-content;
@@ -123,7 +153,7 @@ body {
 .product-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 36px;
-    color: var(--text-dark);
+    color: #FFFFFF;
     font-weight: 800;
     line-height: 1.2;
     text-transform: uppercase;
@@ -134,15 +164,16 @@ body {
     color: var(--text-muted);
     font-size: 13px;
     font-family: 'Space Mono', monospace;
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-color);
-    padding: 4px 8px;
+    border-radius: 20px;
+    padding: 4px 12px;
     width: fit-content;
 }
 
 .product-price-box {
-    border-top: 3px dashed var(--border-color);
-    border-bottom: 3px dashed var(--border-color);
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
     padding: 24px 0;
     display: flex;
     align-items: baseline;
@@ -153,7 +184,7 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 40px;
     font-weight: 800;
-    color: var(--primary);
+    color: #FFFFFF;
 }
 
 .product-unit {
@@ -164,13 +195,19 @@ body {
 }
 
 .product-desc {
-    color: var(--text-body);
+    color: var(--text-card-body) !important;
     line-height: 1.8;
-    font-size: 16px;
+    font-size: 15px;
     padding: 24px;
-    background: var(--bg-light);
-    border: 2px solid var(--border-color);
+    background: var(--card-active-bg) !important;
+    border: var(--border-card);
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
+}
+
+.product-desc h3, .product-desc h4 {
+    color: var(--text-card-dark) !important;
+    margin-bottom: 12px;
 }
 
 .product-specs {
@@ -184,15 +221,17 @@ body {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 16px;
-    border: 2px solid var(--border-color);
-    background: #FFFFFF;
+    padding: 16px 20px;
+    border: var(--border-card);
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
 }
 
 .spec-label {
     font-family: 'Space Mono', monospace;
-    color: var(--text-muted);
+    color: var(--text-card-muted) !important;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -202,10 +241,14 @@ body {
 .spec-val {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    color: var(--text-dark);
+    color: var(--text-card-dark) !important;
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.spec-val i {
+    color: var(--text-card-dark) !important;
 }
 
 .product-actions {
@@ -217,7 +260,8 @@ body {
 .btn-wa {
     background: #25D366;
     color: white;
-    border: 3px solid var(--border-color);
+    border: 1px solid #25D366;
+    border-radius: 30px;
     padding: 16px 32px;
     font-family: 'Space Mono', monospace;
     font-weight: 700;
@@ -227,7 +271,7 @@ body {
     gap: 12px;
     font-size: 16px;
     text-transform: uppercase;
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
+    transition: all 0.3s ease;
     flex-grow: 1;
     box-shadow: var(--shadow-sm);
     cursor: pointer;
@@ -235,8 +279,9 @@ body {
 
 .btn-wa:hover {
     background: #1da851;
-    transform: translate(2px, 2px);
-    box-shadow: none;
+    border-color: #1da851;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
 }
 
 @media (max-width: 992px) {

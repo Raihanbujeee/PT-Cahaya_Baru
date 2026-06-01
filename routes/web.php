@@ -196,7 +196,7 @@ Route::post('/checkout', function (Illuminate\Http\Request $request) {
 
             // 6. Generate WA Message
             $waNumber = '6283834079959';
-            $message  = "Halo PT Cahaya Baru, saya ingin memproses pesanan saya:\n\n";
+            $message  = "Halo TB Cahaya Baru, saya ingin memproses pesanan saya:\n\n";
             $message .= "*Data Pemesan:*\n";
             $message .= "Nama: {$customer->name}\n";
             $message .= "No. HP: {$customer->phone_number}\n";

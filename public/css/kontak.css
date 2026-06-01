@@ -1,17 +1,73 @@
-/* ── KONTAK PAGE STYLES ── */
+/* TB Cahaya Baru - Halaman Kontak Futuristic Stylesheet */
 
+:root {
+    --primary: #995F2F; /* Copper orange-brown */
+    --primary-hover: #804F26;
+    --primary-light: rgba(153, 95, 47, 0.15);
+    --secondary: #978F66; /* Olive gold */
+    --accent: #978F66;
+    
+    /* Theme Backgrounds */
+    --bg-gradient: linear-gradient(135deg, #11241B 0%, #162E21 40%, #2E2F1A 100%);
+    --bg-white: #11241B; /* Fallback Solid Green-black */
+    --bg-light: rgba(255, 255, 255, 0.03); /* Glass container overlay */
+    --bg-beige: rgba(0, 0, 0, 0.25); /* Darker backdrop */
+    
+    /* Card backgrounds: Glassmorphism by default! */
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --card-active-bg: #E4D6A9; /* Sandy cream active state */
+    
+    /* Text colors */
+    --text-dark: #FFFFFF;
+    --text-body: #E5EAD8; /* Soft green-cream */
+    --text-muted: #A3AE98; /* Muted greenish-gray */
+    
+    /* Text inside active beige card */
+    --text-card-dark: #1C2A1E; /* Deep green-black */
+    --text-card-body: #2B3A2D;
+    --text-card-muted: #566859;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-card: 1px solid rgba(255, 255, 255, 0.08);
+    
+    /* Glows & Shadows */
+    --glow-primary: 0 0 20px rgba(153, 95, 47, 0.45);
+    --glow-secondary: 0 0 25px rgba(228, 214, 169, 0.35); /* Beige card glow */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.4);
+    
+    --border-radius: 16px;
+    --border-radius-lg: 24px;
+}
+
+body {
+    background: var(--bg-gradient) no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: var(--text-body);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
 .kontak-hero {
     text-align: center;
     padding: 80px 20px;
-    background-color: var(--bg-white);
-    border-bottom: 3px solid var(--border-color);
 }
 
 .kontak-hero h1 {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 42px;
     font-weight: 800;
-    color: var(--text-dark);
+    color: #FFFFFF;
     margin-bottom: 16px;
     letter-spacing: -0.5px;
     text-transform: uppercase;
@@ -26,48 +82,61 @@
     line-height: 1.7;
 }
 
-/* ── CONTACT CARDS ── */
+/* ==========================================================================
+   Contact Cards
+   ========================================================================== */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-top: -40px; /* Overlap sedikit ke hero */
+    margin-top: -20px;
     position: relative;
     z-index: 5;
 }
 
 .contact-card {
-    background: #FFFFFF;
-    border: 2px solid var(--border-color);
-    border-radius: 0px;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
     padding: 40px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .contact-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary);
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 
 .card-icon {
     width: 64px;
     height: 64px;
-    background: var(--secondary);
-    color: var(--text-dark);
-    border: 2px solid var(--border-color);
-    border-radius: 0px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--primary);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 28px;
     margin-bottom: 24px;
-    box-shadow: 2px 2px 0px var(--border-color);
+    transition: all 0.4s ease;
+}
+
+.contact-card:hover .card-icon {
+    background: rgba(0, 0, 0, 0.08);
+    color: var(--text-card-dark);
+    border-color: rgba(0, 0, 0, 0.12);
 }
 
 .contact-card h3 {
@@ -76,7 +145,11 @@
     font-weight: 700;
     margin-bottom: 12px;
     text-transform: uppercase;
-    color: var(--text-dark);
+    color: #FFFFFF;
+    transition: color 0.4s ease;
+}
+.contact-card:hover h3 {
+    color: var(--text-card-dark) !important;
 }
 
 .contact-card p {
@@ -85,9 +158,19 @@
     line-height: 1.6;
     margin-bottom: 24px;
     flex-grow: 1;
+    transition: color 0.4s ease;
+}
+.contact-card:hover p {
+    color: var(--text-card-muted) !important;
 }
 
-/* ── BOTTOM SECTION ── */
+.contact-card .btn {
+    width: 100%;
+}
+
+/* ==========================================================================
+   Bottom Section
+   ========================================================================== */
 .bottom-section {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -98,12 +181,23 @@
 }
 
 .info-box {
-    background: #FFFFFF;
-    border: 3px solid var(--border-color);
-    border-radius: 0px;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-body);
     padding: 32px;
     margin-bottom: 24px;
     box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.info-box:hover {
+    background: var(--card-active-bg) !important;
+    color: var(--text-card-body) !important;
+    border-color: var(--card-active-bg);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 
 .info-box h3 {
@@ -115,28 +209,50 @@
     gap: 10px;
     margin-bottom: 20px;
     text-transform: uppercase;
+    color: #FFFFFF;
+    transition: color 0.4s ease;
+}
+.info-box:hover h3 {
+    color: var(--text-card-dark) !important;
 }
 
-.info-box h3 i { color: var(--primary); }
+.info-box h3 i { 
+    color: var(--primary); 
+    transition: color 0.4s ease;
+}
+.info-box:hover h3 i {
+    color: var(--text-card-dark) !important;
+}
 
 .jam-row {
     display: flex;
     justify-content: space-between;
     padding: 12px 0;
-    border-bottom: 2px dashed var(--bg-beige);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
     font-size: 14px;
     font-family: 'Space Mono', monospace;
+    transition: border-bottom-color 0.4s ease;
+}
+.info-box:hover .jam-row {
+    border-bottom-color: rgba(98, 43, 20, 0.15);
 }
 
 .jam-row:last-child { border-bottom: none; }
 .jam-row .time { font-weight: 700; }
-.jam-row .tutup { color: var(--primary); font-weight: 700; }
+.jam-row .tutup { color: var(--primary); font-weight: 700; transition: color 0.4s ease; }
+.info-box:hover .jam-row .tutup {
+    color: #c62828;
+}
 
-/* ── FORM BOX ── */
+/* ==========================================================================
+   Form Box
+   ========================================================================== */
 .form-box {
-    background: #FFFFFF;
-    border: 3px solid var(--border-color);
-    border-radius: 0px;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 40px;
     box-shadow: var(--shadow-md);
 }
@@ -147,6 +263,7 @@
     font-weight: 800;
     margin-bottom: 10px;
     text-transform: uppercase;
+    color: #FFFFFF;
 }
 
 .form-sub {
@@ -164,7 +281,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 8px;
-    color: var(--text-dark);
+    color: var(--text-body);
 }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -172,19 +289,22 @@
 input, select, textarea {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid var(--border-color);
-    border-radius: 0px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 15px;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
     box-shadow: var(--shadow-sm);
-    background-color: #FFFFFF;
+    box-sizing: border-box;
 }
 
 input:focus, select:focus, textarea:focus {
-    border-color: var(--primary);
     outline: none;
-    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: var(--glow-primary);
 }
 
 .btn-submit {
@@ -194,32 +314,36 @@ input:focus, select:focus, textarea:focus {
     font-weight: 700;
 }
 
-/* ── MAP SECTION ── */
+/* ==========================================================================
+   Map Section
+   ========================================================================== */
 .map-container {
     margin-bottom: 80px;
 }
 
 .map-card {
-    background: #FFFFFF;
+    background: var(--card-bg);
+    border: var(--border-card);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 12px;
-    border-radius: 0px;
-    border: 3px solid var(--border-color);
     box-shadow: var(--shadow-lg);
     overflow: hidden;
     height: 450px;
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .map-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 
 .map-card iframe {
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 0px;
+    border-radius: var(--border-radius);
     display: block;
 }
 

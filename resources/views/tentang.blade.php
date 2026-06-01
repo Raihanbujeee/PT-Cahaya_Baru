@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tentang Kami - PT Cahaya Baru</title>
+    <title>Tentang Kami - TB Cahaya Baru</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,18 +44,26 @@
         <div class="about-box">
             <div class="about-box-inner">
                 <div class="about-box-img">
-                    <img src="{{ isset($tentangSetting->hero_image) ? asset('storage/' . $tentangSetting->hero_image) : 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }}"
-                         alt="PT Cahaya Baru">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                         alt="TB Cahaya Baru">
                 </div>
                 <div class="about-box-text">
                     <div class="about-label">
                         <div class="about-label-line"></div>
                         <span>Tentang Kami</span>
                     </div>
-                    <h2>{{ $tentangSetting->about_title ?? 'PT Cahaya Baru — Solusi Bahan Bangunan Sejak 2010' }}</h2>
-                    <div class="about-desc">
-                        {!! $tentangSetting->about_description ?? '<p>Berawal dari sebuah toko kecil di Surabaya, PT Cahaya Baru didirikan dengan satu tujuan sederhana: menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari 14 tahun, kami telah berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga pemilik rumah perorangan.</p><p>Kami percaya bahwa fondasi bangunan yang kuat dimulai dari material yang tepat dan hubungan jangka panjang yang didasari rasa saling percaya. Tim kami selalu siap memberikan konsultasi profesional untuk memastikan setiap proyek Anda berjalan lancar tanpa kendala suplai material.</p>' !!}
-                    </div>
+                    <h2>TB Cahaya Baru — Solusi Bahan Bangunan Sejak 2010</h2>
+                    <p>
+                        Berawal dari sebuah toko kecil di Surabaya, TB Cahaya Baru didirikan dengan satu tujuan sederhana:
+                        menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari 14 tahun, kami telah
+                        berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga
+                        pemilik rumah perorangan.
+                    </p>
+                    <p>
+                        Kami percaya bahwa fondasi bangunan yang kuat dimulai dari material yang tepat dan hubungan jangka panjang
+                        yang didasari rasa saling percaya. Tim kami selalu siap memberikan konsultasi profesional untuk memastikan
+                        setiap proyek Anda berjalan lancar tanpa kendala suplai material.
+                    </p>
                     <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:20px;">
                         <a href="/produk" class="btn btn-primary"><i class="ri-store-2-line"></i> Lihat Produk</a>
                         <a href="/kontak" class="btn btn-outline"><i class="ri-phone-line"></i> Hubungi Kami</a>

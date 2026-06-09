@@ -84,6 +84,21 @@
             <div class="section-title fade-up">
                 <h2>Layanan Utama Kami</h2>
             </div>
+
+            <!-- Search & Filter Controls -->
+            <div class="search-filter-container fade-up">
+                <div class="search-box">
+                    <i class="ri-search-line search-icon"></i>
+                    <input type="text" id="service-search" placeholder="Cari jasa atau layanan...">
+                </div>
+                <div class="filter-pills">
+                    <button class="filter-pill active" data-filter="all">Semua</button>
+                    <button class="filter-pill" data-filter="pemasangan">Pemasangan</button>
+                    <button class="filter-pill" data-filter="pengantaran">Pengantaran</button>
+                    <button class="filter-pill" data-filter="lainnya">Lainnya</button>
+                </div>
+            </div>
+
             <div class="services-main-grid">
                 @php
                     $icons = [
@@ -104,7 +119,11 @@
                             }
                         }
                     @endphp
-                    <div class="service-main-card fade-up" style="transition-delay: {{ $index * 0.1 }}s">
+                    <div class="service-main-card fade-up" 
+                         data-name="{{ strtolower($service->name) }}" 
+                         data-description="{{ strtolower($service->description) }}" 
+                         data-type="{{ $service->type }}" 
+                         style="transition-delay: {{ $index * 0.1 }}s">
                         <div class="service-badge">{{ $service->price > 0 ? 'Rp ' . number_format($service->price, 0, ',', '.') : 'Gratis' }}</div>
                         <div class="service-main-icon">
                             <i class="{{ $icon }}"></i>
@@ -119,6 +138,13 @@
                         </div>
                     </div>
                 @endforeach
+
+                <!-- No results message -->
+                <div id="no-services-message" class="no-results-message" style="display: none;">
+                    <i class="ri-search-eye-line"></i>
+                    <h3>Layanan Tidak Ditemukan</h3>
+                    <p>Coba gunakan kata kunci pencarian atau kategori filter lainnya.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -127,6 +153,62 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/welcome.js') }}"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('service-search');
+            const filterPills = document.querySelectorAll('.filter-pill');
+            const serviceCards = document.querySelectorAll('.service-main-card');
+            const noMessage = document.getElementById('no-services-message');
+
+            let searchTerm = '';
+            let activeFilter = 'all';
+
+            function filterServices() {
+                let visibleCount = 0;
+
+                serviceCards.forEach(card => {
+                    const name = card.getAttribute('data-name') || '';
+                    const desc = card.getAttribute('data-description') || '';
+                    const type = card.getAttribute('data-type') || '';
+
+                    const matchesSearch = name.includes(searchTerm) || desc.includes(searchTerm);
+                    const matchesFilter = activeFilter === 'all' || type === activeFilter;
+
+                    if (matchesSearch && matchesFilter) {
+                        card.style.display = '';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noMessage.style.display = 'block';
+                } else {
+                    noMessage.style.display = 'none';
+                }
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    searchTerm = e.target.value.toLowerCase().trim();
+                    filterServices();
+                });
+            }
+
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    filterPills.forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilter = this.getAttribute('data-filter');
+                    filterServices();
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

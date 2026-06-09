@@ -146,6 +146,26 @@
                     <p>Coba gunakan kata kunci pencarian atau kategori filter lainnya.</p>
                 </div>
             </div>
+
+            <!-- Custom Pagination -->
+            @if ($services->hasPages())
+                <div class="custom-pagination fade-up" style="margin-top: 40px; display: flex; justify-content: center; gap: 10px; align-items: center;">
+                    {{-- Previous Page Link --}}
+                    @if ($services->onFirstPage())
+                        <span style="opacity: 0.5; cursor: not-allowed; padding: 10px 20px; border-radius: 30px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-muted); font-family: 'Space Mono', monospace; font-size: 14px;"><i class="ri-arrow-left-s-line"></i> Sebelumnya</span>
+                    @else
+                        <a href="{{ $services->previousPageUrl() }}" style="padding: 10px 20px; border-radius: 30px; background: var(--primary); color: #fff; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 14px; transition: all 0.3s ease; box-shadow: var(--shadow-sm);"><i class="ri-arrow-left-s-line"></i> Sebelumnya</a>
+                    @endif
+
+                    {{-- Next Page Link --}}
+                    @if ($services->hasMorePages())
+                        <a href="{{ $services->nextPageUrl() }}" style="padding: 10px 20px; border-radius: 30px; background: var(--primary); color: #fff; text-decoration: none; font-family: 'Space Mono', monospace; font-size: 14px; transition: all 0.3s ease; box-shadow: var(--shadow-sm);">Selanjutnya <i class="ri-arrow-right-s-line"></i></a>
+                    @else
+                        <span style="opacity: 0.5; cursor: not-allowed; padding: 10px 20px; border-radius: 30px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-muted); font-family: 'Space Mono', monospace; font-size: 14px;">Selanjutnya <i class="ri-arrow-right-s-line"></i></span>
+                    @endif
+                </div>
+            @endif
+
         </div>
     </section>
 

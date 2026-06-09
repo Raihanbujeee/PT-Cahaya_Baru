@@ -34,7 +34,7 @@ Route::get('/kontak', function () {
 });
 
 Route::get('/layanan', function () {
-    $services = App\Models\Service::all();
+    $services = App\Models\Service::paginate(8);
     $layananSetting = \App\Models\LayananSetting::first();
     return view('layanan', compact('services', 'layananSetting'));
 });

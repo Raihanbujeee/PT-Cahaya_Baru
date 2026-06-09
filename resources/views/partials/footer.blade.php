@@ -102,18 +102,24 @@ footer {
 </style>
 
 <!-- ── FOOTER ── -->
+@php
+    $footer = \App\Models\FooterSetting::first();
+    // dd($footer); 
+@endphp
 <footer>
     <div class="container">
         <div class="footer-grid">
 
             <div class="footer-about">
-                <div class="logo">TB Cahaya Baru</div>
-                <p>Pusat perbelanjaan bahan bangunan terlengkap dan termurah. Menjadi solusi utama untuk segala kebutuhan proyek konstruksi Anda.</p>
+                <div class="logo">PT Cahaya Baru</div>
+                <div class="footer-desc">
+                    {!! $footer->description ?? 'Deskripsi perusahaan belum diisi.' !!}
+                </div>
                 <div class="social-icons">
-                    <a href="#"><i class="ri-facebook-fill"></i></a>
-                    <a href="#"><i class="ri-instagram-line"></i></a>
-                    <a href="#"><i class="ri-twitter-x-line"></i></a>
-                    <a href="#"><i class="ri-youtube-fill"></i></a>
+                    <a href="{{ $footer->social_links['facebook'] ?? '#' }}"><i class="ri-facebook-fill"></i></a>
+                    <a href="{{ $footer->social_links['instagram'] ?? '#' }}"><i class="ri-instagram-line"></i></a>
+                    <a href="{{ $footer->social_links['x'] ?? '#' }}"><i class="ri-twitter-x-line"></i></a>
+                    <a href="{{ $footer->social_links['youtube'] ?? '#' }}"><i class="ri-youtube-fill"></i></a>
                 </div>
             </div>
 
@@ -142,19 +148,19 @@ footer {
                 <ul>
                     <li>
                         <i class="ri-map-pin-fill"></i>
-                        <span>Jl. Saxophone No.65, Tunggulwulung, Kec. Lowokwaru, Kota Malang, Jawa Timur 65143</span>
+                        <span>{{ $footer->address ?? 'Alamat belum diisi' }}</span>
                     </li>
                     <li>
                         <i class="ri-phone-fill"></i>
-                        <span>0838-3407-9959</span>
+                        <span>{{ $footer->phone ?? '-' }}</span>
                     </li>
                     <li>
                         <i class="ri-mail-fill"></i>
-                        <span>info@ptcahayabaru.com</span>
+                        <span>{{ $footer->email ?? '-' }}</span>
                     </li>
                     <li>
                         <i class="ri-time-fill"></i>
-                        <span>Senin - Sabtu: 08:00 - 17:00</span>
+                        <span>{{ $footer->hours ?? '-' }}</span>
                     </li>
                 </ul>
             </div>

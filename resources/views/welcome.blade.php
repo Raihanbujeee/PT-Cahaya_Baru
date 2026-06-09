@@ -84,7 +84,7 @@
                             <div class="product-meta">
                                 <span class="product-category">{{ strtoupper($catName) }}</span>
                                 <span class="product-stock-badge {{ $stockOk ? 'in-stock' : 'out-stock' }}">
-                                    <i class="ri-circle-fill"></i> {{ $stockOk ? 'Tersedia' : 'Pre-order' }}
+                                    <i class="ri-circle-fill"></i> {{ $stockOk ? 'Tersedia' : 'Pra-pesan' }}
                                 </span>
                             </div>
                             <h3 class="product-title">{{ $product->name }}</h3>

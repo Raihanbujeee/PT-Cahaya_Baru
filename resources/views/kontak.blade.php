@@ -167,15 +167,18 @@
         </div>
 
         <div style="max-width: 620px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid #f0f0f0;">
-            <div id="review-success-msg" style="display:none; text-align:center; padding: 20px;">
+            @if(session('success'))
+            <div id="review-success-msg" style="text-align:center; padding: 20px;">
                 <i class="ri-checkbox-circle-fill" style="font-size: 48px; color: #2e7d32;"></i>
                 <h3 style="margin-top: 12px; color: #1a1a1a;">Terima Kasih!</h3>
-                <p style="color: #777;">Ulasan Anda telah berhasil dikirim.</p>
+                <p style="color: #777;">{{ session('success') }}</p>
             </div>
-            <div id="review-form-wrap">
+            @else
+            <form action="{{ url('/reviews') }}" method="POST" id="review-form-wrap">
+                @csrf
                 <div style="margin-bottom: 20px;">
                     <label style="display:block; font-weight: 600; margin-bottom: 8px; color: #1a1a1a; font-size: 14px;">Nama Anda</label>
-                    <input type="text" id="review-name" placeholder="Masukkan nama lengkap Anda"
+                    <input type="text" name="customer_name" id="review-name" placeholder="Masukkan nama lengkap Anda" required
                         style="width:100%; padding: 12px 16px; border: 1.5px solid #e5e5e5; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.2s; box-sizing: border-box;"
                         onfocus="this.style.borderColor='#C27A1A'" onblur="this.style.borderColor='#e5e5e5'">
                 </div>
@@ -189,22 +192,23 @@
                         <i class="ri-star-fill" data-val="4" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
                         <i class="ri-star-fill" data-val="5" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
                     </div>
-                    <input type="hidden" id="review-rating" value="5">
+                    <input type="hidden" name="rating" id="review-rating" value="5">
                 </div>
 
                 <div style="margin-bottom: 28px;">
                     <label style="display:block; font-weight: 600; margin-bottom: 8px; color: #1a1a1a; font-size: 14px;">Ulasan Anda</label>
-                    <textarea id="review-comment" rows="5" placeholder="Ceritakan pengalaman Anda berbelanja di PT Cahaya Baru..."
+                    <textarea name="comment" id="review-comment" rows="5" placeholder="Ceritakan pengalaman Anda berbelanja di PT Cahaya Baru..." required
                         style="width:100%; padding: 12px 16px; border: 1.5px solid #e5e5e5; border-radius: 8px; font-size: 14px; outline: none; resize: vertical; transition: border 0.2s; box-sizing: border-box; font-family: inherit;"
                         onfocus="this.style.borderColor='#C27A1A'" onblur="this.style.borderColor='#e5e5e5'"></textarea>
                 </div>
 
-                <button onclick="submitReviewKontak()" id="btn-kirim-ulasan"
+                <button type="submit" id="btn-kirim-ulasan"
                     style="width: 100%; padding: 14px; background: #C27A1A; color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s;"
                     onmouseover="this.style.background='#A86710'" onmouseout="this.style.background='#C27A1A'">
                     <i class="ri-send-plane-fill"></i> Kirim Ulasan
                 </button>
-            </div>
+            </form>
+            @endif
         </div>
     </section>
 
@@ -231,45 +235,13 @@
             });
         })();
 
-        async function submitReviewKontak() {
-            const name    = document.getElementById('review-name').value.trim();
-            const rating  = document.getElementById('review-rating').value;
-            const comment = document.getElementById('review-comment').value.trim();
-
-            if (!name || !comment) {
-                alert('Mohon lengkapi nama dan ulasan Anda.');
-                return;
-            }
-
-            const btn = document.getElementById('btn-kirim-ulasan');
-            btn.innerHTML = '<i class="ri-loader-4-line"></i> Mengirim...';
-            btn.disabled = true;
-
-            try {
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
-                const baseUrl = (window.APP_URL || window.location.origin).replace(/\/$/, '');
-
-                const res = await fetch(baseUrl + '/api/reviews', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
-                    body: JSON.stringify({ customer_name: name, rating: parseInt(rating), comment: comment }),
-                });
-
-                const data = await res.json();
-                if (res.ok && data.success) {
-                    document.getElementById('review-form-wrap').style.display = 'none';
-                    document.getElementById('review-success-msg').style.display = 'block';
-                } else {
-                    alert('Gagal mengirim: ' + (data.message || 'Terjadi kesalahan.'));
-                    btn.innerHTML = '<i class="ri-send-plane-fill"></i> Kirim Ulasan';
-                    btn.disabled = false;
-                }
-            } catch(e) {
-                alert('Terjadi kesalahan koneksi.');
-                btn.innerHTML = '<i class="ri-send-plane-fill"></i> Kirim Ulasan';
-                btn.disabled = false;
-            }
-        }
+        // Scroll to success message if exists
+        @if(session('success'))
+            setTimeout(function() {
+                const el = document.getElementById('ulasan');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        @endif
 
         // Auto-scroll to form if URL has #ulasan hash
         if (window.location.hash === '#ulasan') {

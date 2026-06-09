@@ -169,6 +169,7 @@ footer {
 
 <!-- Mobile Menu Script -->
 <script>
+    window.allServicesData = @json($servicesList ?? []);
     (function () {
         const btn = document.querySelector('.mobile-menu-btn');
         const nav = document.querySelector('.nav-links');

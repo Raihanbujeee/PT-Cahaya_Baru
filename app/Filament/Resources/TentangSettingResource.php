@@ -6,7 +6,7 @@ use App\Filament\Resources\TentangSettingResource\Pages\ManageTentangSettings;
 use App\Models\TentangSetting;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -30,7 +30,7 @@ class TentangSettingResource extends Resource
     {
         return $schema
             ->schema([
-                Section::make('Hero Section')
+                Section::make('Bagian Hero')
                     ->schema([
                         TextInput::make('hero_title')->required(),
                         Textarea::make('hero_description')->columnSpanFull(),
@@ -51,7 +51,7 @@ class TentangSettingResource extends Resource
                 ImageColumn::make('hero_image')->label('Gambar'),
                 TextColumn::make('hero_title')->searchable()->label('Judul Hero'),
                 TextColumn::make('about_title')->searchable()->label('Judul Tentang'),
-                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)->label('Diperbarui'),
             ])
             ->actions([
                 EditAction::make(),

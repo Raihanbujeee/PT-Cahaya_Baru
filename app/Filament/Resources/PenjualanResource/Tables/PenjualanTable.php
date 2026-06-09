@@ -14,7 +14,7 @@ class PenjualanTable
                 Tables\Columns\TextColumn::make('id')->sortable()->searchable()->toggleable()->label('ID'),
                 Tables\Columns\TextColumn::make('customer.name')->sortable()->searchable()->toggleable()->label('Pelanggan'),
                 Tables\Columns\TextColumn::make('date')->date()->sortable()->searchable()->toggleable()->label('Tanggal'),
-                Tables\Columns\TextColumn::make('grand_total')->money('IDR')->sortable()->toggleable()->label('Grand Total'),
+                Tables\Columns\TextColumn::make('grand_total')->money('IDR')->sortable()->toggleable()->label('Total Keseluruhan'),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->badge()
                     ->searchable()
@@ -30,6 +30,11 @@ class PenjualanTable
                     ->badge()
                     ->searchable()
                     ->toggleable()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'Paid' => 'Lunas',
+                        'Unpaid' => 'Belum Lunas',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'Paid' => 'success',
                         'Unpaid' => 'danger',
@@ -37,7 +42,7 @@ class PenjualanTable
                     })
                     ->label('Status'),
                 Tables\Columns\TextColumn::make('user.name')->searchable()->sortable()->toggleable()->label('Kasir'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)->label('Dibuat'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([

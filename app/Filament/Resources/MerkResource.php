@@ -14,7 +14,7 @@ class MerkResource extends Resource
 {
     protected static ?string $model = Brand::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-storefront';
-    protected static string | \UnitEnum | null $navigationGroup = 'Master Data';
+    protected static string | \UnitEnum | null $navigationGroup = 'Data Utama';
     protected static ?string $slug = 'merk';
     protected static ?string $navigationLabel = 'Merk';
     protected static ?int $navigationSort = 2;

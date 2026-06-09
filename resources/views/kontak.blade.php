@@ -181,7 +181,7 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <label style="display:block; font-weight: 600; margin-bottom: 10px; color: #1a1a1a; font-size: 14px;">Rating</label>
+                    <label style="display:block; font-weight: 600; margin-bottom: 10px; color: #1a1a1a; font-size: 14px;">Penilaian</label>
                     <div id="star-rating" style="display: flex; gap: 8px; cursor: pointer;">
                         <i class="ri-star-fill" data-val="1" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
                         <i class="ri-star-fill" data-val="2" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>

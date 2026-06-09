@@ -13,7 +13,7 @@ class SupplierSchema
             Forms\Components\TextInput::make('name')
                 ->required()
                 ->maxLength(255)
-                ->label('Nama Supplier'),
+                ->label('Nama Pemasok'),
             Forms\Components\TextInput::make('contact_info')
                 ->maxLength(255)
                 ->label('Kontak'),

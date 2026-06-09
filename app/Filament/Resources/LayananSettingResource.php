@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LayananSettingResource\Pages\ManageLayananSettings;
 use App\Models\LayananSetting;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -29,7 +29,7 @@ class LayananSettingResource extends Resource
     {
         return $schema
             ->schema([
-                Section::make('Hero Section')
+                Section::make('Bagian Hero')
                     ->schema([
                         TextInput::make('hero_title')->required(),
                         Textarea::make('hero_description')->columnSpanFull(),
@@ -44,7 +44,7 @@ class LayananSettingResource extends Resource
             ->columns([
                 ImageColumn::make('hero_image')->label('Gambar'),
                 TextColumn::make('hero_title')->searchable()->label('Judul Hero'),
-                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)->label('Diperbarui'),
             ])
             ->actions([
                 EditAction::make(),

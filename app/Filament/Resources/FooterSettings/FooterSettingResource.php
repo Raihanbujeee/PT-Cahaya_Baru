@@ -16,6 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Filament\Forms\Form;
+use Filament\Tables\Actions\CreateAction;
 
 class FooterSettingResource extends Resource
 {
@@ -39,6 +40,13 @@ class FooterSettingResource extends Resource
     {
         return true; // Paksa dia untuk selalu muncul
     }
+
+
+    public static function getModelLabel(): string
+    {
+        return 'Pengaturan Footer';
+    }
+
 
     public static function form(Schema $schema): Schema
     {
@@ -75,7 +83,7 @@ class FooterSettingResource extends Resource
 
     public static function canCreate(): bool
     {
-        return false; 
+         return FooterSetting::count() === 0;
     }
 
     protected function getHeaderActions(): array
@@ -83,10 +91,14 @@ class FooterSettingResource extends Resource
         return [
             \Filament\Actions\CreateAction::make()
                 ->modalHeading('Tambah Pengaturan Footer')
+                ->url(static::getResource()::getUrl('create'))
                 ->modalSubmitActionLabel('Simpan')
-                ->modalWidth('2xl'), 
+                ->modalWidth('2xl')
+                ->visible(FooterSetting::count() === 0),
         ];
     }
+
+    
 
         // protected function getFooterActions(): array
         // {

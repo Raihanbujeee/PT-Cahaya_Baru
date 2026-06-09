@@ -44,6 +44,11 @@ class CompanyStatsResource extends Resource
         ];
     }
 
+    public static function canCreate(): bool
+    {
+         return CompanyStats::count() === 0;
+    }
+
     public static function getPages(): array
     {
         return [

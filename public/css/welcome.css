@@ -699,9 +699,9 @@ header .mobile-menu-btn {
 /* ================================ */
 .services-main-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 32px;
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -709,7 +709,7 @@ header .mobile-menu-btn {
     background: var(--card-bg);
     border: var(--border-card);
     border-radius: var(--border-radius-lg);
-    padding: 40px;
+    padding: 30px 24px;
     position: relative;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -727,8 +727,8 @@ header .mobile-menu-btn {
 
 .service-badge {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 24px;
+    right: 24px;
     background: var(--primary);
     color: #FFFFFF;
     padding: 6px 16px;
@@ -1122,6 +1122,9 @@ footer {
     .footer-grid {
         grid-template-columns: 1fr 1fr;
     }
+    .services-main-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
@@ -1156,6 +1159,11 @@ footer {
 
     .product-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
     .layanan-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin: 0 auto;
+    }
+    .services-main-grid {
         grid-template-columns: 1fr;
         max-width: 440px;
         margin: 0 auto;

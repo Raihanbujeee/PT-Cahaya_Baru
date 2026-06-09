@@ -45,7 +45,7 @@ class JasaSchema
                 ->required()
                 ->label(fn ( $get) => match ($get('type')) {
                     'pemasangan'  => 'Biaya Pemasangan (per unit produk)',
-                    'pengantaran' => 'Biaya Dasar (base fee)',
+                    'pengantaran' => 'Biaya Dasar',
                     default       => 'Harga',
                 }),
 

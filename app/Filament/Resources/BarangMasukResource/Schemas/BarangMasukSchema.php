@@ -19,7 +19,7 @@ class BarangMasukSchema
                     ->searchable()
                     ->preload()
                     ->required()
-                    ->label('Supplier'),
+                    ->label('Pemasok'),
                 Forms\Components\DatePicker::make('date')
                     ->required()
                     ->default(now())

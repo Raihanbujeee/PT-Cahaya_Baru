@@ -15,7 +15,7 @@ class PenjualanSchema
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            // HEADER: Customer & Payment Info
+            // KEPALA: Informasi Pelanggan & Pembayaran
             Section::make('Informasi Penjualan')->schema([
                 Forms\Components\Select::make('customer_id')
                     ->relationship('customer', 'name')
@@ -54,7 +54,7 @@ class PenjualanSchema
                     ->columnSpanFull(),
             ])->columns(2)->columnSpanFull(),
 
-            // SECTION 1: Products Repeater
+            // BAGIAN 1: Daftar Produk
             Section::make('Produk')->schema([
                 Forms\Components\Repeater::make('saleProductDetails')
                     ->relationship()
@@ -88,7 +88,7 @@ class PenjualanSchema
                                 $price = (float) $get('unit_price');
                                 $set('subtotal', $qty * $price);
                             })
-                            ->label('Qty')
+                            ->label('Jml')
                             ->columnSpan(2),
                         Forms\Components\TextInput::make('unit_price')
                             ->numeric()
@@ -117,7 +117,7 @@ class PenjualanSchema
                     ->hiddenLabel(),
             ])->columnSpanFull(),
 
-            // SECTION 2: Services Repeater
+            // BAGIAN 2: Daftar Jasa
             Section::make('Jasa / Layanan')->schema([
                 Forms\Components\Repeater::make('saleServiceDetails')
                     ->relationship()
@@ -179,7 +179,7 @@ class PenjualanSchema
                     ->hiddenLabel(),
             ])->columnSpanFull(),
 
-            // FOOTER: Grand Total
+            // BAWAH: Total Keseluruhan
             Section::make('Ringkasan')->schema([
                 Forms\Components\Placeholder::make('total_product_display')
                     ->label('Total Produk')
@@ -202,7 +202,7 @@ class PenjualanSchema
                         return 'Rp ' . number_format($total, 0, ',', '.');
                     }),
                 Forms\Components\Placeholder::make('grand_total_display')
-                    ->label('GRAND TOTAL')
+                    ->label('TOTAL KESELURUHAN')
                     ->content(function (Get $get): string {
                         $productItems = $get('saleProductDetails') ?? [];
                         $serviceItems = $get('saleServiceDetails') ?? [];

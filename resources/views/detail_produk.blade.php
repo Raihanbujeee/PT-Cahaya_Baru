@@ -89,11 +89,11 @@
                             </span>
                         </div>
                         <div class="spec-item">
-                            <span class="spec-label">Minimal Order</span>
+                            <span class="spec-label">Minimal Pesanan</span>
                             <span class="spec-val">{{ $minOrder }} {{ $unit }}</span>
                         </div>
                         <div class="spec-item">
-                            <span class="spec-label">Supplier</span>
+                            <span class="spec-label">Pemasok</span>
                             <span class="spec-val"><i class="ri-store-2-line" style="color:var(--text-muted)"></i> {{ $supplier }}</span>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                         <span id="cart-service-total">Rp 0</span>
                     </div>
                     <div class="summary-row total">
-                        <span>Grand Total</span>
+                        <span>Total Keseluruhan</span>
                         <span id="cart-total">Rp 0</span>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeCheckoutModal()">Kembali</button>
-                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">Checkout Sekarang <i class="ri-whatsapp-line"></i></button>
+                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">Buat Pesanan <i class="ri-whatsapp-line"></i></button>
             </div>
         </div>
     </div>

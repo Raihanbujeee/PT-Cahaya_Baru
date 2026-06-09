@@ -6,7 +6,7 @@ use App\Filament\Resources\BerandaSettingResource\Pages\ManageBerandaSettings;
 use App\Models\HomepageSetting;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
@@ -29,7 +29,7 @@ class BerandaSettingResource extends Resource
     {
         return $schema
             ->schema([
-                Section::make('Hero Section')
+                Section::make('Bagian Hero')
                     ->description('Bagian atas halaman beranda.')
                     ->schema([
                         TextInput::make('hero_title')->required(),
@@ -56,7 +56,7 @@ class BerandaSettingResource extends Resource
                 ImageColumn::make('hero_image')->label('Gambar'),
                 TextColumn::make('hero_title')->searchable()->label('Judul Hero'),
                 TextColumn::make('about_title')->searchable()->label('Judul Tentang'),
-                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)->label('Diperbarui'),
             ])
             ->actions([
                 EditAction::make(),

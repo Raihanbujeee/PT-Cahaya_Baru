@@ -19,7 +19,6 @@ class UlasanPelangganResource extends Resource
     protected static ?string $model = Review::class;
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-star';
-    protected static \UnitEnum|string|null $navigationGroup = 'Pengaturan Halaman';
     protected static ?string $navigationLabel = 'Ulasan Pelanggan';
     protected static ?string $pluralModelLabel = 'Ulasan Pelanggan';
     protected static ?string $modelLabel = 'Ulasan';

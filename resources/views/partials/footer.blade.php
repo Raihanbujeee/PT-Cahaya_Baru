@@ -133,7 +133,7 @@ footer {
                     <li><a href="#">Cara Pembelian</a></li>
                     <li><a href="#">Syarat &amp; Ketentuan</a></li>
                     <li><a href="#">Kebijakan Retur</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Tanya Jawab Umum</a></li>
                 </ul>
             </div>
 
@@ -162,7 +162,7 @@ footer {
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; {{ date('Y') }} TB Cahaya Baru. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} TB Cahaya Baru. Hak Cipta Dilindungi.</p>
         </div>
     </div>
 </footer>

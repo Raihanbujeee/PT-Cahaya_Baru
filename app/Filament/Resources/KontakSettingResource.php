@@ -6,7 +6,7 @@ use App\Filament\Resources\KontakSettingResource\Pages\ManageKontakSettings;
 use App\Models\KontakSetting;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -30,7 +30,7 @@ class KontakSettingResource extends Resource
     {
         return $schema
             ->schema([
-                Section::make('Hero Section')
+                Section::make('Bagian Hero')
                     ->schema([
                         TextInput::make('hero_title')->required(),
                         Textarea::make('hero_description')->columnSpanFull(),
@@ -58,7 +58,7 @@ class KontakSettingResource extends Resource
                 TextColumn::make('hero_title')->searchable()->label('Judul Hero'),
                 TextColumn::make('phone')->label('Telepon'),
                 TextColumn::make('email')->label('Email'),
-                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)->label('Diperbarui'),
             ])
             ->actions([
                 EditAction::make(),

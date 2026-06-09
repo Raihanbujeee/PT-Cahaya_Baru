@@ -48,7 +48,7 @@ class JasaTable
                     ->money('IDR')
                     ->sortable()
                     ->toggleable()
-                    ->label('Harga / Base Fee'),
+                    ->label('Harga / Biaya Awal'),
 
                 Tables\Columns\TextColumn::make('price_per_km')
                     ->money('IDR')

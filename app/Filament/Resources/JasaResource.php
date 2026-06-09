@@ -14,7 +14,7 @@ class JasaResource extends Resource
 {
     protected static ?string $model = Service::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-wrench-screwdriver';
-    protected static string | \UnitEnum | null $navigationGroup = 'Master Data';
+    protected static string | \UnitEnum | null $navigationGroup = 'Data Utama';
     protected static ?string $slug = 'jasa';
     protected static ?string $navigationLabel = 'Jasa / Layanan';
     protected static ?int $navigationSort = 3;

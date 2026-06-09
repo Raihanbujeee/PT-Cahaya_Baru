@@ -17,6 +17,12 @@ class LogStokTable
                     ->badge()
                     ->searchable()
                     ->toggleable()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'In' => 'Masuk',
+                        'Out' => 'Keluar',
+                        'Adjustment' => 'Penyesuaian',
+                        default => $state,
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'In' => 'success',
                         'Out' => 'danger',

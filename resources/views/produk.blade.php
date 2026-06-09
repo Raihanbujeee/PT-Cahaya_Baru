@@ -111,7 +111,7 @@
         'id' => $p->id,
         'name' => $p->name,
         'category' => $cat,
-        'brand' => $p->brand ? $p->brand->name : 'No Brand',
+        'brand' => $p->brand ? $p->brand->name : 'Tanpa Merk',
         'stock' => $p->current_stock > 0 ? 'Tersedia' : 'Habis',
         'price' => (float) $p->selling_price,
         'unit' => 'pcs',
@@ -154,7 +154,7 @@
                         <span id="cart-service-total">Rp 0</span>
                     </div>
                     <div class="summary-row total">
-                        <span>Grand Total</span>
+                        <span>Total Keseluruhan</span>
                         <span id="cart-total">Rp 0</span>
                     </div>
                 </div>
@@ -188,7 +188,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeCheckoutModal()">Kembali</button>
-                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()">Checkout Sekarang <i
+                <button class="btn btn-primary" id="btn-submit-checkout" onclick="submitCheckout()">Buat Pesanan <i
                         class="ri-whatsapp-line"></i></button>
             </div>
         </div>

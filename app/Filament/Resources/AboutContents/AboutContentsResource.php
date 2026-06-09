@@ -39,7 +39,12 @@ class AboutContentsResource extends Resource
     {
         return [
             //
-        ];
+            ];
+    }
+    
+    public static function canCreate(): bool
+    {
+        return \App\Models\AboutContents::count() === 0;
     }
 
     public static function getPages(): array
@@ -48,6 +53,7 @@ class AboutContentsResource extends Resource
             'index' => ListAboutContents::route('/'),
             'create' => CreateAboutContents::route('/create'),
             'edit' => EditAboutContents::route('/{record}/edit'),
-        ];
+            ];
     }
 }
+

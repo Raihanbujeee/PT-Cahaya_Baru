@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
         // Seed Homepage Settings
         $this->call([
             HomepageSettingSeeder::class,
+            LayananSettingSeeder::class,
+            KontakSettingSeeder::class,
+            TentangSettingSeeder::class,
         ]);
 
         // Seed Categories

@@ -35,15 +35,15 @@ class JasaSchema
                 ->options(Product::pluck('name', 'id'))
                 ->searchable()
                 ->preload()
-                ->visible(fn (Forms\Get $get) => $get('type') === 'pemasangan')
-                ->required(fn (Forms\Get $get) => $get('type') === 'pemasangan')
+                ->visible(fn ( $get) => $get('type') === 'pemasangan')
+                ->required(fn ( $get) => $get('type') === 'pemasangan')
                 ->helperText('Pilih produk yang membutuhkan jasa pemasangan ini'),
 
             Forms\Components\TextInput::make('price')
                 ->numeric()
                 ->prefix('Rp')
                 ->required()
-                ->label(fn (Forms\Get $get) => match ($get('type')) {
+                ->label(fn ( $get) => match ($get('type')) {
                     'pemasangan'  => 'Biaya Pemasangan (per unit produk)',
                     'pengantaran' => 'Biaya Dasar (base fee)',
                     default       => 'Harga',
@@ -55,8 +55,8 @@ class JasaSchema
                 ->prefix('Rp')
                 ->label('Tarif per Km')
                 ->helperText('Biaya tambahan per kilometer jarak pengiriman')
-                ->visible(fn (Forms\Get $get) => $get('type') === 'pengantaran')
-                ->required(fn (Forms\Get $get) => $get('type') === 'pengantaran'),
+                ->visible(fn ( $get) => $get('type') === 'pengantaran')
+                ->required(fn ( $get) => $get('type') === 'pengantaran'),
 
             Forms\Components\Textarea::make('description')
                 ->label('Deskripsi')

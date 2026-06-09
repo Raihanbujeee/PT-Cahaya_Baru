@@ -98,12 +98,4 @@ class FooterSettingResource extends Resource
         ];
     }
 
-    
-
-        // protected function getFooterActions(): array
-        // {
-        //     return [
-        //         \Filament\Actions\EditAction::make(),
-        //     ];
-        // }
 }

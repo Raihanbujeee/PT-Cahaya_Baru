@@ -14,7 +14,7 @@ class PelangganResource extends Resource
 {
     protected static ?string $model = Customer::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-users';
-    protected static string | \UnitEnum | null $navigationGroup = 'Master Data';
+    protected static string | \UnitEnum | null $navigationGroup = 'Data Utama';
     protected static ?string $slug = 'pelanggan';
     protected static ?string $navigationLabel = 'Pelanggan';
     protected static ?int $navigationSort = 4;

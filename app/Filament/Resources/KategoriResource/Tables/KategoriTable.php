@@ -18,7 +18,7 @@ class KategoriTable
                     ->label('Jumlah Produk')
                     ->sortable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true)->label('Dibuat'),
             ])
             ->filters([])
             ->actions([

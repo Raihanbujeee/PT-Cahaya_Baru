@@ -34,30 +34,32 @@ Route::get('/kontak', function () {
 });
 
 Route::get('/layanan', function () {
-    $services = App\Models\Service::all();
+    $services = App\Models\Service::paginate(8);
     $layananSetting = \App\Models\LayananSetting::first();
     return view('layanan', compact('services', 'layananSetting'));
 });
 
+use Illuminate\Support\Facades\View;
 
-Route::get('/api/services', function () {
-    $services = \App\Models\Service::with('product:id,name')
+View::composer(['welcome', 'produk', 'detail_produk', 'layanan'], function ($view) {
+    $servicesList = \App\Models\Service::with('product:id,name')
         ->orderBy('type')
         ->orderBy('name')
         ->get(['id', 'name', 'type', 'price', 'price_per_km', 'product_id', 'description']);
-    return response()->json($services);
+    $view->with('servicesList', $servicesList);
 });
 
-Route::post('/api/reviews', function (\Illuminate\Http\Request $request) {
+
+Route::post('/reviews', function (\Illuminate\Http\Request $request) {
     $validated = $request->validate([
         'customer_name' => 'required|string|max:255',
         'rating' => 'required|integer|min:1|max:5',
         'comment' => 'required|string',
     ]);
 
-    $review = \App\Models\Review::create($validated);
+    \App\Models\Review::create($validated);
 
-    return response()->json(['success' => true, 'review' => $review]);
+    return redirect()->back()->with('success', 'Ulasan berhasil dikirim!');
 });
 
 Route::post('/checkout', function (Illuminate\Http\Request $request) {

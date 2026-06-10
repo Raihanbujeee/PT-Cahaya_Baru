@@ -26,10 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchServices() {
     try {
-        const baseUrl = (window.APP_URL || '').replace(/\/$/, '');
-        const resp = await fetch(baseUrl + '/api/services');
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        allServices = await resp.json();
+        // Read directly from the global variable injected by Laravel (No API fetch needed)
+        allServices = window.allServicesData || [];
     } catch (e) {
         console.warn('Could not load services:', e);
         allServices = [];

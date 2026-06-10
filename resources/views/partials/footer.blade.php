@@ -113,13 +113,13 @@ footer {
             <div class="footer-about">
                 <div class="logo">PT Cahaya Baru</div>
                 <div class="footer-desc">
-                    {!! $footer->description ?? 'Deskripsi perusahaan belum diisi.' !!}
+                    {!! $footer?->description ?? 'Deskripsi perusahaan belum diisi.' !!}
                 </div>
                 <div class="social-icons">
-                    <a href="{{ $footer->social_links['facebook'] ?? '#' }}"><i class="ri-facebook-fill"></i></a>
-                    <a href="{{ $footer->social_links['instagram'] ?? '#' }}"><i class="ri-instagram-line"></i></a>
-                    <a href="{{ $footer->social_links['x'] ?? '#' }}"><i class="ri-twitter-x-line"></i></a>
-                    <a href="{{ $footer->social_links['youtube'] ?? '#' }}"><i class="ri-youtube-fill"></i></a>
+                    <a href="{{ data_get($footer, 'social_links.facebook', '#') }}"><i class="ri-facebook-fill"></i></a>
+                    <a href="{{ data_get($footer, 'social_links.instagram', '#') }}"><i class="ri-instagram-line"></i></a>
+                    <a href="{{ data_get($footer, 'social_links.x', '#') }}"><i class="ri-twitter-x-line"></i></a>
+                    <a href="{{ data_get($footer, 'social_links.youtube', '#') }}"><i class="ri-youtube-fill"></i></a>
                 </div>
             </div>
 
@@ -148,19 +148,19 @@ footer {
                 <ul>
                     <li>
                         <i class="ri-map-pin-fill"></i>
-                        <span>{{ $footer->address ?? 'Alamat belum diisi' }}</span>
+                        <span>{{ $footer?->address ?? 'Alamat belum diisi' }}</span>
                     </li>
                     <li>
                         <i class="ri-phone-fill"></i>
-                        <span>{{ $footer->phone ?? '-' }}</span>
+                        <span>{{ $footer?->phone ?? '-' }}</span>
                     </li>
                     <li>
                         <i class="ri-mail-fill"></i>
-                        <span>{{ $footer->email ?? '-' }}</span>
+                        <span>{{ $footer?->email ?? '-' }}</span>
                     </li>
                     <li>
                         <i class="ri-time-fill"></i>
-                        <span>{{ $footer->hours ?? '-' }}</span>
+                        <span>{{ $footer?->hours ?? '-' }}</span>
                     </li>
                 </ul>
             </div>

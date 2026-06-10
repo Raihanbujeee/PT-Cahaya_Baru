@@ -242,12 +242,118 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
-                <button onclick="console.log('Button clicked'); openReviewModal()" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto;">
+                <button onclick="openReviewModal()" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
-                </a>
+                </button>
             </div>
         </div>
     </section>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Tulis Ulasan Anda</h2>
+                <button class="btn-close-modal" onclick="closeReviewModal()"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="modal-body">
+                @if(session('success'))
+                <div id="review-success-msg" style="text-align:center; padding: 20px;">
+                    <i class="ri-checkbox-circle-fill" style="font-size: 48px; color: #2e7d32; display: block; margin: 0 auto 12px;"></i>
+                    <h3 style="margin-top: 12px; color: #fff; font-family: 'Space Grotesk', sans-serif;">Terima Kasih!</h3>
+                    <p style="color: var(--text-muted);">{{ session('success') }}</p>
+                </div>
+                @else
+                <form action="{{ url('/reviews') }}" method="POST" id="review-form-wrap" class="checkout-form" style="margin-bottom: 0;">
+                    @csrf
+                    <div class="form-group">
+                        <label for="review-name">Nama Anda</label>
+                        <input type="text" name="customer_name" id="review-name" placeholder="Masukkan nama lengkap Anda" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display:block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text-body); font-family: 'Space Mono', monospace; text-transform: uppercase;">Penilaian</label>
+                        <div id="star-rating" style="display: flex; gap: 8px; cursor: pointer; margin-bottom: 15px;">
+                            <i class="ri-star-fill" data-val="1" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
+                            <i class="ri-star-fill" data-val="2" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
+                            <i class="ri-star-fill" data-val="3" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
+                            <i class="ri-star-fill" data-val="4" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
+                            <i class="ri-star-fill" data-val="5" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
+                        </div>
+                        <input type="hidden" name="rating" id="review-rating" value="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="review-comment">Ulasan Anda</label>
+                        <textarea name="comment" id="review-comment" rows="4" placeholder="Ceritakan pengalaman Anda berbelanja di TB Cahaya Baru..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="btn-kirim-ulasan"
+                        style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; font-family: 'Space Mono', monospace; text-transform: uppercase;">
+                        <i class="ri-send-plane-fill"></i> Kirim Ulasan
+                    </button>
+                </form>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        // Star rating logic for review form on home page modal
+        (function() {
+            let currentRating = 5;
+            const stars = document.querySelectorAll('#star-rating i');
+
+            function setRating(val) {
+                currentRating = val;
+                const ratingInput = document.getElementById('review-rating');
+                if (ratingInput) ratingInput.value = val;
+                stars.forEach(s => {
+                    s.style.color = parseInt(s.dataset.val) <= val ? '#C27A1A' : '#ddd';
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() { setRating(parseInt(this.dataset.val)); });
+                star.addEventListener('mouseover', function() {
+                    stars.forEach(s => { s.style.color = parseInt(s.dataset.val) <= parseInt(this.dataset.val) ? '#C27A1A' : '#ddd'; });
+                });
+                star.addEventListener('mouseout', function() { setRating(currentRating); });
+            });
+        })();
+
+        // Define openReviewModal and closeReviewModal globally
+        window.openReviewModal = function() {
+            const modal = document.getElementById('review-modal');
+            if (modal) modal.classList.add('active');
+        };
+
+        window.closeReviewModal = function() {
+            const modal = document.getElementById('review-modal');
+            if (modal) modal.classList.remove('active');
+        };
+
+        // Close modal when clicking on the overlay backdrop
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('review-modal');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeReviewModal();
+                    }
+                });
+            }
+        });
+
+        // Automatically open modal if ulasan has been successfully submitted (to show thank you message)
+        @if(session('success'))
+            setTimeout(function() {
+                openReviewModal();
+            }, 300);
+        @endif
+    </script>
+    @endpush
 
     <!-- Tentang Kami Section -->
     <section id="tentang" class="section-padding tentang-bg">

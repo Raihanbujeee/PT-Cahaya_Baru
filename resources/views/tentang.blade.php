@@ -50,7 +50,7 @@
         <div class="about-box">
             <div class="about-box-inner">
                 <div class="about-box-img">
-                    @if($about_contents->image)
+                    @if($about_contents?->image)
                         <img src="{{ asset('storage/' . $about_contents->image) }}" alt="Tentang Kami">
                     @endif
                 </div>

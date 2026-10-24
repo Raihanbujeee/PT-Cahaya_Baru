@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'demo_mode' => env('DEMO_MODE', env('VERCEL', false)),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

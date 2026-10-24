@@ -103,8 +103,7 @@ footer {
 
 <!-- ── FOOTER ── -->
 @php
-    $footer = \App\Models\FooterSetting::first();
-    // dd($footer); 
+    $footer = null;
 @endphp
 <footer>
     <div class="container">

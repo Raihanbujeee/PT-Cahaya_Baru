@@ -1,8 +1,11 @@
 @php
-    $about_contents = \App\Models\AboutContents::first();
-    // dd($about_contents);
-    $stats = \App\Models\CompanyStats::orderBy('id', 'asc')->get(); 
-    // return view('tentang', compact('about_contents', 'stats')); 
+    $about_contents = null;
+    $stats = collect([
+        (object) ['value' => '14+', 'label' => 'Tahun Pengalaman'],
+        (object) ['value' => '500+', 'label' => 'Produk Material'],
+        (object) ['value' => '1.000+', 'label' => 'Pelanggan'],
+        (object) ['value' => 'Jatim', 'label' => 'Jangkauan Layanan'],
+    ]);
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

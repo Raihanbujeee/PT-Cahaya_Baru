@@ -70,11 +70,9 @@
                 @endphp
                 @foreach($featuredProducts as $index => $product)
                     @php
-                        $catName = $product->category ? $product->category->name : 'Lainnya';
-                        $imgUrl = $product->image
-                            ? asset('storage/' . $product->image)
-                            : ($fallbacks[$catName] ?? $defaultFallback);
-                        $stockOk = $product->current_stock > 0;
+                        $catName = $product->category;
+                        $imgUrl = $product->image;
+                        $stockOk = $product->stock > 0;
                     @endphp
                     <div class="product-card fade-up" style="transition-delay: {{ $index * 0.1 }}s">
                         <div class="product-img-wrap">
@@ -88,7 +86,7 @@
                                 </span>
                             </div>
                             <h3 class="product-title">{{ $product->name }}</h3>
-                            <p class="product-price">Rp {{ number_format($product->selling_price, 0, ',', '.') }}</p>
+                            <p class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                             <a href="/produk/{{ $product->id }}" class="btn-detail">Lihat Detail</a>
                         </div>
                     </div>
@@ -242,13 +240,15 @@
             </div>
             
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
-                <button onclick="openReviewModal()" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;">
+                <a href="https://wa.me/6283834079959" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
-                </button>
+                </a>
             </div>
         </div>
     </section>
 
+    {{-- Review submission requires a database and is omitted in demo mode. --}}
+    @if(!config('app.demo_mode'))
     <!-- Review Modal -->
     <div id="review-modal" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
@@ -297,6 +297,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     @push('scripts')
     <script>

@@ -16,7 +16,7 @@
 <body>
 
     @php
-        $cat = $product->category ? $product->category->name : 'Lainnya';
+        $cat = $product->category;
         $imgFallback = 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80';
         
         if(str_contains(strtolower($cat), 'semen')) $imgFallback = 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80';
@@ -27,15 +27,15 @@
         else if(str_contains(strtolower($cat), 'kabel')) $imgFallback = 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=800&q=80';
         else if(str_contains(strtolower($cat), 'kayu')) $imgFallback = 'https://images.unsplash.com/photo-1628744448829-01297db3c800?w=800&q=80';
 
-        $brandName = $product->brand ? $product->brand->name : 'Unggulan';
+        $brandName = $product->brand;
         $description = 'Produk ' . $product->name . ' dari merek ' . $brandName . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.';
         
         $unit = 'pcs';
         $minOrder = '1';
         $supplier = 'TB Cahaya Baru';
-        $stockLabel = $product->current_stock > 0 ? 'Tersedia' : 'Habis';
-        $stockColor = $product->current_stock > 0 ? 'var(--success)' : 'var(--danger)';
-        $stockIcon = $product->current_stock > 0 ? 'ri-checkbox-circle-fill' : 'ri-close-circle-fill';
+        $stockLabel = $product->stock > 0 ? 'Tersedia' : 'Habis';
+        $stockColor = $product->stock > 0 ? 'var(--success)' : 'var(--danger)';
+        $stockIcon = $product->stock > 0 ? 'ri-checkbox-circle-fill' : 'ri-close-circle-fill';
         $waText = "Halo, saya tertarik dengan produk {$product->name}";
     @endphp
 
@@ -56,7 +56,7 @@
         <div class="container">
             <div class="detail-card">
                 <div class="product-img-wrap">
-                    <img src="{{ $product->image ? asset('storage/' . $product->image) : $imgFallback }}" alt="{{ $product->name }}">
+                    <img src="{{ $product->image }}" alt="{{ $product->name }}">
                 </div>
                 
                 <div class="product-info">
@@ -69,7 +69,7 @@
                     </div>
                     
                     <div class="product-price-box">
-                        <div class="product-price">Rp {{ number_format($product->selling_price, 0, ',', '.') }}</div>
+                        <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
                         <div class="product-unit">/ {{ $unit }}</div>
                     </div>
                     
@@ -85,7 +85,7 @@
                         <div class="spec-item">
                             <span class="spec-label">Status Stok</span>
                             <span class="spec-val" style="color: {{ $stockColor }};">
-                                <i class="{{ $stockIcon }}"></i> {{ $stockLabel }} ({{ $product->current_stock }})
+                                <i class="{{ $stockIcon }}"></i> {{ $stockLabel }} ({{ $product->stock }})
                             </span>
                         </div>
                         <div class="spec-item">
@@ -187,9 +187,9 @@
                 return {
                     id: {{ $product->id }},
                     name: "{{ $product->name }}",
-                    price: {{ (float) $product->selling_price }},
+                    price: {{ $product->price }},
                     image: "{{ $product->image ? asset('storage/' . $product->image) : $imgFallback }}",
-                    stock: "{{ $product->current_stock > 0 ? 'Tersedia' : 'Habis' }}"
+                    stock: "{{ $product->stock > 0 ? 'Tersedia' : 'Habis' }}"
                 };
             }
             return null;

@@ -22,10 +22,8 @@
     @include('partials.header', ['activePage' => 'layanan'])
 
     <!-- ── HERO SECTION ── -->
-    <section class="layanan-hero" @if(isset($layananSetting->hero_image)) style="background: url('{{ asset('storage/' . $layananSetting->hero_image) }}') center/cover no-repeat; position: relative;" @endif>
-        @if(isset($layananSetting->hero_image))
-            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6);"></div>
-        @endif
+    <section class="layanan-hero" style="background: url('{{ \App\Support\Media::url($layananSetting?->hero_image, 'images/hero/layanan.jpg') }}') center/cover no-repeat; position: relative;">
+        <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6);"></div>
         <div class="container" style="position: relative; z-index: 2;">
             <nav class="hero-breadcrumb fade-up">
                 Beranda &nbsp; > &nbsp; <strong>Jasa & Layanan</strong>
@@ -50,7 +48,7 @@
                     <div class="advantage-icon">
                         <i class="ri-medal-line"></i>
                     </div>
-                    <h3>Pengalaman 10+ Tahun</h3>
+                    <h3>Pengalaman {{ $homepageSetting?->years_operating ?? (now()->year - 2010) }}+ Tahun</h3>
                     <p>Terpercaya dalam ratusan proyek di seluruh wilayah.</p>
                 </div>
                 <div class="advantage-card fade-up" style="transition-delay: 0.1s">

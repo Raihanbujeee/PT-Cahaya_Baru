@@ -17,15 +17,7 @@
 
     @php
         $cat = $product->category ? $product->category->name : 'Lainnya';
-        $imgFallback = 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&q=80';
-        
-        if(str_contains(strtolower($cat), 'semen')) $imgFallback = 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80';
-        else if(str_contains(strtolower($cat), 'cat')) $imgFallback = 'https://images.unsplash.com/photo-1562259929-b7e181d8d002?w=800&q=80';
-        else if(str_contains(strtolower($cat), 'besi')) $imgFallback = 'https://images.unsplash.com/photo-1590496734187-57ce3dd3045d?w=800&q=80';
-        else if(str_contains(strtolower($cat), 'keramik')) $imgFallback = 'https://images.unsplash.com/photo-1523413363574-c30aa1c2a516?w=800&q=80';
-        else if(str_contains(strtolower($cat), 'pipa')) $imgFallback = 'https://images.unsplash.com/photo-1621252179027-94459d278660?w=800&q=80';
-        else if(str_contains(strtolower($cat), 'kabel')) $imgFallback = 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=800&q=80';
-        else if(str_contains(strtolower($cat), 'kayu')) $imgFallback = 'https://images.unsplash.com/photo-1628744448829-01297db3c800?w=800&q=80';
+        $imgUrl = $product->image_url;
 
         $brandName = $product->brand ? $product->brand->name : 'Unggulan';
         $description = 'Produk ' . $product->name . ' dari merek ' . $brandName . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.';
@@ -56,7 +48,7 @@
         <div class="container">
             <div class="detail-card">
                 <div class="product-img-wrap">
-                    <img src="{{ $product->image ? asset('storage/' . $product->image) : $imgFallback }}" alt="{{ $product->name }}">
+                    <img src="{{ $imgUrl }}" alt="{{ $product->name }}">
                 </div>
                 
                 <div class="product-info">
@@ -186,10 +178,10 @@
             if (id === {{ $product->id }}) {
                 return {
                     id: {{ $product->id }},
-                    name: "{{ $product->name }}",
+                    name: {!! json_encode($product->name, JSON_UNESCAPED_UNICODE) !!},
                     price: {{ (float) $product->selling_price }},
-                    image: "{{ $product->image ? asset('storage/' . $product->image) : $imgFallback }}",
-                    stock: "{{ $product->current_stock > 0 ? 'Tersedia' : 'Habis' }}"
+                    image: {!! json_encode($imgUrl) !!},
+                    stock: {!! json_encode($product->current_stock > 0 ? 'Tersedia' : 'Habis') !!}
                 };
             }
             return null;

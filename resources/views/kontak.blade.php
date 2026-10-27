@@ -40,10 +40,8 @@
     </div>
 
     <!-- ── HERO SECTION ── -->
-    <section class="kontak-hero" @if(isset($kontakSetting->hero_image)) style="background: url('{{ asset('storage/' . $kontakSetting->hero_image) }}') center/cover no-repeat; position: relative;" @endif>
-        @if(isset($kontakSetting->hero_image))
-            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6);"></div>
-        @endif
+    <section class="kontak-hero" style="background: url('{{ \App\Support\Media::url($kontakSetting?->hero_image, 'images/hero/kontak.jpg') }}') center/cover no-repeat; position: relative;">
+        <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6);"></div>
         <div class="container" style="position: relative; z-index: 2;">
             <h1 class="fade-up">{{ $kontakSetting->hero_title ?? 'Kami Siap Membantu Anda' }}</h1>
             <p class="fade-up" style="transition-delay: 0.1s">

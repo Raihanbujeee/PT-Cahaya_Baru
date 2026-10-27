@@ -104,25 +104,24 @@
         // Product Data from Database
         window.APP_URL = "{{ url('/') }}";
         const dbProducts = {!! json_encode($products->map(function ($p) {
-    $cat = $p->category ? $p->category->name : 'Lainnya';
-    $imgFallback = 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500&q=80';
-
     return [
         'id' => $p->id,
         'name' => $p->name,
-        'category' => $cat,
+        'category' => $p->category ? $p->category->name : 'Lainnya',
         'brand' => $p->brand ? $p->brand->name : 'Tanpa Merk',
         'stock' => $p->current_stock > 0 ? 'Tersedia' : 'Habis',
         'price' => (float) $p->selling_price,
         'unit' => 'pcs',
         'minOrder' => '1',
         'supplier' => 'TB Cahaya Baru',
-        'image' => $p->image ? asset('storage/' . $p->image) : $imgFallback,
+        'image' => $p->image_url,
         'description' => 'Produk ' . $p->name . ' dari merek ' . ($p->brand ? $p->brand->name : 'unggulan') . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.',
         'date' => $p->created_at ? $p->created_at->format('Y-m-d') : now()->format('Y-m-d'),
-        'sold' => rand(10, 500)
+        // Jumlah unit yang benar-benar terjual, dihitung dari detail penjualan
+        // (sebelumnya memakai rand() sehingga urutan "Terlaris" acak).
+        'sold' => (int) ($p->sold_count ?? 0),
     ];
-})) !!};
+}), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) !!};
 
     </script>
 

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\JasaResource\Schemas;
 
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class JasaSchema
@@ -35,15 +36,15 @@ class JasaSchema
                 ->options(Product::pluck('name', 'id'))
                 ->searchable()
                 ->preload()
-                ->visible(fn (Forms\Get $get) => $get('type') === 'pemasangan')
-                ->required(fn (Forms\Get $get) => $get('type') === 'pemasangan')
+                ->visible(fn (Get $get) => $get('type') === 'pemasangan')
+                ->required(fn (Get $get) => $get('type') === 'pemasangan')
                 ->helperText('Pilih produk yang membutuhkan jasa pemasangan ini'),
 
             Forms\Components\TextInput::make('price')
                 ->numeric()
                 ->prefix('Rp')
                 ->required()
-                ->label(fn (Forms\Get $get) => match ($get('type')) {
+                ->label(fn (Get $get) => match ($get('type')) {
                     'pemasangan'  => 'Biaya Pemasangan (per unit produk)',
                     'pengantaran' => 'Biaya Dasar',
                     default       => 'Harga',
@@ -55,8 +56,8 @@ class JasaSchema
                 ->prefix('Rp')
                 ->label('Tarif per Km')
                 ->helperText('Biaya tambahan per kilometer jarak pengiriman')
-                ->visible(fn (Forms\Get $get) => $get('type') === 'pengantaran')
-                ->required(fn (Forms\Get $get) => $get('type') === 'pengantaran'),
+                ->visible(fn (Get $get) => $get('type') === 'pengantaran')
+                ->required(fn (Get $get) => $get('type') === 'pengantaran'),
 
             Forms\Components\Textarea::make('description')
                 ->label('Deskripsi')

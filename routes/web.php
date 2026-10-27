@@ -14,7 +14,9 @@ Route::get('/', function () {
 });
 
 Route::get('/produk', function () {
-    $products = Product::with(['category', 'brand'])->get();
+    $products = Product::with(['category', 'brand'])
+        ->withSum('saleProductDetails as sold_count', 'quantity')
+        ->get();
     return view('produk', compact('products'));
 });
 
@@ -36,7 +38,8 @@ Route::get('/kontak', function () {
 Route::get('/layanan', function () {
     $services = App\Models\Service::paginate(8);
     $layananSetting = \App\Models\LayananSetting::first();
-    return view('layanan', compact('services', 'layananSetting'));
+    $homepageSetting = \App\Models\HomepageSetting::first();
+    return view('layanan', compact('services', 'layananSetting', 'homepageSetting'));
 });
 
 use Illuminate\Support\Facades\View;

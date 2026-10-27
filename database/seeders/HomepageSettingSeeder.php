@@ -16,14 +16,17 @@ class HomepageSettingSeeder extends Seeder
             'id' => 1
         ], [
             'hero_title' => 'Solusi Bahan Bangunan Terpercaya untuk Semua Kebutuhan Anda',
-            'hero_description' => 'Menyediakan material konstruksi berkualitas tinggi dengan pelayanan profesional sejak 2004. Bangun impian Anda bersama kami.',
+            'hero_description' => 'Menyediakan material konstruksi berkualitas tinggi dengan pelayanan profesional sejak 2010. Bangun impian Anda bersama kami.',
+            'founded_year' => 2010,
             'about_title' => 'Mengenal TB Cahaya Baru',
             'about_desc_1' => 'Berdiri sejak 2010, TB Cahaya Baru telah menjadi mitra terpercaya bagi ribuan proyek pembangunan di Indonesia. Kami berkomitmen untuk selalu menyediakan produk material bahan bangunan berkualitas tinggi dengan standar SNI dan harga yang bersaing.',
             'about_desc_2' => 'Dengan pengalaman lebih dari satu dekade, kami memahami betul kebutuhan pelanggan dari skala perumahan hingga proyek komersial besar. Tim kami siap memberikan pelayanan prima dan solusi terbaik untuk setiap kebutuhan konstruksi Anda.',
-            'stat_years' => 14,
-            'stat_products' => 5000,
+            // "Tahun Beroperasi" tidak lagi diisi manual: dihitung dari
+            // founded_year oleh HomepageSetting::getYearsOperatingAttribute().
+            'stat_years' => 16,
+            'stat_products' => 500,
             'stat_suppliers' => 50,
-            'stat_customers' => 10,
+            'stat_customers' => 10000,
         ]);
     }
 }

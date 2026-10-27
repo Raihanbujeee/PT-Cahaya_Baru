@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 clearInterval(timer);
                 el.isAnimating = false;
             } else {
-                el.innerText = Math.floor(current) + suffix;
+                el.innerText = Math.floor(current).toLocaleString('id-ID') + suffix;
             }
         }, stepTime);
     };

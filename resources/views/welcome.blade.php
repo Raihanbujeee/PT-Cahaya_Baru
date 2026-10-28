@@ -33,12 +33,12 @@
     <script src="{{ asset('js/cart.js') }}"></script>
 
     <!-- Hero Section -->
-    <section id="beranda" class="hero" @if(isset($homepageSetting->hero_image)) style="background: url('{{ asset('storage/' . $homepageSetting->hero_image) }}') center/cover no-repeat;" @endif>
+    <section id="beranda" class="hero" style="background: url('{{ \App\Support\Media::url($homepageSetting?->hero_image, 'images/hero/beranda.jpg') }}') center/cover no-repeat;">
         <div class="hero-overlay"></div>
         <div class="container hero-content">
             <h1 class="fade-up">{{ $homepageSetting->hero_title ?? 'Solusi Bahan Bangunan Terpercaya untuk Semua Kebutuhan Anda' }}</h1>
             <div class="fade-up hero-description" style="transition-delay: 0.1s">
-                {!! $homepageSetting->hero_description ?? '<p>Menyediakan material konstruksi berkualitas tinggi dengan pelayanan profesional sejak 2004. Bangun impian Anda bersama kami.</p>' !!}
+                {!! $homepageSetting->hero_description ?? '<p>Menyediakan material konstruksi berkualitas tinggi dengan pelayanan profesional sejak 2010. Bangun impian Anda bersama kami.</p>' !!}
             </div>
             <div class="hero-buttons fade-up" style="transition-delay: 0.2s">
                 <a href="/produk" class="btn btn-primary">Lihat Produk</a>
@@ -56,23 +56,11 @@
             </div>
 
             <div class="product-grid">
-                @php
-                    $fallbacks = [
-                        'Semen' => 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80',
-                        'Cat Tembok' => 'https://images.unsplash.com/photo-1562259929-b7e181d8d002?w=500&q=80',
-                        'Besi' => 'https://images.unsplash.com/photo-1590496734187-57ce3dd3045d?w=500&q=80',
-                        'Keramik' => 'https://images.unsplash.com/photo-1523413363574-c30aa1c2a516?w=500&q=80',
-                        'Pipa' => 'https://images.unsplash.com/photo-1621252179027-94459d278660?w=500&q=80',
-                        'Kabel' => 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=500&q=80',
-                        'Kayu' => 'https://images.unsplash.com/photo-1628744448829-01297db3c800?w=500&q=80',
-                    ];
-                    $defaultFallback = 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500&q=80';
-                @endphp
                 @foreach($featuredProducts as $index => $product)
                     @php
-                        $catName = $product->category;
-                        $imgUrl = $product->image;
-                        $stockOk = $product->stock > 0;
+                        $imgUrl = $product->image_url;
+                        $catName = $product->category?->name ?? 'Lainnya';
+                        $stockOk = $product->current_stock > 0;
                     @endphp
                     <div class="product-card fade-up" style="transition-delay: {{ $index * 0.1 }}s">
                         <div class="product-img-wrap">
@@ -86,7 +74,7 @@
                                 </span>
                             </div>
                             <h3 class="product-title">{{ $product->name }}</h3>
-                            <p class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                            <p class="product-price">Rp {{ number_format($product->selling_price, 0, ',', '.') }}</p>
                             <a href="/produk/{{ $product->id }}" class="btn-detail">Lihat Detail</a>
                         </div>
                     </div>
@@ -106,7 +94,7 @@
                     <div class="advantage-icon">
                         <i class="ri-medal-line"></i>
                     </div>
-                    <h3>Pengalaman 10+ Tahun</h3>
+                    <h3>Pengalaman {{ $homepageSetting?->years_operating ?? (now()->year - 2010) }}+ Tahun</h3>
                     <p>Terpercaya dalam ratusan proyek di seluruh wilayah.</p>
                 </div>
                 <div class="advantage-card fade-up" style="transition-delay: 0.1s">
@@ -188,32 +176,19 @@
 
             <div class="testimoni-grid">
                 @php
-                    $reviewsData = isset($reviews) && $reviews->count() > 0 ? $reviews : [
-                        [
-                            'customer_name' => 'Budi Santoso',
-                            'rating' => 5,
-                            'comment' => 'Material selalu lengkap dan kualitasnya terjamin. Pengiriman ke lokasi proyek di Jakarta Selatan selalu tepat waktu. Sangat membantu operasional kontraktor.',
-                        ],
-                        [
-                            'customer_name' => 'Rina Wijaya',
-                            'rating' => 5,
-                            'comment' => 'Pelayanan stafnya luar biasa. Saat saya renovasi rumah, mereka sabar merekomendasikan jenis cat dan keramik yang pas dengan budget. Toko langganan!',
-                        ],
-                        [
-                            'customer_name' => 'Andi Pratama',
-                            'rating' => 5,
-                            'comment' => 'Harga sangat bersaing terutama untuk pembelian partai besar. Proses PO jelas dan tagihan selalu rapi. Mitra bisnis yang solid.',
-                        ]
-                    ];
+                    // Ulasan diambil dari tabel reviews (dikelola lewat panel
+                    // admin). Daftar hardcoded sebelumnya dihapus supaya tidak
+                    // muncul ulasan palsu ketika admin mengosongkan tabel.
+                    $reviewsData = isset($reviews) ? $reviews : collect();
                     $avatarColors = ['#E8D5B7', '#D4B896', '#C4A882', '#D3B48F', '#CBA373', '#E0C8A4'];
                 @endphp
 
-                @foreach($reviewsData as $index => $review)
+                @forelse($reviewsData as $index => $review)
                     @php
                         $color = $avatarColors[$index % count($avatarColors)];
-                        $reviewName = is_object($review) ? $review->customer_name : $review['customer_name'];
-                        $reviewComment = is_object($review) ? $review->comment : $review['comment'];
-                        $reviewRating = is_object($review) ? $review->rating : $review['rating'];
+                        $reviewName = $review->customer_name;
+                        $reviewComment = $review->comment;
+                        $reviewRating = (int) $review->rating;
                         $initial = strtoupper(substr($reviewName, 0, 1));
                     @endphp
                     <div class="testimoni-card fade-up" style="transition-delay: {{ $index * 0.1 }}s">
@@ -236,125 +211,22 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="testimoni-card fade-up" style="grid-column: 1 / -1; text-align: center;">
+                        <p class="testimoni-text" style="margin-bottom: 0;">
+                            Belum ada ulasan. Jadilah yang pertama membagikan pengalaman Anda.
+                        </p>
+                    </div>
+                @endforelse
             </div>
             
             <div style="text-align: center; margin-top: 40px; position: relative; z-index: 5;">
-                <a href="https://wa.me/6283834079959" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto; display: inline-flex; align-items: center; gap: 8px;">
+                <a href="{{ url('/kontak') }}#ulasan" class="btn btn-primary btn-retro-hover" style="position: relative; z-index: 10; pointer-events: auto;">
                     <i class="ri-pencil-line"></i> Tulis Ulasan Anda
                 </a>
             </div>
         </div>
     </section>
-
-    {{-- Review submission requires a database and is omitted in demo mode. --}}
-    @if(!config('app.demo_mode'))
-    <!-- Review Modal -->
-    <div id="review-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header">
-                <h2>Tulis Ulasan Anda</h2>
-                <button class="btn-close-modal" onclick="closeReviewModal()"><i class="ri-close-line"></i></button>
-            </div>
-            <div class="modal-body">
-                @if(session('success'))
-                <div id="review-success-msg" style="text-align:center; padding: 20px;">
-                    <i class="ri-checkbox-circle-fill" style="font-size: 48px; color: #2e7d32; display: block; margin: 0 auto 12px;"></i>
-                    <h3 style="margin-top: 12px; color: #fff; font-family: 'Space Grotesk', sans-serif;">Terima Kasih!</h3>
-                    <p style="color: var(--text-muted);">{{ session('success') }}</p>
-                </div>
-                @else
-                <form action="{{ url('/reviews') }}" method="POST" id="review-form-wrap" class="checkout-form" style="margin-bottom: 0;">
-                    @csrf
-                    <div class="form-group">
-                        <label for="review-name">Nama Anda</label>
-                        <input type="text" name="customer_name" id="review-name" placeholder="Masukkan nama lengkap Anda" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label style="display:block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text-body); font-family: 'Space Mono', monospace; text-transform: uppercase;">Penilaian</label>
-                        <div id="star-rating" style="display: flex; gap: 8px; cursor: pointer; margin-bottom: 15px;">
-                            <i class="ri-star-fill" data-val="1" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
-                            <i class="ri-star-fill" data-val="2" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
-                            <i class="ri-star-fill" data-val="3" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
-                            <i class="ri-star-fill" data-val="4" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
-                            <i class="ri-star-fill" data-val="5" style="font-size: 32px; color: #C27A1A; transition: transform 0.1s;"></i>
-                        </div>
-                        <input type="hidden" name="rating" id="review-rating" value="5">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="review-comment">Ulasan Anda</label>
-                        <textarea name="comment" id="review-comment" rows="4" placeholder="Ceritakan pengalaman Anda berbelanja di TB Cahaya Baru..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="btn-kirim-ulasan"
-                        style="width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; font-family: 'Space Mono', monospace; text-transform: uppercase;">
-                        <i class="ri-send-plane-fill"></i> Kirim Ulasan
-                    </button>
-                </form>
-                @endif
-            </div>
-        </div>
-    </div>
-    @endif
-
-    @push('scripts')
-    <script>
-        // Star rating logic for review form on home page modal
-        (function() {
-            let currentRating = 5;
-            const stars = document.querySelectorAll('#star-rating i');
-
-            function setRating(val) {
-                currentRating = val;
-                const ratingInput = document.getElementById('review-rating');
-                if (ratingInput) ratingInput.value = val;
-                stars.forEach(s => {
-                    s.style.color = parseInt(s.dataset.val) <= val ? '#C27A1A' : '#ddd';
-                });
-            }
-
-            stars.forEach(star => {
-                star.addEventListener('click', function() { setRating(parseInt(this.dataset.val)); });
-                star.addEventListener('mouseover', function() {
-                    stars.forEach(s => { s.style.color = parseInt(s.dataset.val) <= parseInt(this.dataset.val) ? '#C27A1A' : '#ddd'; });
-                });
-                star.addEventListener('mouseout', function() { setRating(currentRating); });
-            });
-        })();
-
-        // Define openReviewModal and closeReviewModal globally
-        window.openReviewModal = function() {
-            const modal = document.getElementById('review-modal');
-            if (modal) modal.classList.add('active');
-        };
-
-        window.closeReviewModal = function() {
-            const modal = document.getElementById('review-modal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        // Close modal when clicking on the overlay backdrop
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('review-modal');
-            if (modal) {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeReviewModal();
-                    }
-                });
-            }
-        });
-
-        // Automatically open modal if ulasan has been successfully submitted (to show thank you message)
-        @if(session('success'))
-            setTimeout(function() {
-                openReviewModal();
-            }, 300);
-        @endif
-    </script>
-    @endpush
 
     <!-- Tentang Kami Section -->
     <section id="tentang" class="section-padding tentang-bg">
@@ -373,14 +245,14 @@
                     <div class="stat-card">
                         <i class="ri-history-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4 class="counter" data-target="{{ $homepageSetting->stat_years ?? 14 }}" data-suffix="+">0</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting?->years_operating ?? (now()->year - 2010) }}" data-suffix="+">0</h4>
                             <span>Tahun Beroperasi</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="ri-store-3-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4 class="counter" data-target="{{ $homepageSetting->stat_products ?? 5000 }}" data-suffix="+">0</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting->stat_products ?? 500 }}" data-suffix="+">0</h4>
                             <span>Produk Tersedia</span>
                         </div>
                     </div>
@@ -394,7 +266,7 @@
                     <div class="stat-card">
                         <i class="ri-user-smile-line stat-icon"></i>
                         <div class="stat-info">
-                            <h4 class="counter" data-target="{{ $homepageSetting->stat_customers ?? 10 }}" data-suffix="k+">0</h4>
+                            <h4 class="counter" data-target="{{ $homepageSetting->stat_customers ?? 1000 }}" data-suffix="+">0</h4>
                             <span>Pelanggan Puas</span>
                         </div>
                     </div>

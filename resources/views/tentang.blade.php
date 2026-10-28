@@ -1,12 +1,3 @@
-@php
-    $about_contents = null;
-    $stats = collect([
-        (object) ['value' => '14+', 'label' => 'Tahun Pengalaman'],
-        (object) ['value' => '500+', 'label' => 'Produk Material'],
-        (object) ['value' => '1.000+', 'label' => 'Pelanggan'],
-        (object) ['value' => 'Jatim', 'label' => 'Jangkauan Layanan'],
-    ]);
-@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -44,52 +35,67 @@
         {{-- Header atas --}}
         <div class="about-hero">
             <h1>
-                {!! nl2br(e($tentangSetting->hero_title ?? "Mitra Terpercaya Untuk Setiap\nProyek Bangunan Anda")) !!}
+                {!! nl2br(e($about?->title ?? $tentangSetting?->hero_title ?? "Mitra Terpercaya Untuk Setiap\nProyek Bangunan Anda")) !!}
             </h1>
-            <p>{{ $tentangSetting->hero_description ?? 'Kami hadir memberikan solusi terbaik untuk kebutuhan bangunan Anda.' }}</p>
+            <p>{{ $tentangSetting?->hero_description ?? 'Kami hadir memberikan solusi terbaik untuk kebutuhan bangunan Anda.' }}</p>
         </div>
 
         {{-- Kotak tengah dengan foto --}}
         <div class="about-box">
             <div class="about-box-inner">
                 <div class="about-box-img">
-                    @if($about_contents?->image)
-                        <img src="{{ asset('storage/' . $about_contents->image) }}" alt="Tentang Kami">
-                    @endif
+                    <img src="{{ \App\Support\Media::url($about?->image ?? $tentangSetting?->hero_image, 'images/hero/tentang.jpg') }}"
+                         alt="TB Cahaya Baru">
                 </div>
                 <div class="about-box-text">
                     <div class="about-label">
                         <div class="about-label-line"></div>
                         <span>Tentang Kami</span>
                     </div>
-                    <h2>PT Cahaya Baru — Solusi Bahan Bangunan Sejak 2010</h2>
-                    <p>
-                        Berawal dari sebuah toko kecil di Surabaya, PT Cahaya Baru didirikan dengan satu tujuan sederhana:
-                        menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari 14 tahun, kami telah
-                        berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga
-                        pemilik rumah perorangan.
-                    </p>
-                    <p>
-                        Kami percaya bahwa fondasi bangunan yang kuat dimulai dari material yang tepat dan hubungan jangka panjang
-                        yang didasari rasa saling percaya. Tim kami selalu siap memberikan konsultasi profesional untuk memastikan
-                        setiap proyek Anda berjalan lancar tanpa kendala suplai material.
-                    </p>
+                    <h2>{{ $tentangSetting?->about_title ?? 'TB Cahaya Baru — Solusi Bahan Bangunan Sejak 2010' }}</h2>
+                    <div>
+                        {!! $about?->description ?? $tentangSetting?->about_description ?? '<p>Berawal dari sebuah toko kecil di Surabaya, TB Cahaya Baru didirikan dengan satu tujuan sederhana: menyediakan bahan bangunan berkualitas dengan harga yang jujur. Selama lebih dari satu dekade, kami telah berkembang menjadi salah satu distributor terkemuka di Jawa Timur, melayani kontraktor, pemborong hingga pemilik rumah perorangan.</p><p>Kami percaya bahwa fondasi bangunan yang kuat dimulai dari material yang tepat dan hubungan jangka panjang yang didasari rasa saling percaya. Tim kami selalu siap memberikan konsultasi profesional untuk memastikan setiap proyek Anda berjalan lancar tanpa kendala suplai material.</p>' !!}
+                    </div>
                     <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:20px;">
                         <a href="/produk" class="btn btn-primary"><i class="ri-store-2-line"></i> Lihat Produk</a>
-                        <a href="/kontak" class="btn btn-outline"><i class="ri-phone-line"></i> Hubungi Kami</a>
+                        <a href="{{ $about?->link ?: '/kontak' }}" class="btn btn-outline"><i class="ri-phone-line"></i> Hubungi Kami</a>
                     </div>
                 </div>
             </div>
         </div>
 
         {{-- Statistik 4 kolom --}}
+        @php
+            $homepageSetting = $homepageSetting ?? \App\Models\HomepageSetting::first();
+            $tahunBeroperasi = $homepageSetting?->years_operating ?? (now()->year - 2010);
+            $companyStats = $companyStats ?? collect();
+        @endphp
         <div class="stats-row">
-            @foreach($stats as $stat)
+            @if($companyStats->isNotEmpty())
+                @foreach($companyStats as $stat)
+                    <div class="stat-box">
+                        <div class="number">{{ $stat->value }}</div>
+                        <div class="label">{{ $stat->label }}</div>
+                    </div>
+                @endforeach
+            @else
                 <div class="stat-box">
-                    <div class="number">{{ $stat->value }}</div>
-                    <div class="label">{{ $stat->label }}</div>
+                    <div class="number">{{ $tahunBeroperasi }}+</div>
+                    <div class="label">Tahun Pengalaman</div>
                 </div>
-            @endforeach
+                <div class="stat-box">
+                    <div class="number">{{ number_format($homepageSetting->stat_products ?? 500, 0, ',', '.') }}+</div>
+                    <div class="label">Jenis Produk</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">{{ $homepageSetting->stat_suppliers ?? 50 }}+</div>
+                    <div class="label">Mitra Supplier</div>
+                </div>
+                <div class="stat-box">
+                    <div class="number">{{ number_format($homepageSetting->stat_customers ?? 1000, 0, ',', '.') }}+</div>
+                    <div class="label">Pelanggan Puas</div>
+                </div>
+            @endif
         </div>
 
         {{-- Visi & Misi --}}
@@ -136,21 +142,21 @@
             <h2 class="section-h2">Nilai-Nilai Inti Kami</h2>
             <p class="section-sub">Prinsip yang menjadi landasan setiap langkah kami</p>
             <div class="nilai-grid">
-                <div class="nilai-card">
-                    <div class="icon"><i class="fa-regular fa-handshake"></i></div>
-                    <h3>Kejujuran</h3>
-                    <p>Kami menjunjung kejujuran dan tanggung jawab dalam setiap transaksi dan layanan.</p>
-                </div>
-                <div class="nilai-card">
-                    <div class="icon"><i class="fa-regular fa-star"></i></div>
-                    <h3>Kualitas</h3>
-                    <p>Produk dan pelayanan terbaik menjadi standar utama kami setiap hari.</p>
-                </div>
-                <div class="nilai-card">
-                    <div class="icon"><i class="fa-solid fa-shield"></i></div>
-                    <h3>Kepercayaan</h3>
-                    <p>Hubungan jangka panjang dengan pelanggan adalah prioritas utama kami.</p>
-                </div>
+                @php
+                    $coreValues = $coreValues ?? collect();
+                    $defaultCoreValues = collect([
+                        (object) ['icon' => 'fa-regular fa-handshake', 'title' => 'Kejujuran', 'description' => 'Kami menjunjung kejujuran dan tanggung jawab dalam setiap transaksi dan layanan.'],
+                        (object) ['icon' => 'fa-regular fa-star', 'title' => 'Kualitas', 'description' => 'Produk dan pelayanan terbaik menjadi standar utama kami setiap hari.'],
+                        (object) ['icon' => 'fa-solid fa-shield', 'title' => 'Kepercayaan', 'description' => 'Hubungan jangka panjang dengan pelanggan adalah prioritas utama kami.'],
+                    ]);
+                @endphp
+                @foreach($coreValues->isNotEmpty() ? $coreValues : $defaultCoreValues as $value)
+                    <div class="nilai-card">
+                        <div class="icon"><i class="{{ $value->icon ?: 'fa-regular fa-star' }}"></i></div>
+                        <h3>{{ $value->title }}</h3>
+                        <p>{{ $value->description }}</p>
+                    </div>
+                @endforeach
             </div>
         </div>
 

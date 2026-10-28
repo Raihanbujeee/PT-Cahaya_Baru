@@ -16,8 +16,7 @@ use Filament\Tables\Table;
 
 class CoreValuesResource extends Resource
 {
-    // Use string class name to avoid undefined class reference issues during static analysis
-    protected static ?string $model = 'App\\Models\\CoreValues';
+    protected static ?string $model = CoreValues::class;
     public static function getNavigationGroup(): ?string
 {
     return 'Tentang Kami';

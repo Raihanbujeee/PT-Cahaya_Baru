@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             LayananSettingSeeder::class,
             KontakSettingSeeder::class,
             TentangSettingSeeder::class,
+            ReviewSeeder::class,
         ]);
 
         // Seed Categories
@@ -53,7 +54,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($categories as $name) {
-            Category::create(['name' => $name]);
+            Category::firstOrCreate(['name' => $name]);
         }
 
         // Seed Brands

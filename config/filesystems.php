@@ -33,7 +33,9 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Dimatikan agar route /storage/{path} milik aplikasi
+            // (bootstrap/app.php) yang dipakai, bukan route bawaan Laravel.
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],

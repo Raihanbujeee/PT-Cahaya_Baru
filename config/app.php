@@ -15,7 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'demo_mode' => env('DEMO_MODE', env('VERCEL', false)),
+    // Mode demo tanpa database (opsional, harus diaktifkan manual lewat
+    // DEMO_MODE=true). Deploy normal memakai database sungguhan, jadi jangan
+    // diikat ke env VERCEL — Vercel selalu mengisi VERCEL=1.
+    'demo_mode' => env('DEMO_MODE', false),
 
     /*
     |--------------------------------------------------------------------------

@@ -103,7 +103,21 @@ footer {
 
 <!-- ── FOOTER ── -->
 @php
-    $footer = null;
+    // Footer bisa diatur dari panel admin (FooterSetting). Kalau belum diisi,
+    // dipakai data asli toko supaya tidak ada teks kosong.
+    if (! isset($footer)) {
+        $footer = \Illuminate\Support\Facades\Schema::hasTable('footer_settings')
+            ? \App\Models\FooterSetting::first()
+            : null;
+    }
+
+    $footerDescription = $footer?->description
+        ?? '<p>Pusat perbelanjaan bahan bangunan terlengkap dan termurah. Menjadi solusi utama untuk segala kebutuhan proyek konstruksi Anda.</p>';
+    $footerAddress = $footer?->address
+        ?? 'Jl. Saxophone No.65, Tunggulwulung, Kec. Lowokwaru, Kota Malang, Jawa Timur 65143';
+    $footerPhone = $footer?->phone ?? '0838-3407-9959';
+    $footerEmail = $footer?->email ?? 'info@ptcahayabaru.com';
+    $footerHours = $footer?->hours ?? 'Senin - Sabtu: 08:00 - 17:00';
 @endphp
 <footer>
     <div class="container">
@@ -112,7 +126,7 @@ footer {
             <div class="footer-about">
                 <div class="logo">PT Cahaya Baru</div>
                 <div class="footer-desc">
-                    {!! $footer?->description ?? 'Deskripsi perusahaan belum diisi.' !!}
+                    {!! $footerDescription !!}
                 </div>
                 <div class="social-icons">
                     <a href="{{ data_get($footer, 'social_links.facebook', '#') }}"><i class="ri-facebook-fill"></i></a>
@@ -147,19 +161,19 @@ footer {
                 <ul>
                     <li>
                         <i class="ri-map-pin-fill"></i>
-                        <span>{{ $footer?->address ?? 'Alamat belum diisi' }}</span>
+                        <span>{{ $footerAddress }}</span>
                     </li>
                     <li>
                         <i class="ri-phone-fill"></i>
-                        <span>{{ $footer?->phone ?? '-' }}</span>
+                        <span>{{ $footerPhone }}</span>
                     </li>
                     <li>
                         <i class="ri-mail-fill"></i>
-                        <span>{{ $footer?->email ?? '-' }}</span>
+                        <span>{{ $footerEmail }}</span>
                     </li>
                     <li>
                         <i class="ri-time-fill"></i>
-                        <span>{{ $footer?->hours ?? '-' }}</span>
+                        <span>{{ $footerHours }}</span>
                     </li>
                 </ul>
             </div>

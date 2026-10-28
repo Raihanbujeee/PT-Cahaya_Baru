@@ -1,89 +1,253 @@
 <?php
 
-use App\Support\DummyCatalog;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
+use App\Models\Product;
+use App\Models\Service;
 
-$products = DummyCatalog::products();
-$services = DummyCatalog::services();
+Route::get('/', function () {
+    $featuredProducts = Product::with(['category', 'brand'])->take(4)->get();
+    $services = Service::take(6)->get(); // Ambil 6 layanan teratas untuk dashboard
+    $homepageSetting = \App\Models\HomepageSetting::latest()->first();
+    $reviews = \App\Models\Review::latest()->take(3)->get();
 
-View::composer(['welcome', 'produk', 'detail_produk', 'layanan'], function ($view) use ($services) {
-    $view->with('servicesList', $services);
-    $view->with('allServicesData', $services->map(fn ($service) => [
-        'id' => $service->id,
-        'name' => $service->name,
-        'type' => $service->type,
-        'price' => $service->price,
-        'price_per_km' => $service->price_per_km,
-        'description' => $service->description,
-    ]));
+    return view('welcome', compact('featuredProducts', 'services', 'homepageSetting', 'reviews'));
 });
 
-Route::get('/', fn () => view('welcome', [
-    'featuredProducts' => $products->take(4),
-    'services' => $services->take(6),
-    'homepageSetting' => null,
-    'reviews' => collect(),
-]));
+Route::get('/produk', function () {
+    $products = Product::with(['category', 'brand'])
+        ->withSum('saleProductDetails as sold_count', 'quantity')
+        ->get();
+    return view('produk', compact('products'));
+});
 
-Route::get('/produk', fn () => view('produk', ['products' => $products]));
-
-Route::get('/produk/{id}', function (int $id) use ($products) {
-    $product = $products->firstWhere('id', $id);
-    abort_if(! $product, 404);
+Route::get('/produk/{id}', function ($id) {
+    $product = Product::with(['category', 'brand'])->findOrFail($id);
     return view('detail_produk', compact('product'));
 });
 
-Route::get('/layanan', fn () => view('layanan', [
-    'services' => DummyCatalog::paginate($services),
-    'layananSetting' => null,
-]));
+Route::get('/tentang-kami', function () {
+    $tentangSetting = \App\Models\TentangSetting::first();
 
-Route::view('/tentang-kami', 'tentang');
-Route::view('/kontak', 'kontak');
+    // Data tambahan dari panel admin (AboutContents / CompanyStats /
+    // CoreValues). Dibungkus hasTable supaya halaman tetap jalan kalau
+    // migrasi baru belum dijalankan.
+    $hasTable = fn (string $table) => \Illuminate\Support\Facades\Schema::hasTable($table);
 
-Route::post('/checkout', function (Request $request) use ($products, $services) {
-    $data = $request->validate([
-        'customer_name' => ['required', 'string', 'max:255'],
-        'customer_phone' => ['required', 'string', 'max:30'],
-        'customer_address' => ['required', 'string', 'max:1000'],
-        'cart' => ['required', 'array', 'min:1'],
-        'cart.*.id' => ['required', 'integer'],
-        'cart.*.qty' => ['required', 'integer', 'min:1'],
-        'services' => ['nullable', 'array'],
-        'services.*.id' => ['required_with:services', 'integer'],
-        'services.*.qty' => ['required_with:services', 'integer', 'min:1'],
-        'services.*.distance' => ['nullable', 'numeric', 'min:0'],
+    $about = $hasTable('about_contents') ? \App\Models\AboutContents::first() : null;
+    $companyStats = $hasTable('company_stats') ? \App\Models\CompanyStats::all() : collect();
+    $coreValues = $hasTable('core_values') ? \App\Models\CoreValues::all() : collect();
+
+    return view('tentang', compact('tentangSetting', 'about', 'companyStats', 'coreValues'));
+});
+
+Route::get('/kontak', function () {
+    $kontakSetting = \App\Models\KontakSetting::first();
+    return view('kontak', compact('kontakSetting'));
+});
+
+Route::get('/layanan', function () {
+    $services = App\Models\Service::paginate(8);
+    $layananSetting = \App\Models\LayananSetting::first();
+    $homepageSetting = \App\Models\HomepageSetting::first();
+    return view('layanan', compact('services', 'layananSetting', 'homepageSetting'));
+});
+
+use Illuminate\Support\Facades\View;
+
+View::composer(['welcome', 'produk', 'detail_produk', 'layanan'], function ($view) {
+    $servicesList = \App\Models\Service::with('product:id,name')
+        ->orderBy('type')
+        ->orderBy('name')
+        ->get(['id', 'name', 'type', 'price', 'price_per_km', 'product_id', 'description']);
+    $view->with('servicesList', $servicesList);
+});
+
+
+Route::post('/reviews', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate([
+        'customer_name' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'comment' => 'required|string',
     ]);
 
-    abort_if(count($data['cart']) > 30 || count($data['services'] ?? []) > 20, 422, 'Jumlah item pesanan terlalu banyak.');
+    \App\Models\Review::create($validated);
 
-    $lines = [];
-    $productTotal = 0;
-    foreach ($data['cart'] as $item) {
-        $product = $products->firstWhere('id', (int) $item['id']);
-        abort_if(! $product, 422, 'Produk tidak ditemukan.');
-        abort_if($item['qty'] > 999, 422, 'Jumlah produk terlalu banyak.');
-        $subtotal = $product->price * $item['qty'];
-        $productTotal += $subtotal;
-        $lines[] = "- {$product->name} x{$item['qty']}: Rp ".number_format($subtotal, 0, ',', '.');
+    return redirect()->back()->with('success', 'Ulasan berhasil dikirim!');
+});
+
+Route::post('/checkout', function (Illuminate\Http\Request $request) {
+    $request->validate([
+        'customer_name'       => 'required|string|max:255',
+        'customer_phone'      => 'required|string|max:20',
+        'customer_address'    => 'required|string',
+        'cart'                => 'required|array|min:1',
+        'cart.*.id'           => 'required|integer|exists:products,id',
+        'cart.*.qty'          => 'required|integer|min:1',
+        'services'            => 'nullable|array',
+        'services.*.id'       => 'required_with:services|integer|exists:services,id',
+        'services.*.qty'      => 'required_with:services|integer|min:1',
+        'services.*.distance' => 'nullable|numeric|min:0',
+    ]);
+
+    try {
+        $result = Illuminate\Support\Facades\DB::transaction(function () use ($request) {
+            // 1. Create or Get Customer
+            $customer = \App\Models\Customer::firstOrCreate(
+                ['phone_number' => $request->customer_phone],
+                [
+                    'name'    => $request->customer_name,
+                    'address' => $request->customer_address,
+                ]
+            );
+
+            // Get default user (Admin) for POS
+            $adminUser = \App\Models\User::first();
+            $userId    = $adminUser ? $adminUser->id : 1;
+
+            // 2. Create Sale Record
+            $sale = \App\Models\Sale::create([
+                'customer_id'         => $customer->id,
+                'user_id'             => $userId,
+                'date'                => now(),
+                'total_product_price' => 0,
+                'total_service_price' => 0,
+                'grand_total'         => 0,
+                'payment_method'      => 'Cash',
+                'payment_status'      => 'Unpaid',
+                'shipping_address'    => $request->customer_address,
+            ]);
+
+            $productTotal = 0;
+            $serviceTotal = 0;
+            $productText  = "";
+            $serviceText  = "";
+
+            // 3. Process Cart (Products)
+            foreach ($request->cart as $item) {
+                $product = Product::lockForUpdate()->findOrFail($item['id']);
+                $qty     = (int) $item['qty'];
+
+                if ($product->current_stock < $qty) {
+                    throw new \Exception("Stok untuk produk {$product->name} tidak mencukupi (Sisa: {$product->current_stock}).");
+                }
+
+                // Deduct stock
+                $product->current_stock -= $qty;
+                $product->save();
+
+                $price    = (float) $product->selling_price;
+                $subtotal = $price * $qty;
+
+                \App\Models\SaleProductDetail::create([
+                    'sale_id'    => $sale->id,
+                    'product_id' => $product->id,
+                    'quantity'   => $qty,
+                    'unit_price' => $price,
+                    'subtotal'   => $subtotal,
+                ]);
+
+                // Log stock out
+                if (\Illuminate\Support\Facades\Schema::hasTable('stock_logs')) {
+                    \Illuminate\Support\Facades\DB::table('stock_logs')->insert([
+                        'product_id'      => $product->id,
+                        'type'            => 'Out',
+                        'quantity'        => $qty,
+                        'remaining_stock' => $product->current_stock,
+                        'reference_type'  => 'App\Models\Sale',
+                        'reference_id'    => $sale->id,
+                        'created_at'      => now(),
+                        'updated_at'      => now(),
+                    ]);
+                }
+
+                $productTotal += $subtotal;
+                $productText  .= "  - {$product->name} ({$qty} pcs) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+            }
+
+            // 4. Process Services (with distance-based pricing for pengantaran)
+            foreach ($request->services ?? [] as $item) {
+                $service  = \App\Models\Service::findOrFail($item['id']);
+                $qty      = (int) $item['qty'];
+                $distance = (float) ($item['distance'] ?? 0);
+
+                // Calculate subtotal based on service type
+                if ($service->type === 'pengantaran' && $distance > 0) {
+                    $baseFee  = (float) $service->price;
+                    $perKm    = (float) $service->price_per_km;
+                    $subtotal = $baseFee + ($perKm * $distance);
+                    $unitPrice = $subtotal; // entire delivery cost
+                    $qty = 1; // delivery is always qty 1
+                } else {
+                    $unitPrice = (float) $service->price;
+                    $subtotal  = $unitPrice * $qty;
+                }
+
+                \App\Models\SaleServiceDetail::create([
+                    'sale_id'    => $sale->id,
+                    'service_id' => $service->id,
+                    'quantity'   => $qty,
+                    'unit_price' => $unitPrice,
+                    'subtotal'   => $subtotal,
+                ]);
+
+                $serviceTotal += $subtotal;
+
+                if ($service->type === 'pengantaran' && $distance > 0) {
+                    $serviceText .= "  - {$service->name} ({$distance} km) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+                } else {
+                    $serviceText .= "  - {$service->name} (x{$qty}) = Rp " . number_format($subtotal, 0, ',', '.') . "\n";
+                }
+            }
+
+            // 5. Update Sale totals
+            $grandTotal = $productTotal + $serviceTotal;
+            
+            \Illuminate\Support\Facades\Log::info("Checkout totals: Product: $productTotal, Service: $serviceTotal, Grand: $grandTotal");
+
+            $sale->total_product_price = $productTotal;
+            $sale->total_service_price = $serviceTotal;
+            $sale->grand_total         = $grandTotal;
+            $sale->save();
+
+            // 6. Generate WA Message
+            $waNumber = '6283834079959';
+            $message  = "Halo TB Cahaya Baru, saya ingin memproses pesanan saya:\n\n";
+            $message .= "*Data Pemesan:*\n";
+            $message .= "Nama: {$customer->name}\n";
+            $message .= "No. HP: {$customer->phone_number}\n";
+            $message .= "Alamat: {$request->customer_address}\n\n";
+
+            $message .= "*Produk yang Dipesan:*\n";
+            $message .= $productText ?: "  (tidak ada)\n";
+
+            if ($serviceText) {
+                $message .= "\n*Jasa yang Digunakan:*\n";
+                $message .= $serviceText;
+            }
+
+            $message .= "\n*Rincian Biaya:*\n";
+            $message .= "  Total Produk : Rp " . number_format($productTotal, 0, ',', '.') . "\n";
+            if ($serviceTotal > 0) {
+                $message .= "  Total Jasa   : Rp " . number_format($serviceTotal, 0, ',', '.') . "\n";
+            }
+            $message .= "  *Grand Total : Rp " . number_format($grandTotal, 0, ',', '.') . "*\n\n";
+            $message .= "Mohon informasi untuk pembayaran dan pengirimannya. Terima kasih.";
+
+            $waUrl = "https://wa.me/{$waNumber}?text=" . urlencode($message);
+
+            return [
+                'success' => true,
+                'wa_url'  => $waUrl,
+                'sale_id' => $sale->id,
+            ];
+        });
+
+        return response()->json($result);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], 422);
     }
-
-    $serviceTotal = 0;
-    foreach ($data['services'] ?? [] as $item) {
-        $service = $services->firstWhere('id', (int) $item['id']);
-        abort_if(! $service, 422, 'Layanan tidak ditemukan.');
-        $distance = (float) ($item['distance'] ?? 0);
-        abort_if($distance > 1000 || $item['qty'] > 999, 422, 'Jumlah layanan atau jarak terlalu besar.');
-        $subtotal = $service->type === 'pengantaran'
-            ? $service->price + ($service->price_per_km * $distance)
-            : $service->price * $item['qty'];
-        $serviceTotal += $subtotal;
-        $lines[] = "- {$service->name}: Rp ".number_format($subtotal, 0, ',', '.');
-    }
-
-    $message = "Halo TB Cahaya Baru, saya ingin memesan:\n\nNama: {$data['customer_name']}\nNo. HP: {$data['customer_phone']}\nAlamat: {$data['customer_address']}\n\n".implode("\n", $lines)."\n\nTotal: Rp ".number_format($productTotal + $serviceTotal, 0, ',', '.');
-
-    return response()->json(['success' => true, 'wa_url' => 'https://wa.me/6283834079959?text='.urlencode($message)]);
 });

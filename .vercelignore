@@ -1,0 +1,36 @@
+# Dependency lokal tidak perlu di-upload.
+# Runtime vercel-php akan menjalankan `composer install` sendiri saat build.
+/vendor
+
+/node_modules
+
+# File environment lokal (jangan pernah ikut ter-deploy).
+/.env
+/.env.*
+!/.env.example
+
+# Tidak dipakai saat runtime.
+/tests
+/diagrams
+/storage
+
+# Sisa build/dev lokal.
+/public/build
+/public/hot
+/public/storage
+/bootstrap/cache/*.php
+/.phpunit.result.cache
+/database/*.sqlite
+/.editorconfig
+/.gitattributes
+/.gitignore
+
+# Git & tooling.
+/.git
+/.github
+/.idea
+/.vscode
+/.fleet
+/.zed
+/auth.json
+*.log

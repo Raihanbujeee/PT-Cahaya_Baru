@@ -101,23 +101,27 @@
 
     <!-- Script -->
     <script>
-        // Product data is supplied by DummyCatalog.
+        // Product Data from Database
         window.APP_URL = "{{ url('/') }}";
-        const dbProducts = {!! json_encode($products->map(fn ($p) => [
-            'id' => $p->id,
-            'name' => $p->name,
-            'category' => $p->category,
-            'brand' => $p->brand,
-            'stock' => $p->stock > 0 ? 'Tersedia' : 'Habis',
-            'price' => $p->price,
-            'unit' => 'pcs',
-            'minOrder' => '1',
-            'supplier' => 'TB Cahaya Baru',
-            'image' => $p->image,
-            'description' => $p->description,
-            'date' => '2026-01-01',
-            'sold' => 0,
-        ])) !!};
+        const dbProducts = {!! json_encode($products->map(function ($p) {
+    return [
+        'id' => $p->id,
+        'name' => $p->name,
+        'category' => $p->category ? $p->category->name : 'Lainnya',
+        'brand' => $p->brand ? $p->brand->name : 'Tanpa Merk',
+        'stock' => $p->current_stock > 0 ? 'Tersedia' : 'Habis',
+        'price' => (float) $p->selling_price,
+        'unit' => 'pcs',
+        'minOrder' => '1',
+        'supplier' => 'TB Cahaya Baru',
+        'image' => $p->image_url,
+        'description' => 'Produk ' . $p->name . ' dari merek ' . ($p->brand ? $p->brand->name : 'unggulan') . ' menawarkan kualitas terbaik untuk kebutuhan konstruksi Anda. Diproduksi dengan standar tinggi untuk menjamin ketahanan, keamanan, dan keandalan di setiap proyek pembangunan Anda.',
+        'date' => $p->created_at ? $p->created_at->format('Y-m-d') : now()->format('Y-m-d'),
+        // Jumlah unit yang benar-benar terjual, dihitung dari detail penjualan
+        // (sebelumnya memakai rand() sehingga urutan "Terlaris" acak).
+        'sold' => (int) ($p->sold_count ?? 0),
+    ];
+}), JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) !!};
 
     </script>
 

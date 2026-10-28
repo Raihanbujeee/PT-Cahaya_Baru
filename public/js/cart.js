@@ -56,8 +56,13 @@ window.addToCart = function(id) {
     saveCart();
     updateCartCount();
 
-    const btn = event.currentTarget;
-    if (btn) {
+    // `event` tidak selalu tersedia (mis. Firefox / strict mode), jadi
+    // tombol diambil dari window.event bila ada.
+    const btn = (typeof window.event !== 'undefined' && window.event)
+        ? window.event.currentTarget
+        : null;
+
+    if (btn && btn.innerHTML) {
         const originalHtml = btn.innerHTML;
         btn.innerHTML = '<i class="ri-check-line"></i>';
         setTimeout(() => { btn.innerHTML = originalHtml; }, 1000);
@@ -445,7 +450,17 @@ window.submitCheckout = async function() {
             updateCartCount();
             closeCheckoutModal();
 
+            // Set customer name into the review modal automatically
+            const reviewNameInput = document.getElementById('review-name');
+            if (reviewNameInput) {
+                reviewNameInput.value = name;
+            }
+
             window.open(data.wa_url, '_blank');
+
+            // Tidak ada modal ulasan di halaman ini (ulasan hanya tersedia di
+            // halaman kontak), jadi pengguna cukup diarahkan lewat pesan.
+            alert('Pesanan berhasil dibuat. Silakan lanjutkan konfirmasi melalui WhatsApp.');
         } else {
             alert('Gagal memproses pesanan: ' + (data.message || 'Terjadi kesalahan pada server.'));
         }

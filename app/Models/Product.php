@@ -64,4 +64,73 @@ class Product extends Model
     {
         return $this->hasOne(Service::class)->where('type', 'pemasangan');
     }
+
+    /**
+     * URL gambar produk.
+     *
+     * Urutan: file unggahan admin (kalau benar-benar ada) → foto bawaan sesuai
+     * nama produk → foto bawaan sesuai kategori → gambar default. Pengecekan
+     * keberadaan file penting karena di serverless (Vercel) folder storage
+     * bersifat sementara, sehingga path lama bisa menunjuk file yang hilang.
+     */
+    public function getImageUrlAttribute(): string
+    {
+        if (\App\Support\Media::exists($this->image)) {
+            return asset('storage/'.$this->image);
+        }
+
+        return self::fallbackImageFor($this->name, $this->category?->name);
+    }
+
+    public static function fallbackImageFor(?string $name = null, ?string $category = null): string
+    {
+        // Dicocokkan berurutan; aturan paling spesifik harus lebih dulu
+        // (mis. "Semen Putih" sebelum "Semen").
+        $map = [
+            'semen putih' => 'semen-putih',
+            'semen' => 'semen',
+            'cat kayu' => 'cat-kayu',
+            'cat besi' => 'cat-kayu',
+            'cat' => 'cat',
+            'besi beton' => 'besi',
+            'besi siku' => 'besi-profil',
+            'besi hollow' => 'besi-profil',
+            'besi' => 'besi',
+            'keramik dinding' => 'keramik-dinding',
+            'keramik kamar mandi' => 'keramik-km',
+            'anti slip' => 'keramik-km',
+            'keramik' => 'keramik',
+            'pipa' => 'pipa',
+            'knie' => 'pipa',
+            'kabel' => 'kabel',
+            'gypsum' => 'gypsum',
+            'paku' => 'paku',
+            'genteng metal' => 'genteng-metal',
+            'genteng' => 'genteng',
+            'batako' => 'batako',
+            'bata' => 'bata',
+            'kayu' => 'kayu',
+            'engsel' => 'engsel',
+            'saklar' => 'saklar',
+        ];
+
+        $haystacks = [
+            strtolower($name ?? ''),
+            strtolower($category ?? ''),
+        ];
+
+        foreach ($haystacks as $haystack) {
+            if ($haystack === '') {
+                continue;
+            }
+
+            foreach ($map as $needle => $file) {
+                if (str_contains($haystack, $needle)) {
+                    return asset('images/produk/'.$file.'.jpg');
+                }
+            }
+        }
+
+        return asset('images/produk/default.jpg');
+    }
 }

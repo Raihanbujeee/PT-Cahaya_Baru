@@ -41,7 +41,13 @@ class BerandaSettingResource extends Resource
                         TextInput::make('about_title'),
                         RichEditor::make('about_desc_1')->columnSpanFull(),
                         RichEditor::make('about_desc_2')->columnSpanFull(),
-                        TextInput::make('stat_years')->numeric()->default(0)->label('Tahun Beroperasi'),
+                        TextInput::make('founded_year')
+                            ->numeric()
+                            ->default(2010)
+                            ->minValue(1900)
+                            ->maxValue((int) date('Y'))
+                            ->label('Tahun Berdiri')
+                            ->helperText('Dipakai untuk menghitung "Tahun Beroperasi" secara otomatis.'),
                         TextInput::make('stat_products')->numeric()->default(0)->label('Produk Tersedia'),
                         TextInput::make('stat_suppliers')->numeric()->default(0)->label('Mitra Supplier'),
                         TextInput::make('stat_customers')->numeric()->default(0)->label('Pelanggan Puas'),

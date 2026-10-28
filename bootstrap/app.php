@@ -32,7 +32,9 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Vercel menaruh aplikasi di balik proxy. Tanpa ini Laravel mengira
+        // request datang sebagai HTTP (cookie/session jadi tidak "secure").
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

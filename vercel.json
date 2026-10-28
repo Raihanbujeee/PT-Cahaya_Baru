@@ -7,6 +7,8 @@
             "runtime": "vercel-php@0.7.4"
         }
     },
+    "installCommand": "",
+    "buildCommand": "echo skip",
     "outputDirectory": "public",
     "routes": [
         {
@@ -19,6 +21,10 @@
         },
         {
             "src": "/\\.htaccess",
+            "dest": "/api/index.php"
+        },
+        {
+            "src": "^/(\\.git|\\.env|app|bootstrap|config|database|lang|node_modules|public|resources|routes|tests|vendor|storage|artisan|composer\\.json|composer\\.lock|package\\.json|package-lock\\.json|phpunit\\.xml|vite\\.config\\.js|DEPLOY-VERCEL\\.md|README\\.md|api)(/|$|\\.)",
             "dest": "/api/index.php"
         },
         {

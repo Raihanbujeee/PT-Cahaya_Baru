@@ -10,9 +10,11 @@ disiapkan di repo ini — dokumen ini menjelaskan cara deploy-nya.
 
 | File | Fungsi |
 | --- | --- |
-| `api/index.php` | Entry point serverless. Membuat folder tulis di `/tmp`, mengarahkan cache/compiled view Laravel ke `/tmp`, lalu menjalankan aplikasi. |
-| `vercel.json` | Mendaftarkan `api/index.php` sebagai function `vercel-php@0.7.4` (PHP 8.3), menjadikan `public/` sebagai output statis, dan meneruskan request lain ke Laravel. |
+| `api/index.php` | Entry point serverless. Menyajikan aset `public/` (cadangan kalau CDN tidak menanganinya), membuat folder tulis di `/tmp`, mengarahkan cache/compiled view Laravel ke `/tmp`, lalu menjalankan aplikasi. |
+| `api/php.ini` | Override `php.ini` runtime: `memory_limit` 256M dan batas upload 4M. |
+| `vercel.json` | Mendaftarkan `api/index.php` sebagai function `vercel-php@0.7.4` (PHP 8.3), menjadikan `public/` sebagai output statis, memblokir path source code, dan meneruskan request lain ke Laravel. |
 | `.vercelignore` | Supaya `vendor/`, `node_modules/`, `.env`, `storage/`, dan `tests/` tidak ikut di-upload. |
+| `package.json` | `"engines": {"node": "22.x"}` — versi Node yang dipakai runtime PHP saat build. |
 | `app/Providers/AppServiceProvider.php` | Memaksa URL HTTPS saat `APP_ENV=production`. |
 | `bootstrap/app.php` | Route `/storage/{path}` untuk menyajikan gambar dari disk default (pengganti symlink `public/storage`). |
 
@@ -57,14 +59,25 @@ disiapkan di repo ini — dokumen ini menjelaskan cara deploy-nya.
 
 1. `/`, `/index.php`, dan `/.htaccess` dipaksa masuk ke `api/index.php`
    (mencegah source code `public/index.php` ikut tersaji mentah).
-2. `handle: filesystem` — semua file yang benar-benar ada di `public/`
+2. Path source code (`/app`, `/bootstrap`, `/config`, `/vendor`, `/composer.json`,
+   `/artisan`, dst.) juga dipaksa masuk ke Laravel supaya tidak pernah bisa
+   diunduh sebagai file statis.
+3. `handle: filesystem` — semua file yang benar-benar ada di output `public/`
    (`/css/...`, `/js/...`, `/images/...`, `/fonts/...`, `/favicon.ico`,
    `/robots.txt`, aset Filament) disajikan langsung oleh CDN Vercel.
-3. Sisanya (`/produk`, `/admin`, `/livewire/...`, `/storage/...`) masuk ke
+4. Sisanya (`/produk`, `/admin`, `/livewire/...`, `/storage/...`) masuk ke
    Laravel lewat `api/index.php`.
 
+Sebagai jaring pengaman, `api/index.php` juga bisa menyajikan sendiri file dari
+`public/` (dengan MIME type dan header cache yang benar). Jadi kalau suatu saat
+route `handle: filesystem` tidak mengenai sebuah aset, CSS/JS/gambar tetap
+tampil — tidak akan 404.
+
 Runtime `vercel-php` otomatis menjalankan `composer install` saat build, jadi
-folder `vendor/` tidak perlu di-commit.
+folder `vendor/` tidak perlu di-commit. Install/build command Node sengaja
+dikosongkan (`"installCommand": ""`, `"buildCommand": "echo skip"`) karena
+seluruh CSS/JS proyek ini sudah berupa file statis di `public/`, bukan hasil
+Vite.
 
 ### Deploy lewat CLI
 
@@ -103,7 +116,8 @@ Disarankan:
 | `SESSION_DRIVER` | `database` | Butuh tabel `sessions` (sudah ada di migrasi). Bisa juga `cookie`. |
 | `CACHE_STORE` | `database` | Butuh tabel `cache` (sudah ada di migrasi). |
 | `QUEUE_CONNECTION` | `sync` | Tidak ada worker di Vercel. |
-| `LOG_CHANNEL` | `stderr` | Log muncul di dashboard Vercel → Logs. |
+| `SESSION_SECURE_COOKIE` | `true` | Cookie session hanya dikirim lewat HTTPS. |
+| `LOG_CHANNEL` | `stderr` | Log muncul di dashboard Vercel → Logs (sudah otomatis kalau tidak diisi). |
 | `LOG_LEVEL` | `error` | Agar tidak terlalu ramai. |
 | `FILESYSTEM_DISK` | `public` atau `s3` | Lihat bagian Gambar/Upload. |
 
@@ -214,7 +228,7 @@ otomatis menyajikan file tersebut (URL di halaman publik tetap
 | --- | --- |
 | `The bootstrap/cache directory must be present and writable` | Pastikan request masuk lewat `api/index.php` (bukan `public/index.php`). Cek `routes` di `vercel.json` dan file `api/index.php` tidak diubah. |
 | `No application encryption key has been specified` | `APP_KEY` belum diisi di Environment Variables Vercel. |
-| Halaman tampil tanpa CSS/JS | Aset tidak tersaji dari `public/`. Pastikan `outputDirectory` tetap `public` dan route `handle: filesystem` tidak dihapus dari `vercel.json`, serta file memang ada di `public/css`, `public/js`, `public/images`. |
+| Halaman tampil tanpa CSS/JS | Aset tidak tersaji dari `public/`. Pastikan `outputDirectory` tetap `public`, file memang ada di `public/css`, `public/js`, `public/images`, dan `api/index.php` tidak diubah (di dalamnya ada fallback penyaji aset). |
 | Build gagal saat `composer install` / `package:discover` | Biasanya karena dependency butuh ekstensi PHP yang tidak ada di runtime. Cek log build, atau tambahkan `"config": {"platform": {"php": "8.3.0"}}` di `composer.json` agar resolusi dependency mengikuti PHP 8.3. |
 | `SQLSTATE[HY000] [2002] Connection refused` | Host/port DB salah, atau database menolak koneksi dari luar. Vercel memakai IP keluar dinamis — jangan pakai allowlist IP ketat. Untuk Neon, pakai host `...-pooler...`. |
 | `could not find driver` | `DB_CONNECTION` tidak cocok dengan driver (mis. `pgsql` tapi memakai MySQL). |
@@ -237,6 +251,15 @@ npm run dev
 ```
 
 `vercel dev` tidak didukung oleh runtime PHP ini; gunakan `php artisan serve`.
+
+Untuk menguji entry point serverless persis seperti di Vercel (tanpa
+`public/index.php`), jalankan:
+
+```bash
+php -S localhost:8001 api/index.php
+```
+
+Lalu buka <http://localhost:8001>. Semua halaman dan aset harus tampil normal.
 
 Catatan: saat build di Vercel, runtime hanya menjalankan
 `composer install --no-dev --no-scripts`, jadi tidak ada perintah artisan yang

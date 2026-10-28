@@ -18,6 +18,12 @@
 /public/build
 /public/hot
 /public/storage
+/bootstrap/cache/*.php
+/.phpunit.result.cache
+/database/*.sqlite
+/.editorconfig
+/.gitattributes
+/.gitignore
 
 # Git & tooling.
 /.git
